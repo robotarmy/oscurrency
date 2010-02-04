@@ -332,6 +332,11 @@ class Person < ActiveRecord::Base
     categories.collect { |cat| cat.long_name + "<br>"}.to_s.chop.chop.chop.chop
   end
 
+  # from Columbia 
+  def listed_categories
+    categories.collect { |cat| cat.long_name + ", "}.to_s.chop.chop
+  end
+
   def current_offers
     today = DateTime.now
     offers = self.offers.find(:all, :conditions => ["expiration_date >= ?", today], :order => 'created_at DESC')
@@ -521,6 +526,10 @@ class Person < ActiveRecord::Base
                                      map(&:contact_id)).paginate
   end
   
+  def short_description
+    self.description.briefiate(50)
+  end
+
   protected
 
     ## Callbacks

@@ -484,6 +484,24 @@ p.formatting span
     color:#777;
 }
 
+/* from columbia */
+.col_content
+{
+    padding:5px;
+    width:425px;
+    margin-left:10px;
+    margin-right:2px;
+    border:1px solid #ddd;
+    background:white url(/images/black-grad.jpg) bottom repeat-x;
+}
+
+.col_content:after{clear:both;content:'.';display:block;visibility:hidden;height:0}
+.clearfix{display:inline-block}
+* html .clearfix{height:1%}
+.clearfix{display:block}
+
+
+
 .thinking {
   width: 16px;
   height: 16px;

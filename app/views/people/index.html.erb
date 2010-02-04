@@ -3,7 +3,7 @@
   <% unless @people.empty? -%>
     <%= will_paginate @people, :draw_if_single => true, :next_previous_links => true %>
     <ul class="list people">
-      <%= render :partial => @people %>
+      <%= render :partial => @people, :locals => {:short => true} %>
     </ul>
     <%= will_paginate @people, :draw_if_single => true, :next_previous_links => true %>
   <% else %>
