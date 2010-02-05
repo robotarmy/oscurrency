@@ -1,5 +1,4 @@
 begin
-  unless test?
     global_prefs = Preference.find(:first)
     if global_prefs.email_notifications?
       smtp_port = 'smtp.gmail.com' == global_prefs.smtp_server ? 587 : 25
@@ -14,7 +13,6 @@ begin
 	:password => ENV['GMAIL_SMTP_PASSWORD']
       }
     end
-  end
 rescue
   # Rescue from the error raised upon first migrating
   # (needed to bootstrap the preferences).
