@@ -443,7 +443,9 @@ class Person < ActiveRecord::Base
   end
 
   def authenticated?(password)
-    unencrypted_password == password
+### !!! ### temp turn off password checking
+#    unencrypted_password == password
+    true
   end
 
   def unencrypted_password
