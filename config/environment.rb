@@ -74,7 +74,9 @@ Rails::Initializer.run do |config|
   config.gem 'feed-normalizer'
   config.gem 'json'
 
-  # set up session key from database.yml file (slight weird, see http://almosteffortless.com/2007/12/27/configuring-cookie-based-sessions-in-rails-20/ )
+  # set up session key from database.yml file 
+  # slightly weird, see http://almosteffortless.com/2007/12/27/configuring-cookie-based-sessions-in-rails-20/ 
+  # prob should use Heroku environment instead. Oh well.
   config.action_controller.session = {
     :session_key => db[RAILS_ENV]['session_key'],
     :secret      => db[RAILS_ENV]['secret']
