@@ -1,6 +1,7 @@
 class CreateLocalEncryptionKeys < ActiveRecord::Migration
   include Crypto
 
+  # temporarily create this class, to be removed in next migration.
   class LocalEncryptionKey < ActiveRecord::Base
   end
 
@@ -14,8 +15,15 @@ class CreateLocalEncryptionKeys < ActiveRecord::Migration
     # RSA keys for user authentication
     # XXX hack! until authentication is replaced, rsa keys are now going
     # into database instead of files for diskless deploy.
-    LocalEncryptionKey.create!
-    Crypto.create_keys
+    key = LocalEncryptionKey.create!
+
+    # comment out this.
+    error "You need to hand-edit this migration to have the right RSA keys"
+
+    # uncomment and set these
+#    key.rsa_public_key =
+#    key.rsa_private_key = 
+    key.save!
   end
 
   def self.down

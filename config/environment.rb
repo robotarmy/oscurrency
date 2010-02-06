@@ -10,6 +10,9 @@ RAILS_GEM_VERSION = '2.2.2' unless defined? RAILS_GEM_VERSION
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
+require 'yaml'
+db = YAML.load_file('config/database.yml')
+
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers
@@ -70,6 +73,13 @@ Rails::Initializer.run do |config|
   config.gem 'starling-starling', :lib => 'starling'
   config.gem 'feed-normalizer'
   config.gem 'json'
+
+  # set up session key from database.yml file (slight weird, see http://almosteffortless.com/2007/12/27/configuring-cookie-based-sessions-in-rails-20/ )
+  config.action_controller.session = {
+    :session_key => db[RAILS_ENV]['session_key'],
+    :secret      => db[RAILS_ENV]['secret']
+  }
+
 end
 # Set INLINEDIR to override default location for ruby_inline directory
 # The home directory may not be correctly set in an "su"/"sudo" situation
@@ -148,3 +158,6 @@ GeoKit::Geocoders::geocoder_ca = false
 # various geocoders.  Make sure you read up on relevant Terms of Use for each
 # geocoder you are going to use.
 GeoKit::Geocoders::provider_order = [:google,:us]
+
+require 'yaml'
+db = YAML.load_file('config/database.yml')
