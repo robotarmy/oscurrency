@@ -29,12 +29,13 @@
 #  twitter_name               :string(255)     
 #
 
+require 'digest/sha2'
+
 class Person < ActiveRecord::Base
   include ActivityLogger
   extend PreferencesHelper
 
-  attr_accessor :password, :verify_password, :new_password,
-                :sorted_photos
+  attr_accessor :password, :verify_password, :new_password, :sorted_photos
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description, :connection_notifications,
                   :message_notifications, :wall_comment_notifications, :forum_notifications,
@@ -42,10 +43,16 @@ class Person < ActiveRecord::Base
                   :twitter_name, :zipcode,
                   :phone, :phoneprivacy,
                   :accept_agreement
-  # Indexed fields for Sphinx
-  is_indexed :fields => [ 'name', 'description', 'deactivated',
-                          'email_verified'],
-             :conditions => "deactivated = false AND (email_verified IS NULL OR email_verified = true)"
+
+  index do 
+    name
+    description
+  end
+
+#   is_indexed :fields => [ 'name', 'description', 'deactivated',
+#                           'email_verified'],
+#              :conditions => "deactivated = false AND (email_verified IS NULL OR email_verified = true)"
+
   MAX_EMAIL = MAX_PASSWORD = 40
   MAX_NAME = 40
   MAX_TWITTER_NAME = 15
@@ -427,30 +434,34 @@ class Person < ActiveRecord::Base
     u && u.authenticated?(password) ? u : nil
   end
 
-  def self.encrypt(password)
-    k = LocalEncryptionKey.find(:first)
-    Crypto::Key.from_local_key_value(k.rsa_public_key).encrypt(password)
-  end
-
-  # Encrypts the password with the user salt
-  def encrypt(password)
-    self.class.encrypt(password)
-  end
-
+  # for migration only
   def decrypt(password)
     k = LocalEncryptionKey.find(:first)
     Crypto::Key.from_local_key_value(k.rsa_private_key).decrypt(password)
   end
 
-  def authenticated?(password)
-### !!! ### temp turn off password checking
-#    unencrypted_password == password
-    true
-  end
-
+  # for migration only
   def unencrypted_password
     # The gsub trickery is to unescape the key from the DB.
     decrypt(crypted_password)#.gsub(/\\n/, "\n")
+  end
+
+  def self.encrypt(password)
+#    Crypto::Key.from_local_key_value(k.rsa_public_key).encrypt(password)
+    hash = Digest::SHA2.new
+    password_salt = ActiveSupport::SecureRandom.base64(20)
+    hash << password_salt
+    hash << password
+    hash.to_s
+  end
+
+  # Encrypts the password with the user salt ( +++  on salt)
+  def encrypt(password)
+    self.class.encrypt(password)
+  end
+
+  def authenticated?(password)
+    self.crypted_password = encrypt(password)
   end
 
   def remember_token?
@@ -480,11 +491,10 @@ class Person < ActiveRecord::Base
     save(false)
   end
 
-
   def change_password?(passwords)
     self.password_confirmation = passwords[:password_confirmation]
     self.verify_password = passwords[:verify_password]
-    unless verify_password == unencrypted_password
+    unless authenticated?(verify_password)
       errors.add(:password, "is incorrect")
       return false
     end
