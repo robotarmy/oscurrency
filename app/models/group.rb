@@ -21,7 +21,8 @@ class Group < ActiveRecord::Base
   after_save :log_activity
   
   index do 
-    name description
+    name
+    description
   end
   
   # GROUP modes

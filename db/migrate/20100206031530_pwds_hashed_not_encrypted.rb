@@ -6,6 +6,7 @@ class PwdsHashedNotEncrypted < ActiveRecord::Migration
     Person.find(:all).each { |person|
       person.verify_password = true
       person.password = person.unencrypted_password
+      person.password_confirmation = person.unencrypted_password
       person.save!
     }
     drop_table :local_encryption_keys

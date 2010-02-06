@@ -443,25 +443,19 @@ class Person < ActiveRecord::Base
   # for migration only
   def unencrypted_password
     # The gsub trickery is to unescape the key from the DB.
-    decrypt(crypted_password)#.gsub(/\\n/, "\n")
+    decrypt(crypted_password) #.gsub(/\\n/, "\n")
   end
 
-  def self.encrypt(password)
-#    Crypto::Key.from_local_key_value(k.rsa_public_key).encrypt(password)
+  # encrypt a password using current salt.
+  def encrypt(password)
     hash = Digest::SHA2.new
-    password_salt = ActiveSupport::SecureRandom.base64(20)
     hash << password_salt
     hash << password
     hash.to_s
   end
 
-  # Encrypts the password with the user salt ( +++  on salt)
-  def encrypt(password)
-    self.class.encrypt(password)
-  end
-
   def authenticated?(password)
-    self.crypted_password = encrypt(password)
+    self.crypted_password == encrypt(password)
   end
 
   def remember_token?
@@ -561,8 +555,13 @@ class Person < ActiveRecord::Base
       self.description = "" if description.nil?
     end
 
+    # called on save
     def encrypt_password
       return if password.blank?
+# not in this old version of Rails we are using
+#      self.password_salt = ActiveSupport::SecureRandom.base64(20)
+      # too long but it should work
+      self.password_salt = Rails::SecretKeyGenerator.new("oscurrency").generate_secret
       self.crypted_password = encrypt(password)
     end
 
