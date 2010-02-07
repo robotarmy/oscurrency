@@ -1,5 +1,19 @@
 <li>
-<%= link_to h(subcategory.name), subcategory %> (<%= subcategory.current_and_active_reqs.length %> requests, <%= subcategory.offers.length %> offers, <%= subcategory.active_people.length %> people)
+<%= link_to h(subcategory.name), subcategory %> (
+
+<% if subcategory.current_and_active_reqs.length  > 0 -%>
+	<%= subcategory.current_and_active_reqs.length %> requests
+<% end -%>
+
+<% if subcategory.offers.length  > 0 -%>
+	<%= subcategory.offers.length %> offers
+<% end -%>
+
+<% if subcategory.active_people.length  > 0 -%>
+	<%= subcategory.active_people.length %> people
+<% end -%>
+)
+
 <% if !subcategory.children.empty? %>
   <ul><%= render :partial => 'subcategory', :collection => subcategory.children %></ul>
 <% end %>
