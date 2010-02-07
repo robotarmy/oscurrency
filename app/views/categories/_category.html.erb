@@ -1,5 +1,5 @@
 <li>
-<%= link_to category.name, category, {:class => "categoryMenuItem" } %> (<%= category.active_people.length %>)
+<%= link_to category.name, category, {:class => "categoryMenuItem" } %> <%= category.current_and_active_reqs.length %> requests, <%= category.offers.length %> offers, <%= category.active_people.length %> people
   <div>
     <ul>
     <% unless category.children.empty? -%>
