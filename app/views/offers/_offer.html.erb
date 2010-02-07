@@ -24,7 +24,7 @@
     | <%= link_to "Delete", offer, :confirm => 'Are you sure?', :method => :delete %>
     <% end -%>
     <br>
-    <% if !current_person.address.nil? && !offer.person.address.nil? && !current_person?(offer.person) -%>
+	 <% if !current_person.address.nil? && current_person.address.zipcode_plus_4  != 89001 && !offer.person.address.nil? && offer.person.address.zipcode_plus_4  != 89001  && !current_person?(offer.person) -%>
       <%= number_with_precision(offer.person.address.distance_to(current_person.address), 1).to_s %> miles away
     <% end -%>
   </p>
