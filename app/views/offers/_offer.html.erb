@@ -6,9 +6,6 @@
   </div>
   <p>
   <%= link_to h(offer.name), offer, :class => "show-follow" %> (<%= h offer.price %> hrs)
-  <% if offer.available_count > 0 && offer.expiration_date > Time.now && !current_person?(offer.person) %>
-  <%= link_to 'Accept Offer!', new_person_exchange_path(offer.person, :offer => offer.id) %>
-<% end %>
     Expires: <%= offer.expiration_date.nil? ? '' : relative_time_ago_in_words(offer.expiration_date) %>
   </p>
     <%= display offer.formatted_categories, :class => "meta" %>
