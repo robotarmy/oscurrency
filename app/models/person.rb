@@ -136,7 +136,7 @@ class Person < ActiveRecord::Base
   has_many :reqs
   has_many :bids
 
-  validates_presence_of     :email, :name
+  validates_presence_of     :email, :name, :zipcode, :neighborhoods
   validates_presence_of     :password,              :if => :password_required?
   validates_presence_of     :password_confirmation, :if => :password_required?
   validates_length_of       :password, :within => 4..MAX_PASSWORD,
