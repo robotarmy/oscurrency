@@ -68,7 +68,7 @@ class Person < ActiveRecord::Base
   NUM_RECENT = 8
   FEED_SIZE = 10
   TIME_AGO_FOR_MOSTLY_ACTIVE = 3.months.ago
-  DEFAULT_ZIPCODE_STRING = '89001'
+  DEFAULT_ZIPCODE_STRING = ''
   # These constants should be methods, but I couldn't figure out how to use
   # methods in the has_many associations.  I hope you can do better.
   ACCEPTED_AND_ACTIVE =  [%(status = ? AND
@@ -136,7 +136,7 @@ class Person < ActiveRecord::Base
   has_many :reqs
   has_many :bids
 
-  validates_presence_of     :email, :name
+  validates_presence_of     :email, :name, :zipcode, :neighborhood_ids
   validates_presence_of     :password,              :if => :password_required?
   validates_presence_of     :password_confirmation, :if => :password_required?
   validates_length_of       :password, :within => 4..MAX_PASSWORD,
