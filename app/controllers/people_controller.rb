@@ -57,6 +57,7 @@ class PeopleController < ApplicationController
   
   def new
     @body = "register single-col"
+    @body = @body + " yui-skin-sam"
     @person = Person.new
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
@@ -126,6 +127,7 @@ class PeopleController < ApplicationController
   end
 
   def edit
+    @body = @body + " yui-skin-sam"
     @person = Person.find(params[:id])
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
