@@ -102,7 +102,7 @@ class SessionsController < ApplicationController
         @first_admin_login = true
       end
       current_person.last_logged_in_at = Time.now
-      current_person.save_without_validation!
+      current_person.save(perform_validation = false) || raise(RecordNotSaved)
       if params[:remember_me] == "1"
         current_person.remember_me
         cookies[:auth_token] = {
