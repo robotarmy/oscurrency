@@ -25,7 +25,7 @@ body {
 */
 
 #content {
-  width: 744px;
+  width: 844px;
   float: left;
 }
 
@@ -57,15 +57,16 @@ div.status-btn input.disabled, div.status-btn input.disabled:hover { background:
 
 .col1 {
   float: left;
-  width: 490px;
+  width: 550px;
 }
 .col2 {
   float: right;
-  width: 240px;
+  width: 260px;
 }
 .single-col .col1 {
   margin: 0 210px;
   width: 324px;
+  margin-left:140px;
 }
 
 /* Header */
@@ -158,7 +159,7 @@ font-size:1.3em;
   clear: both;
   margin-top: 48px;
   padding: 24px 0;
-  width: 744px;
+  width: 844px;
   
 }
 
@@ -489,11 +490,13 @@ p.formatting span
 {
     padding:5px;
     width:425px;
-    margin-left:10px;
+    margin-left:103px;
     margin-right:2px;
     border:1px solid #ddd;
     background:white url(/images/black-grad.jpg) bottom repeat-x;
 }
+
+.col_content p { margin-left:0 }
 
 .col_content:after{clear:both;content:'.';display:block;visibility:hidden;height:0}
 .clearfix{display:inline-block}
@@ -532,3 +535,8 @@ ul.invite_contacts li {
 ul.invite_contacts li input.check{
     margin-right: 10px;
 }
+span.name
+{
+    text-transform:capitalize;
+}
+

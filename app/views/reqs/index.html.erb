@@ -13,7 +13,7 @@
 <%- else -%>
 <ul class="list full">
     <%= will_paginate %>
-    <%= render :partial => 'req', :collection => @reqs %>
+    <%= render :partial => 'req', :collection => @reqs, :locals => {:short => true} %>
     <%= will_paginate %>
   </ul>
 <%- end -%>
