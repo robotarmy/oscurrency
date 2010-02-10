@@ -9,10 +9,10 @@ class PersonMailer < ActionMailer::Base
     @server_name ||= PersonMailer.global_prefs.server_name
   end
   
-  def password_reminder(person)
-    from         "Password reminder <password-reminder@#{domain}>"
+  def password_reset(person)
+    from         "Password reset <password-reset@#{domain}>"
     recipients   person.email
-    subject      formatted_subject("Password reminder")
+    subject      formatted_subject("Password reset")
     body         "domain" => server, "person" => person
   end
   
