@@ -13,10 +13,10 @@
 <% end -%>
 )
   <div>
-    <ul>
     <% unless category.children.empty? -%>
+    <ul>
       <%= render :partial => 'subcategory', :collection => category.children %>
-    <% end -%>
     </ul>
+    <% end -%>
   </div>
 </li>
