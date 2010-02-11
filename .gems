@@ -8,5 +8,6 @@ texticle
 memcache-client '>= 1.7.0'
 eventmachine
 aws-s3
+rmagick
 rack-openid
 
