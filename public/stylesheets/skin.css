@@ -209,10 +209,6 @@ p.welcome {
 .list.small li {
   display: block;
 }
-.list p {
-  margin-bottom: 0;
-  margin-left: 102px;
-}
 .list .forum p {
   margin-bottom: 1em;
   
@@ -539,4 +535,7 @@ span.name
 {
     text-transform:capitalize;
 }
-
+li.req .profile-image .name
+{
+    font-size:12px;
+}
