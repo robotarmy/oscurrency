@@ -209,10 +209,6 @@ p.welcome {
 .list.small li {
   display: block;
 }
-.list p {
-  margin-bottom: 0;
-  margin-left: 102px;
-}
 .list .forum p {
   margin-bottom: 1em;
   
@@ -460,12 +456,12 @@ ul.categories li ul li
 #categoryMenu
 {
   float:left;
-  width:370px;
+  width:420px;
 }
 #categoryMenu2
 {
   float:left;
-  width:370px;
+  width:420px;
 }
 
 p.formatting
@@ -539,4 +535,7 @@ span.name
 {
     text-transform:capitalize;
 }
-
+li.req .profile-image .name
+{
+    font-size:12px;
+}

@@ -2,15 +2,15 @@
 <%= render :partial => "shared/add_category_button" %>
 <div class="categorycol">
   <%- if @top_level_categories.empty? -%>
-    <h3 class="blankslate">No categories (yet!)</h3>
-    <%- else -%>
-    <% total = @top_level_categories.length %>
-    <% halfish = (total/2.0).ceil %>
-    <ul id="categoryMenu" class="categories">
-      <%= render :partial => 'category', :collection => @top_level_categories[0,halfish] %>
-    </ul>
-    <ul id="categoryMenu2" class="categories">
-      <%= render :partial => 'category', :collection => @top_level_categories[-(total-halfish),(total-halfish)] %>
-    </ul>
+  <h3 class="blankslate">No categories (yet!)</h3>
+  <%- else -%>
+  <% total = @top_level_categories.length %>
+  <% halfish = (total/2.0).ceil %>
+  <ul id="categoryMenu" class="categories">
+    <%= render :partial => 'category', :collection => @top_level_categories[0,halfish] %>
+  </ul>
+  <ul id="categoryMenu2" class="categories">
+    <%= render :partial => 'category', :collection => @top_level_categories[-(total-halfish),(total-halfish)] %>
+  </ul>
   <%- end -%>
 </div>
