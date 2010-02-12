@@ -94,7 +94,7 @@ font-size:1.3em;
   float: right;
 }
 #nav li {
-  background: #009908 url(/images/aten_header-grad.jpg) bottom repeat-x;
+  background: #009908  bottom repeat-x;
   float: left;
   height: 36px;
   line-height: 36px;
@@ -111,7 +111,7 @@ font-size:1.3em;
   font-size: 12px;
 }
 #nav li a:hover {
-  background: url(/images/aten_header-grad-inv.jpg) top repeat-x;
+  background:  top repeat-x;
 }
 #nav li.active a, #nav li.active a:hover {
   background: #fff;
