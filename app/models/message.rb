@@ -162,7 +162,7 @@ class Message < Communication
     end
     
     def save_recipient
-      self.recipient.save!
+      self.recipient.save(perform_validation = false) || raise(RecordNotSaved)
     end
     
     def send_receipt_reminder
