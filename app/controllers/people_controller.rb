@@ -1,6 +1,6 @@
 class PeopleController < ApplicationController
   
-  skip_before_filter :require_activation, :only => :verify_email
+  skip_before_filter :require_activation, :only => [:verify_email]
   skip_before_filter :admin_warning, :only => [ :show, :update ]
   before_filter :login_or_oauth_required, :only => [ :index, :show, :edit, :update ]
   before_filter :correct_person_required, :only => [ :edit, :update ]
@@ -213,6 +213,14 @@ class PeopleController < ApplicationController
     @invitations = @person.invitations
   end
   
+  def reset_password
+    @person = Person.find_by_email(params[:email])
+    if @person
+      @person.reset_password 
+      # +++ send mail
+    end
+  end
+
   private
 
     def setup

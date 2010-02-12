@@ -536,6 +536,12 @@ class Person < ActiveRecord::Base
     self.description.briefiate(50)
   end
 
+  def reset_password
+    self.login_reset_key = Digest::SHA2.new.to_s
+    self.login_reset_key_expire = Time.now + 1.week
+    save!
+  end
+
   protected
 
     ## Callbacks

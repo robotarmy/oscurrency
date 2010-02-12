@@ -50,8 +50,7 @@
               <%= link_to "Sign up", signup_path %>
               <%- if global_prefs.can_send_email? -%>
               <br />
-              <%= link_to "I forgot my password",
-                           new_password_reminder_path %>
+              <%= link_to "I forgot my password", :controller => 'people', :action=>'reset_password_form'  %>
               <%- end -%>             
             <%- end -%>
           </p>
