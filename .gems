@@ -11,4 +11,4 @@ aws-s3
 rmagick
 rack-openid
 system_timer
-
+#workling #it's required but it's also included in the git repo. confusing.

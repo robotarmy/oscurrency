@@ -5,7 +5,9 @@ Net::SMTP.class_eval do
 	private
 	def do_start(helodomain, user, secret, authtype)
 		raise IOError, 'SMTP session already started' if @started
-		check_auth_args user, secret, authtype if user or secret
+      # no authtype, per
+      # http://blog.inspired.no/smtp-error-while-using-gmail-in-rails-271
+		check_auth_args user, secret if user or secret
 
 		sock = timeout(@open_timeout) { TCPSocket.open(@address, @port) }
 		@socket = Net::InternetMessageIO.new(sock)
