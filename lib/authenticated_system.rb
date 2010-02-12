@@ -64,7 +64,7 @@ module AuthenticatedSystem
       respond_to do |format|
         format.html do
           store_location
-          if global_prefs.demo?
+          if false #no, demo, does not mean we want guest users  global_prefs.demo?
             self.current_person = Person.find(DEMO_USER_ID)
             flash[:success] = "You have been logged in as the guest user."
             redirect_back_or_default(home_url)
