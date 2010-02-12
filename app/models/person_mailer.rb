@@ -17,7 +17,7 @@ class PersonMailer < ActionMailer::Base
   end
   
   def message_notification(message)
-    from         "Message notification <message@#{domain}>"
+    from         "#{message.sender.name} <message@#{domain}>"
     recipients   message.recipient.email
     subject      formatted_subject(message.subject)
     content_type "text/html"
