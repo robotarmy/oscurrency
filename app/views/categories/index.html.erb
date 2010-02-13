@@ -8,13 +8,25 @@
   <% halfish = (total/2.0).ceil %>
   <table id="categoryMenu" class="categories">
     <tbody>
-      <tr><td></td><td>Requests</td><td>Offers</td><td>People</td></tr>
+      <tr class="categories">
+        <td>
+        </td>
+        <td>Requests</td>
+        <td>Offers</td>
+        <td>People</td>
+      </tr>
       <%= render :partial => 'category', :collection => @top_level_categories[0,halfish] %>
     </tbody>
   </table>
   <table id="categoryMenu2" class="categories">
     <tbody>
-      <tr><td></td><td>Requests</td><td>Offers</td><td>People</td></tr>
+      <tr class="categories">
+        <td>
+        </td>
+        <td>Requests</td>
+        <td>Offers</td>
+        <td>People</td>
+      </tr>
       <%= render :partial => 'category', :collection => @top_level_categories[-(total-halfish),(total-halfish)] %>
     </tbody>
   </table>

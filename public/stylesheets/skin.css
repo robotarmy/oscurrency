@@ -430,7 +430,7 @@ tr.subcategories {
 }
 
 td.subcategoryname { 
-  padding-left: 10px;
+  padding-left: 14px;
  }
 
 td.categorynumbercell, td.categoryemptycell{ 
@@ -462,12 +462,13 @@ a.categoryMenuItem:hover
 #categoryMenu
 {
   float:left;
-  width:420px;
+  width:405px;
 }
 #categoryMenu2
 {
   float:left;
-  width:420px;
+  margin-left:10px;
+  width:405px;
 }
 
 p.formatting
