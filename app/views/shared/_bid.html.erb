@@ -19,12 +19,12 @@
     Due: <%= relative_time_ago_in_words(bid.req.due_date) %>
   </p>
   <p class="meta">
-<% if bid.state != 'offered' %>Accepted <%= time_ago_in_words(bid.accepted_at) -%> ago<br><% end %>   Submitted by <%= person_link bid.person %>
+<% if bid.state != 'offered' %>Accepted <%= time_ago_in_words(bid.accepted_at) -%> ago<br /><% end %>   Submitted by <%= person_link bid.person %>
     <%= time_ago_in_words(bid.created_at) %> ago
     <% if admin? || current_person?(bid.person) -%>
     | <%= link_to "Delete", req_bid_path(bid.req,bid), :confirm => 'Are you sure?', :method => :delete %>
     <% end -%>
-    <br>
+    <br />
     <% if current_person?(bid.req.person) && !current_person.address.nil? && !bid.person.address.nil? && !current_person?(bid.person) -%>
       <%= number_with_precision(bid.person.address.distance_to(current_person.address), 1).to_s %> miles away
     <% end -%>

@@ -31,6 +31,6 @@ class Offer < ActiveRecord::Base
   end
 
   def formatted_categories
-    categories.collect {|cat| cat.long_name + "<br>"}.to_s.chop.chop.chop.chop
+    categories.collect {|cat| cat.long_name + "<br />"}.to_s.chop.chop.chop.chop
   end
 end
