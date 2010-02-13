@@ -163,10 +163,10 @@ class PeopleController < ApplicationController
           format.html { render :action => "edit" }
         end
       when 'password_edit'
-        if global_prefs.demo?
-          flash[:error] = "Passwords can't be changed in demo mode."
-          redirect_to @person and return
-        end
+#         if global_prefs.demo?
+#           flash[:error] = "Passwords can't be changed in demo mode."
+#           redirect_to @person and return
+#         end
         if @person.change_password?(params[:person])
           flash[:success] = 'Password changed.'
           format.html { redirect_to(@person) }
@@ -218,6 +218,18 @@ class PeopleController < ApplicationController
     if @person
       @person.reset_password 
       # +++ send mail
+    end
+  end
+  
+  def do_reset_password
+    @person = Person.find_by_email(params[:email])
+    @reset_key = params[:key]
+    if @person == nil || !@person.check_login_key(@reset_key)
+      flash[:error] = "Reset failed, try again."
+      redirect_to reset_password_form_url
+    else
+      flash[:success] = "You have been logged in.  Please choose a new password below"
+      self.current_person = @person
     end
   end
 

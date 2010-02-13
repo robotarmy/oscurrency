@@ -485,10 +485,14 @@ class Person < ActiveRecord::Base
     save(false)
   end
 
+  def check_login_key(key)
+    self.login_reset_key == key && self.login_reset_key_expire > Time.now
+  end
+
   def change_password?(passwords)
     self.password_confirmation = passwords[:password_confirmation]
-    self.verify_password = passwords[:verify_password]
-    unless authenticated?(verify_password)
+    self.verify_password = passwords[:verify_password] 
+    unless check_login_key(passwords[:login_reset_key]) || authenticated?(verify_password) 
       errors.add(:password, "is incorrect")
       return false
     end
@@ -497,6 +501,8 @@ class Person < ActiveRecord::Base
       return false
     end
     self.password = passwords[:new_password]
+    self.login_reset_key = nil
+    self.login_reset_key_expire = nil
     save
   end
 
@@ -540,6 +546,10 @@ class Person < ActiveRecord::Base
     self.login_reset_key = Digest::SHA2.new.to_s
     self.login_reset_key_expire = Time.now + 1.week
     save!
+  end
+
+  def password_reset_link
+    "http://#{Socket.gethostname}/do_reset_password?email=#{self.email}&key=#{self.login_reset_key}"
   end
 
   protected
