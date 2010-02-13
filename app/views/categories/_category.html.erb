@@ -1,22 +1,24 @@
-<li>
-<%= link_to category.name, category, {:class => "categoryMenuItem" } %> (
-<% if category.current_and_active_reqs.length  > 0 -%>
-	<%= category.current_and_active_reqs.length %> requests
-<% end -%>
+<tr class="categories" >
+  <td>
+    <%= link_to category.name, category, {:class => "categoryMenuItem" } %>
+  </td>
 
-<% if category.offers.length  > 0 -%>
-	<%= category.offers.length %> offers
-<% end -%>
-
-<% if category.active_people.length  > 0 -%>
-	<%= category.active_people.length %> people
-<% end -%>
-)
-  <div>
-    <% unless category.children.empty? -%>
-    <ul>
-      <%= render :partial => 'subcategory', :collection => category.children %>
-    </ul>
+  <td class="categorynumbercell">
+    <% if category.current_and_active_reqs.length  > 0 -%>
+    <%= category.current_and_active_reqs.length %>
     <% end -%>
-  </div>
-</li>
+  </td>
+  <td class="categorynumbercell">
+    <% if category.offers.length  > 0 -%>
+    <%= category.offers.length %>
+    <% end -%>
+  </td>
+  <td class="categorynumbercell">
+    <% if category.active_people.length  > 0 -%>
+    <%= category.active_people.length %>
+    <% end -%>
+  </td>
+</tr>
+<% unless category.children.empty? -%>
+<%= render :partial => 'subcategory', :collection => category.children %>
+<% end -%>

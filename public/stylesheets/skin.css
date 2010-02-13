@@ -405,16 +405,18 @@ div.desc-message{
 
 
 
-ul.categories
+table.categories
 {
 }
-ul.categories ul
+table.categories
 {
     margin-bottom:0px;
-}
-ul.categories li
-{
     border:1px solid #ddd;
+}
+
+tr.categories, tr.subcategories
+{
+    border-top:1px solid #ddd;
     padding:5px;
     margin:0px;
     margin-left:20px;
@@ -422,19 +424,30 @@ ul.categories li
     font-size:16px;
     color:#333;
 }
-ul.categories a
+
+tr.subcategories { 
+  background: white;
+}
+
+td.subcategoryname { 
+  padding-left: 10px;
+ }
+
+td.categorynumbercell, td.categoryemptycell{ 
+  text-align: right;
+  border:1px solid #ddd;
+}
+
+td.categoryemptycell{ 
+  border:none;
+}
+
+table.categories a
 {
     color:#333;
 }
-ul.categories li ul li.selected
-{
-    background:white;
-}
-ul.categories li.selected a
-{
-    text-decoration:underline;
-}
-ul.categories a.categoryMenuItem, ul.categories li.selected a.selected
+
+table.categories a.categoryMenuItem, table.categories td.selected a.selected
 {
     color:#777;
 }
@@ -442,13 +455,6 @@ a.categoryMenuItem:hover
 {
   text-decoration:underline;
 }
-ul.categories li ul li
-{
-    border:0px;
-    list-style-type:disc;
-    background:white;
-}
-
 .categorycol
 {
   padding-top:20px;

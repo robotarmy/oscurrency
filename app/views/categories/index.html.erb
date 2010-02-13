@@ -6,11 +6,19 @@
   <%- else -%>
   <% total = @top_level_categories.length %>
   <% halfish = (total/2.0).ceil %>
-  <ul id="categoryMenu" class="categories">
-    <%= render :partial => 'category', :collection => @top_level_categories[0,halfish] %>
-  </ul>
-  <ul id="categoryMenu2" class="categories">
-    <%= render :partial => 'category', :collection => @top_level_categories[-(total-halfish),(total-halfish)] %>
-  </ul>
+  <table id="categoryMenu" class="categories">
+    <tbody>
+      <tr><td></td><td>Requests</td><td>Offers</td><td>People</td></tr>
+      <%= render :partial => 'category', :collection => @top_level_categories[0,halfish] %>
+    </tbody>
+  </table>
+  <table id="categoryMenu2" class="categories">
+    <tbody>
+      <tr><td></td><td>Requests</td><td>Offers</td><td>People</td></tr>
+      <%= render :partial => 'category', :collection => @top_level_categories[-(total-halfish),(total-halfish)] %>
+    </tbody>
+  </table>
+
+
   <%- end -%>
 </div>
