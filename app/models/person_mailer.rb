@@ -141,6 +141,7 @@ class PersonMailer < ActionMailer::Base
     body         "name" => req.name,
                  "description" => req.description,
                  "domain" => server,
+                 "requestor" => req.person.name,
                  "url" => req_path(req)
   end
   
