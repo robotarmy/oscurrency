@@ -47,7 +47,7 @@
     <%= time_ago_in_words(req.created_at) %> ago
 
 
-    <% if current_person?(req.person) && !req.active && !req.exchange? -%>
+    <% if current_person?(req.person) && !req.active  -%>
     | 
     <% form_for :req,  :url => req_path(req), :html => {:id => "active_form", :method => :put} do |f| %>
     <%= f.hidden_field :active, :value => 1 %>
@@ -55,7 +55,7 @@
     <% end -%>
     <% end -%>
 
-    <% if current_person?(req.person) && req.active && !req.exchange? -%>
+    <% if current_person?(req.person) && req.active  -%>
     | 
     <% form_for :req,  :url => req_path(req), :html => {:id => "active_form", :method => :put} do |f| %>
     <%= f.hidden_field :active, :value => 0 %>
@@ -63,13 +63,13 @@
     <% end -%>
     <% end -%>
 
-    <% if current_person?(req.person)  && !req.exchange? -%>
+    <% if current_person?(req.person)   -%>
     | <%= link_to "Edit", edit_req_path(req) #unless req.has_accepted_bid?
     %>
     <% end -%>
 
 
-    <% if admin? || current_person?(req.person)  && !req.exchange? -%>
+    <% if admin? || current_person?(req.person)   -%>
     | <%= link_to "Delete", req, :confirm => 'Are you sure?', :method => :delete #unless (req.has_commitment? || req.has_approved?) 
     %>
     <% end -%>
