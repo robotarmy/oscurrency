@@ -26,7 +26,7 @@ class PersonMailer < ActionMailer::Base
   end
   
   def connection_request(connection)
-    from         "Contact request <connection@#{domain}>"
+    from         "#{connection.contact..name} <connection@#{domain}>"
     recipients   connection.person.email
     subject      formatted_subject("New contact request")
     body         "domain" => server,
@@ -36,7 +36,7 @@ class PersonMailer < ActionMailer::Base
   end
   
   def membership_public_group(membership)
-    from         "Membership done <membership@#{domain}>"
+    from         "#{membership.group.name} <membership@#{domain}>"
     recipients   membership.group.owner.email
     subject      formatted_subject("New member in group #{membership.group.name}")
     body         "domain" => server,
@@ -46,7 +46,7 @@ class PersonMailer < ActionMailer::Base
   end
   
   def membership_request(membership)
-    from         "Membership request <membership@#{domain}>"
+    from         "#{membership.group.name} <membership@#{domain}>"
     recipients   membership.group.owner.email
     subject      formatted_subject("Membership request for group #{membership.group.name}")
     body         "domain" => server,
@@ -56,7 +56,7 @@ class PersonMailer < ActionMailer::Base
   end
   
   def membership_accepted(membership)
-    from         "Membership accepted <membership@#{domain}>"
+    from         "#{membership.group.name} <membership@#{domain}>"
     recipients   membership.person.email
     subject      formatted_subject("You have been accepted to join #{membership.group.name}")
     body         "domain" => server,
@@ -66,7 +66,7 @@ class PersonMailer < ActionMailer::Base
   end
   
   def invitation_notification(membership)
-    from         "Invitation notification <invitation#{domain}>"
+    from         "#{membership.group.name} <invitation#{domain}>"
     recipients   membership.person.email
     subject      formatted_subject("Invitation from group #{membership.group.name}")
     body         "domain" => server,
@@ -76,7 +76,7 @@ class PersonMailer < ActionMailer::Base
   end
   
   def invitation_accepted(membership)
-    from         "Invitation accepted <invitation@#{domain}>"
+    from         "#{membership.group.name} <invitation@#{domain}>"
     recipients   membership.group.owner.email
     subject      formatted_subject("#{membership.person.name} accepted the invitation")
     body         "domain" => server,
@@ -86,7 +86,7 @@ class PersonMailer < ActionMailer::Base
   end
   
   def blog_comment_notification(comment)
-    from         "Comment notification <comment@#{domain}>"
+    from         "Blog <comment@#{domain}>"
     recipients   comment.commented_person.email
     subject      formatted_subject("New blog comment")
     body         "domain" => server, "comment" => comment,
@@ -97,7 +97,7 @@ class PersonMailer < ActionMailer::Base
   end
   
   def wall_comment_notification(comment)
-    from         "Comment notification <comment@#{domain}>"
+    from         "Wall <comment@#{domain}>"
     recipients   comment.commented_person.email
     subject      formatted_subject("New wall comment")
     body         "domain" => server, "comment" => comment,
@@ -135,9 +135,9 @@ class PersonMailer < ActionMailer::Base
   end
 
   def req_notification(req, recipient)
-    from         "Request notification <request@#{domain}>"
+    from         "#{req.person.name} <request@#{domain}>"
     recipients   recipient.email
-    subject      formatted_subject("New request matches your profile")
+    subject      formatted_subject("#{req.name} request")
     body         "name" => req.name,
                  "description" => req.description,
                  "domain" => server,
