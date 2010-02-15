@@ -217,7 +217,7 @@ class PeopleController < ApplicationController
     @person = Person.find_by_email(params[:email])
     if @person
       @person.reset_password 
-      # +++ send mail
+      PersonMailer.deliver_password_reset(@person) 
     end
   end
   
