@@ -39,7 +39,7 @@ class PersonMailer < ActionMailer::Base
   def membership_public_group(membership)
     from         "#{membership.group.name} <membership@#{domain}>"
     recipients   membership.group.owner.email
-    subject      formatted_subject("New member in group #{membership.group.name}")
+    subject      formatted_subject("#{membership.person.name} joined group #{membership.group.name}")
     body         "domain" => server,
                  "membership" => membership,
                  "url" => members_group_path(membership.group),
@@ -49,7 +49,7 @@ class PersonMailer < ActionMailer::Base
   def membership_request(membership)
     from         "#{membership.group.name} <membership@#{domain}>"
     recipients   membership.group.owner.email
-    subject      formatted_subject("Membership request for group #{membership.group.name}")
+    subject      formatted_subject("#{membership.person.name} wants to join group #{membership.group.name}")
     body         "domain" => server,
                  "membership" => membership,
                  "url" => members_group_path(membership.group),
