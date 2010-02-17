@@ -74,7 +74,7 @@
     %>
     <% end -%>
 
-    <% if !current_person.address.nil? && current_person.address.zipcode_plus_4  != '89001' && !req.person.address.nil? && req.person.address.zipcode_plus_4  != '89001'  && !current_person?(req.person) -%>
+    <% if  logged_in? && defined? current_person.address && !req.person.nil && !current_person.nil && !current_person.address.nil? && current_person.address.zipcode_plus_4  != '89001' && !req.person.address.nil? && req.person.address.zipcode_plus_4  != '89001'  && !current_person?(req.person) -%>
     <%= number_with_precision(req.person.address.distance_to(current_person.address), 1).to_s %> miles away
     <% end -%>
   </span>

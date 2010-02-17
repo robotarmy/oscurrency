@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
 
-  before_filter :login_required, :except => :index
+  before_filter :login_required, :except => [:index, :show]
   before_filter :authorize_change, :only => [:update, :destroy] 
 
   # GET /categories

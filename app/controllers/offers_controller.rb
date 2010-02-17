@@ -1,5 +1,5 @@
 class OffersController < ApplicationController
-  before_filter :login_required
+  before_filter :login_required, :except => [:index, :show]
   before_filter :correct_person_required, :only => [:edit, :update, :destroy]
 
   def index

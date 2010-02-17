@@ -3,6 +3,8 @@
 <ul class="list full">
 <%= render :partial => @offer %>
 </ul>
+
+<% if logged_in? %>
 <% unless current_person?(@offer.person) %>
   <% form_for(:message, :url => person_messages_path(@offer.person)) do |f| %>
     <% fields_for :offer do |o| %>
@@ -27,3 +29,5 @@
   <%= render :partial => 'searches/box' %>
   <%= render :partial => 'shared/minifeed' %>
 <%- end -%>
+
+<% end %>
