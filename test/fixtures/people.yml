@@ -1,0 +1,8 @@
+one:
+  id: 1
+  name: emtee
+  email: mt@hyperphor.com
+  description: Just a person
+  email_verified: true
+  
+		

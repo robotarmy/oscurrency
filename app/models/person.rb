@@ -29,12 +29,13 @@
 #  twitter_name               :string(255)     
 #
 
+require 'digest/sha2'
+
 class Person < ActiveRecord::Base
   include ActivityLogger
   extend PreferencesHelper
 
-  attr_accessor :password, :verify_password, :new_password,
-                :sorted_photos
+  attr_accessor :password, :verify_password, :new_password, :sorted_photos
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description, :connection_notifications,
                   :message_notifications, :wall_comment_notifications, :forum_notifications,
@@ -42,10 +43,16 @@ class Person < ActiveRecord::Base
                   :twitter_name, :zipcode,
                   :phone, :phoneprivacy,
                   :accept_agreement
-  # Indexed fields for Sphinx
-  is_indexed :fields => [ 'name', 'description', 'deactivated',
-                          'email_verified'],
-             :conditions => "deactivated = false AND (email_verified IS NULL OR email_verified = true)"
+
+  index do 
+    name
+    description
+  end
+
+#   is_indexed :fields => [ 'name', 'description', 'deactivated',
+#                           'email_verified'],
+#              :conditions => "deactivated = false AND (email_verified IS NULL OR email_verified = true)"
+
   MAX_EMAIL = MAX_PASSWORD = 40
   MAX_NAME = 40
   MAX_TWITTER_NAME = 15
@@ -61,7 +68,7 @@ class Person < ActiveRecord::Base
   NUM_RECENT = 8
   FEED_SIZE = 10
   TIME_AGO_FOR_MOSTLY_ACTIVE = 3.months.ago
-  DEFAULT_ZIPCODE_STRING = '89001'
+  DEFAULT_ZIPCODE_STRING = ''
   # These constants should be methods, but I couldn't figure out how to use
   # methods in the has_many associations.  I hope you can do better.
   ACCEPTED_AND_ACTIVE =  [%(status = ? AND
@@ -100,7 +107,7 @@ class Person < ActiveRecord::Base
                                             :conditions => ["people.deactivated = ?", false],
                                             :include => :person
 
-  has_many :page_views, :order => 'created_at DESC'
+#  has_many :page_views, :order => 'created_at DESC'
   
   has_many :own_groups, :class_name => "Group", :foreign_key => "person_id",
     :order => "name ASC"
@@ -129,7 +136,7 @@ class Person < ActiveRecord::Base
   has_many :reqs
   has_many :bids
 
-  validates_presence_of     :email, :name
+  validates_presence_of     :email, :name, :zipcode, :neighborhood_ids
   validates_presence_of     :password,              :if => :password_required?
   validates_presence_of     :password_confirmation, :if => :password_required?
   validates_length_of       :password, :within => 4..MAX_PASSWORD,
@@ -329,7 +336,15 @@ class Person < ActiveRecord::Base
   end
 
   def formatted_categories
-    categories.collect { |cat| cat.long_name + "<br>"}.to_s.chop.chop.chop.chop
+    #i'm told that this is stupid, and it'd be better to go:
+    #categories.collect{|cat| cat.long_name}.join("<br />")
+    # but i haven't tested it
+    categories.collect { |cat| cat.long_name + "<br />"}.to_s.chop.chop.chop.chop
+  end
+
+  # from Columbia 
+  def listed_categories
+    categories.collect { |cat| cat.long_name + ", "}.to_s.chop.chop
   end
 
   # from Columbia
@@ -427,28 +442,28 @@ class Person < ActiveRecord::Base
     u && u.authenticated?(password) ? u : nil
   end
 
-  def self.encrypt(password)
-    k = LocalEncryptionKey.find(:first)
-    Crypto::Key.from_local_key_value(k.rsa_public_key).encrypt(password)
-  end
-
-  # Encrypts the password with the user salt
-  def encrypt(password)
-    self.class.encrypt(password)
-  end
-
+  # for migration only
   def decrypt(password)
     k = LocalEncryptionKey.find(:first)
     Crypto::Key.from_local_key_value(k.rsa_private_key).decrypt(password)
   end
 
-  def authenticated?(password)
-    unencrypted_password == password
-  end
-
+  # for migration only
   def unencrypted_password
     # The gsub trickery is to unescape the key from the DB.
-    decrypt(crypted_password)#.gsub(/\\n/, "\n")
+    decrypt(crypted_password) #.gsub(/\\n/, "\n")
+  end
+
+  # encrypt a password using current salt.
+  def encrypt(password)
+    hash = Digest::SHA2.new
+    hash << password_salt
+    hash << password
+    hash.to_s
+  end
+
+  def authenticated?(password)
+    self.crypted_password == encrypt(password)
   end
 
   def remember_token?
@@ -478,11 +493,14 @@ class Person < ActiveRecord::Base
     save(false)
   end
 
+  def check_login_key(key)
+    self.login_reset_key == key && self.login_reset_key_expire > Time.now
+  end
 
   def change_password?(passwords)
     self.password_confirmation = passwords[:password_confirmation]
-    self.verify_password = passwords[:verify_password]
-    unless verify_password == unencrypted_password
+    self.verify_password = passwords[:verify_password] 
+    unless check_login_key(passwords[:login_reset_key]) || authenticated?(verify_password) 
       errors.add(:password, "is incorrect")
       return false
     end
@@ -491,6 +509,8 @@ class Person < ActiveRecord::Base
       return false
     end
     self.password = passwords[:new_password]
+    self.login_reset_key = nil
+    self.login_reset_key_expire = nil
     save
   end
 
@@ -526,6 +546,20 @@ class Person < ActiveRecord::Base
                                      map(&:contact_id)).paginate
   end
   
+  def short_description
+    self.description.briefiate(50)
+  end
+
+  def reset_password
+    self.login_reset_key = Digest::SHA2.new.to_s
+    self.login_reset_key_expire = Time.now + 1.week
+    save!
+  end
+
+  def password_reset_link
+    "http://#{$hoststring}/do_reset_password?email=#{self.email}&key=#{self.login_reset_key}"
+  end
+
   protected
 
     ## Callbacks
@@ -545,8 +579,13 @@ class Person < ActiveRecord::Base
       self.description = "" if description.nil?
     end
 
+    # called on save
     def encrypt_password
       return if password.blank?
+# not in this old version of Rails we are using
+#      self.password_salt = ActiveSupport::SecureRandom.base64(20)
+      # too long but it should work
+      self.password_salt = Rails::SecretKeyGenerator.new("oscurrency").generate_secret
       self.crypted_password = encrypt(password)
     end
 

@@ -5,10 +5,13 @@
 # ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.1.2' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.2' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
+
+require 'yaml'
+db = YAML.load_file('config/database.yml')
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
@@ -60,6 +63,7 @@ Rails::Initializer.run do |config|
   #                                    :source => 'http://gems.github.com'
   # rake dependencies
 
+  config.gem 'texticle'
   config.gem 'oauth', :version => '>= 0.3.6'
   config.gem 'chronic'
   # add source:
@@ -71,6 +75,12 @@ Rails::Initializer.run do |config|
   config.gem 'starling-starling', :lib => 'starling'
   config.gem 'feed-normalizer'
   config.gem 'json'
+
+  config.action_controller.session = {
+    :session_key => '_oscurrency_session',
+    :secret      => ENV['SESSION_SECRET']
+  }
+
 end
 # Set INLINEDIR to override default location for ruby_inline directory
 # The home directory may not be correctly set in an "su"/"sudo" situation
@@ -90,7 +100,7 @@ module ActiveSupport
       # Ensures that the original message is not mutated.
       message = "#{message} (pid:#{$$})"
       message = "#{message}\n" unless message[-1] == ?\n
-      @buffer << message
+      buffer << message
       auto_flush
       message
     end
@@ -149,3 +159,6 @@ GeoKit::Geocoders::geocoder_ca = false
 # various geocoders.  Make sure you read up on relevant Terms of Use for each
 # geocoder you are going to use.
 GeoKit::Geocoders::provider_order = [:google,:us]
+
+require 'yaml'
+db = YAML.load_file('config/database.yml')

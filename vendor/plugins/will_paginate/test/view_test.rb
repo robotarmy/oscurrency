@@ -105,7 +105,7 @@ class ViewTest < WillPaginate::ViewTestCase
 
   def test_escaping_of_urls
     paginate({:page => 1, :per_page => 1, :total_entries => 2},
-             :page_links => false, :params => { :tag => '<br>' })
+             :page_links => false, :params => { :tag => '<br />' })
     
     assert_select 'a[href]', 1 do |links|
       query = links.first['href'].split('?', 2)[1]

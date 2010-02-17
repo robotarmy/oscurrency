@@ -13,7 +13,7 @@ class Admin::BroadcastEmailsControllerTest < ActionController::TestCase
   end
 
   def test_should_create_broadcast_email
-    assert_difference('Admin::BroadcastEmail.count') do
+    assert_difference('BroadcastEmail.count') do
       post :create, :broadcast_email => { }
     end
 
@@ -36,7 +36,7 @@ class Admin::BroadcastEmailsControllerTest < ActionController::TestCase
   end
 
   def test_should_destroy_broadcast_email
-    assert_difference('Admin::BroadcastEmail.count', -1) do
+    assert_difference('BroadcastEmail.count', -1) do
       delete :destroy, :id => admin_broadcast_emails(:one).id
     end
 

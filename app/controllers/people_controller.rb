@@ -1,6 +1,6 @@
 class PeopleController < ApplicationController
   
-  skip_before_filter :require_activation, :only => :verify_email
+  skip_before_filter :require_activation, :only => [:verify_email]
   skip_before_filter :admin_warning, :only => [ :show, :update ]
   before_filter :login_or_oauth_required, :only => [ :index, :show, :edit, :update ]
   before_filter :correct_person_required, :only => [ :edit, :update ]
@@ -57,7 +57,6 @@ class PeopleController < ApplicationController
   
   def new
     @body = "register single-col"
-    @body = @body + " yui-skin-sam"
     @person = Person.new
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
@@ -127,7 +126,6 @@ class PeopleController < ApplicationController
   end
 
   def edit
-    @body = @body + " yui-skin-sam"
     @person = Person.find(params[:id])
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
@@ -165,10 +163,10 @@ class PeopleController < ApplicationController
           format.html { render :action => "edit" }
         end
       when 'password_edit'
-        if global_prefs.demo?
-          flash[:error] = "Passwords can't be changed in demo mode."
-          redirect_to @person and return
-        end
+#         if global_prefs.demo?
+#           flash[:error] = "Passwords can't be changed in demo mode."
+#           redirect_to @person and return
+#         end
         if @person.change_password?(params[:person])
           flash[:success] = 'Password changed.'
           format.html { redirect_to(@person) }
@@ -215,6 +213,28 @@ class PeopleController < ApplicationController
     @invitations = @person.invitations
   end
   
+  def reset_password
+    @person = Person.find_by_email(params[:email])
+    if @person
+      @person.reset_password 
+      # store this somewhere so model can use it (ugly) (also, should do port)
+      $hoststring = self.request.host
+      PersonMailer.deliver_password_reset(@person) 
+    end
+  end
+  
+  def do_reset_password
+    @person = Person.find_by_email(params[:email])
+    @reset_key = params[:key]
+    if @person == nil || !@person.check_login_key(@reset_key)
+      flash[:error] = "Reset failed, try again."
+      redirect_to reset_password_form_url
+    else
+      flash[:success] = "You have been logged in.  Please choose a new password below"
+      self.current_person = @person
+    end
+  end
+
   private
 
     def setup

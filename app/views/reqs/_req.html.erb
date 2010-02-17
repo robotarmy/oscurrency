@@ -1,33 +1,82 @@
 <li class="req">
-  <a name="req_<%= req.id %>"></a>
+  <a name="req_<%= req.id %>">
+</a>
   <div class="profile-image">
-    <%= image_link req.person, :image => :thumbnail %>
-    <%= image_tag "icons/new.gif", :class => "icon", :alt => "Request" %>
+	<% if params[:controller] != "people" %>
+    <%= image_link req.person, :class => "photo", :image => :thumbnail  %>
+	<% arrow_image = "icons/arrow_right.gif" %>
+    <%= image_tag arrow_image, :class => "icon", :alt => "Request" %>
+    <p class='name'><%= person_link req.person :class => 'url fn' %></p>
+    <% end %>
   </div>
-  <p>
-  <%= link_to h(req.name), req, :class => "show-follow" %> (<%= h req.estimated_hours %> hrs)
-    Due: <%= relative_time_ago_in_words(req.due_date) %>
-  </p>
-    <%= display req.formatted_categories, :class => "meta" %>
-  <p>
-    <%= display simple_format_without_paragraph req.description %>
-  </p>
+
+<p>
+  
+  <%= "<em>Request:</em> " if ["categories"].include? params[:controller] %>
+  <%= link_to h(req.name), req, :class => "show-follow" %>
+
+  
+  <% if req.active %>
+  (<%= h req.estimated_hours %> Hours)
+  <span class="meta">Due: <%= relative_time_ago_in_words(req.due_date) %>
+  </span>
+  <% else %>	
+  <span class="meta">Not active</span>
+  <% end %>
+  
+
+  
+
+</p>
+<div class="col_content">
   <p class="meta">
-    <%= render :partial => "shared/bid_message", :collection => approved_messages(req) %>
-    <%= render :partial => "shared/bid_message", :collection => completed_messages(req) %>
-    <%= render :partial => "shared/bid_message", :collection => commitment_messages(req) %>
-    <%= render :partial => "shared/bid_message", :collection => accepted_messages(req) %>
+    <%= req.categories.collect { |cat| cat.long_name + "<br />"}.to_s %>
+  </p>
+  <p>
+    <% if defined? short %>
+    <%= display req.description.briefiate(100) %>
+    <% else %>
+    <%= display req.description %>
+    <% end %>
+  </p>
+
+  <br />
+  <span class="meta">
+
     Created by <%= person_link req.person %>
     <%= time_ago_in_words(req.created_at) %> ago
-    <% if current_person?(req.person) -%>
-    | <%= link_to "Edit", edit_req_path(req) unless req.has_accepted_bid? %>
+
+
+    <% if current_person?(req.person) && !req.active  -%>
+    | 
+    <% form_for :req,  :url => req_path(req), :html => {:id => "active_form", :method => :put} do |f| %>
+    <%= f.hidden_field :active, :value => 1 %>
+    <%= link_to_function "Activate", "document.getElementById('active_form').submit()" %>
     <% end -%>
-    <% if req.active? && ( admin? || current_person?(req.person) ) -%>
-    | <%= link_to "Delete", req, :confirm => 'Are you sure?', :method => :delete unless (req.has_commitment? || req.has_approved? ) %>
     <% end -%>
-    <br>
-    <% if !current_person.address.nil? && !req.person.address.nil? && !current_person?(req.person) -%>
-      <%= number_with_precision(req.person.address.distance_to(current_person.address), 1).to_s %> miles away
+
+    <% if current_person?(req.person) && req.active  -%>
+    | 
+    <% form_for :req,  :url => req_path(req), :html => {:id => "active_form", :method => :put} do |f| %>
+    <%= f.hidden_field :active, :value => 0 %>
+    <%= link_to_function "Deactivate", "document.getElementById('active_form').submit()" %>
     <% end -%>
-  </p>
+    <% end -%>
+
+    <% if current_person?(req.person)   -%>
+    | <%= link_to "Edit", edit_req_path(req) #unless req.has_accepted_bid?
+    %>
+    <% end -%>
+
+
+    <% if admin? || current_person?(req.person)   -%>
+    | <%= link_to "Delete", req, :confirm => 'Are you sure?', :method => :delete #unless (req.has_commitment? || req.has_approved?) 
+    %>
+    <% end -%>
+
+    <% if  logged_in? && defined? current_person.address && !req.person.nil && !current_person.nil && !current_person.address.nil? && current_person.address.zipcode_plus_4  != '89001' && !req.person.address.nil? && req.person.address.zipcode_plus_4  != '89001'  && !current_person?(req.person) -%>
+    <%= number_with_precision(req.person.address.distance_to(current_person.address), 1).to_s %> miles away
+    <% end -%>
+  </span>
+</div>
 </li>

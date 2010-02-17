@@ -42,7 +42,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :searches
   map.resources :activities
   map.resources :connections
-  map.resources :password_reminders
+
   map.resources :photos
   map.open_id_complete 'session', :controller => "sessions", :action => "create", :requirements => { :method => :get }
   map.resource :session
@@ -53,6 +53,12 @@ ActionController::Routing::Routes.draw do |map|
                                       :common_contacts => :get }
   map.connect 'people/verify/:id', :controller => 'people',
                                     :action => 'verify_email'
+
+  # person rather than people is deliberate; avoid conflict with resource mappings
+  map.reset_password_form '/person/reset_password_form', :controller => 'people', :action => 'reset_password_form'
+  map.reset_password 'person/reset_password/:email', :controller => 'people', :action => 'reset_password'
+  map.connect '/do_reset_password', :controller => 'people', :action => 'do_reset_password'
+
   map.resources :people, :member => {:groups => :get, 
     :admin_groups => :get, :request_memberships => :get, :invitations => :get} do |person|
      person.resources :messages

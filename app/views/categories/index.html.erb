@@ -1,17 +1,36 @@
 <h2>Services</h2>
 <%= render :partial => "shared/add_category_button" %>
 <div class="categorycol">
-  <%= display "Number of people shown in parentheses", :class => "meta" %>
   <%- if @top_level_categories.empty? -%>
-    <h3 class="blankslate">No categories (yet!)</h3>
-    <%- else -%>
-    <% total = @top_level_categories.length %>
-    <% halfish = (total/2.0).ceil %>
-    <ul id="categoryMenu" class="categories">
+  <h3 class="blankslate">No categories (yet!)</h3>
+  <%- else -%>
+  <% total = @top_level_categories.length %>
+  <% halfish = (total/2.0).ceil %>
+  <table id="categoryMenu" class="categories">
+    <tbody>
+      <tr class="categories">
+        <td>
+        </td>
+        <td>Requests</td>
+        <td>Offers</td>
+        <td>People</td>
+      </tr>
       <%= render :partial => 'category', :collection => @top_level_categories[0,halfish] %>
-    </ul>
-    <ul id="categoryMenu2" class="categories">
+    </tbody>
+  </table>
+  <table id="categoryMenu2" class="categories">
+    <tbody>
+      <tr class="categories">
+        <td>
+        </td>
+        <td>Requests</td>
+        <td>Offers</td>
+        <td>People</td>
+      </tr>
       <%= render :partial => 'category', :collection => @top_level_categories[-(total-halfish),(total-halfish)] %>
-    </ul>
+    </tbody>
+  </table>
+
+
   <%- end -%>
 </div>

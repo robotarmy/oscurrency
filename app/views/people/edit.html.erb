@@ -22,7 +22,13 @@
         <label for="person_phone"><%= image_tag "icons/phone.gif", :class => "icon", :alt => "Phone" %> Phone</label>
         <%= f.text_field :phone %>
       </div>
-    <% unless global_prefs.twitter_name.blank? %>
+
+  <div class="form_row">
+    <label for="zipcode">Zipcode</label>
+    <%= f.text_field :zipcode %>
+  </div>
+
+	  <% unless global_prefs.twitter_name.blank? %>
       <div class="form_row">
         <label for="twitter_name">Twitter ID</label>
         <%= f.text_field :twitter_name, :maxlength => Person::MAX_TWITTER_NAME %>
@@ -182,4 +188,3 @@
   <% end %>
 <%- end -%>
 
-<%= yui_headers('person_description') %>

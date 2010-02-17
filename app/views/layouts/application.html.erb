@@ -50,8 +50,7 @@
               <%= link_to "Sign up", signup_path %>
               <%- if global_prefs.can_send_email? -%>
               <br />
-              <%= link_to "I forgot my password",
-                           new_password_reminder_path %>
+              <%= link_to "I forgot my password", :controller => 'people', :action=>'reset_password_form'  %>
               <%- end -%>             
             <%- end -%>
           </p>
@@ -80,9 +79,9 @@
         <div id="footer">
           <p id="footer-nav">
           <%- if logged_in? -%>
-          <a href="/">Home</a> | <a href="/categories">SkillBank</a> | <a href="/reqs">Requests</a> | <a href="/messages">Inbox</a> | <a href="/people">People</a> | <a href="/forums">Forum</a>
+          <a href="/">Home</a> | <a href="/categories">Directory</a> | <a href="/reqs">Requests</a> | <a href="/messages">Inbox</a> | <a href="/people">People</a> | <a href="/forums">Forum</a>
           <%- else -%>
-          <a href="/">Home</a> | <a href="/categories">SkillBank</a>
+          <a href="/">Home</a> | <a href="/categories">Directory</a>
           <%- end -%>
 
           </p>

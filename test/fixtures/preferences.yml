@@ -1,0 +1,37 @@
+one:
+  blog_feed_url: ""
+  steps: ""
+  whitelist: f
+  server_name: sfbace.org
+  googlemap_api_key: ""
+  updated_at: 2010-02-01 00:15:17.812562
+  questions: ""
+  app_name: SFBACE
+  agreement: ""
+  group_option: f
+  demo: t
+  email_verifications: f
+  contact: ""
+  domain: sfbace.org
+  twitter_name: sfbace
+  exception_notification: ""
+  smtp_server: smtp.google.com
+  id: "1"
+  new_member_notification: ""
+  zipcode_browsing: f
+  about: ""
+  twitter_api: twitter.com
+  crypted_twitter_password: |
+    NcZIRImtOf5n4MBpXCrIoYzqqZj/e7cCOBKJ1W+xRc2zpfeBF0+JW1MGzTPL
+    qBtUsl6nHtQb+NgYzQniam+3aMomRdIP+aJiS+DH1aI6g8ghyH2E6n3QmTWO
+    gAhdC+z7aElKHTrNHgwNN3tf4prbQijrUr4UcaE2Cs085cgHO34=
+
+  crypted_twitter_oauth_consumer_secret: 
+  gmail: ""
+  practice: ""
+  email_notifications: f
+  registration_intro: ""
+  twitter_oauth_consumer_key: ""
+  analytics: ""
+  created_at: 2010-02-01 00:12:37.595755
+

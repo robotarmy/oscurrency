@@ -19,8 +19,12 @@ class Req < ActiveRecord::Base
   include ActivityLogger
   extend PreferencesHelper 
 
-  is_indexed :fields => ['name', 'description']
-
+  index do
+    name
+    description
+  end
+  
+  
   has_and_belongs_to_many :categories
   belongs_to :person
   has_many :bids, :order => 'created_at DESC', :dependent => :destroy
@@ -42,7 +46,10 @@ class Req < ActiveRecord::Base
   end
 
   def formatted_categories
-    categories.collect {|cat| cat.long_name + "<br>"}.to_s.chop.chop.chop.chop
+    #i'm told that this is stupid, and it'd be better to go:
+    #categories.collect{|cat| cat.long_name}.join("<br />")
+    # but i haven't tested it
+    categories.collect {|cat| cat.long_name + "<br />"}.to_s.chop.chop.chop.chop
   end
 
   def tweet(url)

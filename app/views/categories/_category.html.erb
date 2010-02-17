@@ -1,10 +1,24 @@
-<li>
-<%= link_to category.name, category, {:class => "categoryMenuItem" } %> (<%= category.active_people.length %>)
-  <div>
-    <ul>
-    <% unless category.children.empty? -%>
-      <%= render :partial => 'subcategory', :collection => category.children %>
+<tr class="categories" >
+  <td>
+    <%= link_to h(category.name), category, {:class => "categoryMenuItem" } %>
+  </td>
+
+  <td class="categorynumbercell">
+    <% if category.current_and_active_reqs.length  > 0 -%>
+    <%= category.current_and_active_reqs.length %>
     <% end -%>
-    </ul>
-  </div>
-</li>
+  </td>
+  <td class="categorynumbercell">
+    <% if category.offers.length  > 0 -%>
+    <%= category.offers.length %>
+    <% end -%>
+  </td>
+  <td class="categorynumbercell">
+    <% if category.active_people.length  > 0 -%>
+    <%= category.active_people.length %>
+    <% end -%>
+  </td>
+</tr>
+<% unless category.children.empty? -%>
+<%= render :partial => 'subcategory', :collection => category.children %>
+<% end -%>

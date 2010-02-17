@@ -5,7 +5,7 @@
   <%- else -%>
   <ul class="list full">
     <%= will_paginate %>
-    <%= render :partial => 'offer', :collection => @offers %>
+    <%= render :partial => 'offer', :collection => @offers, :locals => {:short => true} %>
     <%= will_paginate %>
   </ul>
   <%- end -%>
