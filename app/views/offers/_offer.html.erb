@@ -1,17 +1,32 @@
 <li class="offer">
-  <a name="offer_<%= offer.id %>"></a>
-  <div class="profile-image">
-    <%= image_link offer.person, :image => :thumbnail %>
-    <%= image_tag "icons/new.gif", :class => "icon", :alt => "Offer" %>
-  </div>
+  <a name="offer_<%= offer.id %>">
+</a>
+<div class="profile-image">
+  <% if params[:controller] != "people" %>
+  <%= image_link offer.person, :class => "photo", :image => :thumbnail  %>
+  <% arrow_image = "icons/arrow_right.gif" %>
+  <%= image_tag arrow_image, :class => "icon", :alt => "Offers" %>
+  <p class='name'>
+    <%= person_link offer.person :class => 'url fn' %>
+  </p>
+  <% end %>
+</div>
+
+<div class="col_content">
   <p>
-  <%= link_to h(offer.name), offer, :class => "show-follow" %> (<%= h offer.price %> hrs)
+    <%= link_to h(offer.name), offer, :class => "show-follow" %> (<%= h offer.price %> hrs)
     Expires: <%= offer.expiration_date.nil? ? '' : relative_time_ago_in_words(offer.expiration_date) %>
   </p>
-    <%= display offer.formatted_categories, :class => "meta" %>
+  <%= display offer.formatted_categories, :class => "meta" %>
   <p>
-    <%= display simple_format_without_paragraph(offer.description) %>
+    <% if defined? short %>
+    <%= display offer.description.briefiate(100) %>
+    <% else %>
+    <%= display offer.description %>
+    <% end %>
   </p>
+
+
   <p class="meta">
     Available count: <%= offer.available_count %>
     <br />
@@ -24,8 +39,9 @@
     | <%= link_to "Delete", offer, :confirm => 'Are you sure?', :method => :delete %>
     <% end -%>
     <br />
-	 <% if !current_person.address.nil? && current_person.address.zipcode_plus_4  != '89001' && !offer.person.address.nil? && offer.person.address.zipcode_plus_4  != '89001'  && !current_person?(offer.person) -%>
-      <%= number_with_precision(offer.person.address.distance_to(current_person.address), 1).to_s %> miles away
+    <% if !current_person.address.nil? && current_person.address.zipcode_plus_4  != '89001' && !offer.person.address.nil? && offer.person.address.zipcode_plus_4  != '89001'  && !current_person?(offer.person) -%>
+    <%= number_with_precision(offer.person.address.distance_to(current_person.address), 1).to_s %> miles away
     <% end -%>
   </p>
+</div>
 </li>
