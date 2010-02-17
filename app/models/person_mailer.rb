@@ -14,6 +14,7 @@ class PersonMailer < ActionMailer::Base
     recipients   person.email
     subject      formatted_subject("Password reset")
     body         "domain" => server, "person" => person
+    content_type "text/html"
   end
   
   def message_notification(message)
