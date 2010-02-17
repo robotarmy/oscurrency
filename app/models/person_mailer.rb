@@ -144,6 +144,17 @@ class PersonMailer < ActionMailer::Base
                  "requestor" => req.person.name,
                  "url" => req_path(req)
   end
+
+  def offer_notification(offer, recipient)
+    from         "#{offer.person.name} <offer@#{domain}>"
+    recipients   recipient.email
+    subject      formatted_subject("#{offer.name} offered")
+    body         "name" => offer.name,
+                 "description" => offer.description,
+                 "domain" => server,
+                 "offerer" => offer.person.name,
+                 "url" => offer_path(offer)
+  end
   
   private
   
