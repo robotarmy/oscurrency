@@ -1,7 +1,5 @@
 class ReqsController < ApplicationController
-  skip_before_filter :require_activation, :only => [:show, :index]
   before_filter :login_required, :except => [:show, :index]
-  before_filter :login_or_oauth_required, :only => [:show, :index]
   before_filter :correct_person_and_no_accept_required, :only => [ :edit, :update ]
   before_filter :correct_person_and_no_commitment_required, :only => [ :destroy ]
   before_filter :twitter_oauth_setup, :only => [:twitter_oauth_client, :twitter_oauth_callback]
