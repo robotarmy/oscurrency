@@ -217,6 +217,8 @@ class PeopleController < ApplicationController
     @person = Person.find_by_email(params[:email])
     if @person
       @person.reset_password 
+      # store this somewhere so model can use it (ugly) (also, should do port)
+      $hoststring = self.request.host
       PersonMailer.deliver_password_reset(@person) 
     end
   end

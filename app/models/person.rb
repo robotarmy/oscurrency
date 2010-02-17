@@ -549,7 +549,7 @@ class Person < ActiveRecord::Base
   end
 
   def password_reset_link
-    "http://#{Socket.gethostname}/do_reset_password?email=#{self.email}&key=#{self.login_reset_key}"
+    "http://#{$hoststring}/do_reset_password?email=#{self.email}&key=#{self.login_reset_key}"
   end
 
   protected
