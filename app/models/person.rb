@@ -451,9 +451,18 @@ class Person < ActiveRecord::Base
 
   # encrypt a password using current salt.
   def encrypt(password)
+    Person.encrypted_password(password, password_salt)
+  end
+
+  # needed for test fixtures
+  def self.salt
+    Rails::SecretKeyGenerator.new("oscurrency").generate_secret
+  end
+
+  def self.encrypted_password(plain, salt)
     hash = Digest::SHA2.new
-    hash << password_salt
-    hash << password
+    hash << salt
+    hash << plain
     hash.to_s
   end
 
@@ -580,9 +589,10 @@ class Person < ActiveRecord::Base
 # not in this old version of Rails we are using
 #      self.password_salt = ActiveSupport::SecureRandom.base64(20)
       # too long but it should work
-      self.password_salt = Rails::SecretKeyGenerator.new("oscurrency").generate_secret
+      self.password_salt = Person.salt
       self.crypted_password = encrypt(password)
     end
+
 
     def update_group_letter
       self.first_letter = name[0,1].capitalize
