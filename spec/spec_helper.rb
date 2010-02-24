@@ -27,7 +27,7 @@ Spec::Runner.configure do |config|
   # do so right here. Just uncomment the next line and replace the fixture
   # names with your fixtures.
   #
-  # config.global_fixtures = :table_a, :table_b
+  config.global_fixtures = :blogs, :client_applications, :comments, :communications, :connections, :conversations, :email_verifications, :events, :feeds, :forums, :neighborhoods, :oauth_nonces, :oauth_tokens, :offers, :people, :posts, :preferences, :topics
   #
   # If you declare global fixtures, be aware that they will be declared
   # for all of your examples, even those that don't use them.
