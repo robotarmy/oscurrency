@@ -75,6 +75,7 @@ Rails::Initializer.run do |config|
   config.gem 'starling-starling', :lib => 'starling'
   config.gem 'feed-normalizer'
   config.gem 'json'
+  config.gem 'heroku'
 
   config.action_controller.session = {
     :session_key => '_oscurrency_session',
