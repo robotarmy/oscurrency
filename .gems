@@ -10,5 +10,4 @@ eventmachine
 aws-s3
 rmagick
 rack-openid
-system_timer
-heroku
+
