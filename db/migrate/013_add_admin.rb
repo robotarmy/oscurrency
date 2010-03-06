@@ -12,11 +12,11 @@ class AddAdmin < ActiveRecord::Migration
     add_column :people, :deactivated, :boolean, 
                         :default => false, :null => false
    
-    local_encryption_key = LocalEncryptionKey.find(:first)
-    public_key = Crypto::Key.from_local_key_value(local_encryption_key.rsa_public_key)
+#    local_encryption_key = LocalEncryptionKey.find(:first)
+#    public_key = Crypto::Key.from_local_key_value(local_encryption_key.rsa_public_key)
     person = Person.new(:email => "admin@example.com",
                         :name => "admin",
-                        :crypted_password => public_key.encrypt("admin"),
+#                        :crypted_password => public_key.encrypt("admin"),
                         :description => "")
     person.admin = true
     person.save!
