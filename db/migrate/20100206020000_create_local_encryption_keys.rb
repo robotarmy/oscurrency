@@ -6,6 +6,11 @@ class CreateLocalEncryptionKeys < ActiveRecord::Migration
   end
 
   def self.up
+
+    begin
+      drop_table :local_encryption_keys
+    end rescue nil
+
     create_table :local_encryption_keys do |t|
       t.text :rsa_private_key
       t.text :rsa_public_key
@@ -15,15 +20,16 @@ class CreateLocalEncryptionKeys < ActiveRecord::Migration
     # RSA keys for user authentication
     # XXX hack! until authentication is replaced, rsa keys are now going
     # into database instead of files for diskless deploy.
-    key = LocalEncryptionKey.create!
+#    key = LocalEncryptionKey.create!
 
     # comment out this.
-    error "You need to hand-edit this migration to have the right RSA keys"
+#    error "You need to hand-edit this migration to have the right RSA keys"
 
     # uncomment and set these
+    # mt: no.  Do this by hand in the console.
 #    key.rsa_public_key =
 #    key.rsa_private_key = 
-    key.save!
+#    key.save!
   end
 
   def self.down
