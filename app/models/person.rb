@@ -336,7 +336,7 @@ class Person < ActiveRecord::Base
   end
 
   def formatted_categories
-    categories.collect{|cat| cat.long_name}.join("<br />")
+    categories.collect{|cat| ERB::Util.html_escape(cat.long_name)}.join("<br />")
   end
 
   # from Columbia 
