@@ -339,11 +339,6 @@ class Person < ActiveRecord::Base
     categories.collect{|cat| ERB::Util.html_escape(cat.long_name)}.join("<br />")
   end
 
-  # from Columbia 
-  def listed_categories
-    categories.collect { |cat| cat.long_name + ", "}.to_s.chop.chop
-  end
-
   # from Columbia
   def listed_categories
     categories.collect { |cat| cat.long_name + ", "}.to_s.chop.chop
