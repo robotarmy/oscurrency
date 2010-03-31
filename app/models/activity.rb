@@ -30,9 +30,7 @@ class Activity < ActiveRecord::Base
   def self.global_feed
     find(:all, 
          :joins => "INNER JOIN people p ON activities.person_id = p.id",
-         :conditions => [%(p.deactivated = ? AND
-                           (p.email_verified IS NULL OR p.email_verified = ?)), 
-                         false, true], 
+         :conditions => "item_type = 'Exchange'", 
          :order => 'activities.created_at DESC',
          :limit => GLOBAL_FEED_SIZE)
   end
