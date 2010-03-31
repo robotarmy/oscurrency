@@ -1,7 +1,6 @@
 
-<li class="offer">
-  <a name="offer_<%= offer.id %>">
-</a>
+<div class="offer">
+  <a name="offer_<%= offer.id %>"></a>
 <div class="profile-image">
   <% if params[:controller] != "people" %>
   <%= image_link offer.person, :class => "photo", :image => :thumbnail  %>
@@ -50,4 +49,4 @@ offer.person.address.zipcode_plus_4  != '89001'  &&
     <% end -%>
   </p>
 </div>
-</li>
+</div>
