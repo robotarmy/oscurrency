@@ -65,7 +65,7 @@ module ActivitiesHelper
     when "Exchange"
       exchange = activity.item
       if exchange.group.nil?
-        %(#{person_link(person)} earned #{exchange.amount} hours for #{metadata_link(exchange.metadata.name,exchange.metadata)}.)
+        %(#{person_link(person)} earned #{exchange.amount} hours from #{person_link(exchange.customer)} for #{metadata_link(exchange.metadata.name,exchange.metadata)}.)
       else
         %(#{person_link(person)} earned #{exchange.amount} #{exchange.group.unit} for #{metadata_link(exchange.metadata.name,exchange.metadata)} in #{group_link(exchange.group)}.)
       end

@@ -3,7 +3,7 @@
     <%= image_link counterparty(transact), :image => :thumbnail %>
     <%= image_tag "icons/switch.gif", :class => "icon", :alt => "Transaction" %>
 </div>
-  <p>
+  <p> 
   <%= counterparty_action(transact) %><%= person_link counterparty(transact) %>) for <%= link_to h(transact.metadata.name), transact.metadata %>
   </p>
   <p class="meta published">
