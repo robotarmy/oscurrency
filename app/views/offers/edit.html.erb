@@ -9,7 +9,10 @@
     <%= f.label 'title' %>
     <%= f.text_field :name %>
   </div>
-
+<div class="form_row">
+  <%= f.label :available_count %>
+  <%= f.text_field :available_count, :size => 2 %>
+</div>
   <div class="form_row">
     <%= f.label :price %>
     <%= f.text_field :price, :size => 5 %>

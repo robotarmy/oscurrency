@@ -27,6 +27,7 @@ class OffersController < ApplicationController
 
   def create
     @offer = Offer.new(params[:offer])
+    ##TODO: move this to the model, a before_create method?
     @offer.available_count = @offer.total_available
     @offer.person_id = current_person.id
 
