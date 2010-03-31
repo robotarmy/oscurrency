@@ -341,7 +341,7 @@ class Person < ActiveRecord::Base
 
   # from Columbia
   def listed_categories
-    categories.collect { |cat| cat.long_name + ", "}.to_s.chop.chop
+    categories.collect{|cat| ERB::Util.html_escape(cat.long_name)}.join(",").briefiate(100)
   end
 
   def current_offers
@@ -548,7 +548,7 @@ class Person < ActiveRecord::Base
   end
   
   def short_description
-    self.description.briefiate(50)
+    self.description.briefiate(100)
   end
 
   def reset_password
