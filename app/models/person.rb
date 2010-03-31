@@ -336,10 +336,7 @@ class Person < ActiveRecord::Base
   end
 
   def formatted_categories
-    #i'm told that this is stupid, and it'd be better to go:
-    #categories.collect{|cat| cat.long_name}.join("<br />")
-    # but i haven't tested it
-    categories.collect { |cat| cat.long_name + "<br />"}.to_s.chop.chop.chop.chop
+    categories.collect{|cat| cat.long_name}.join("<br />")
   end
 
   # from Columbia 
