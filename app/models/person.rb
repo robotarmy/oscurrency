@@ -346,7 +346,7 @@ class Person < ActiveRecord::Base
 
   def current_offers
     today = DateTime.now
-    offers = self.offers.find(:all, :conditions => ["expiration_date >= ? OR expiration_date is null", today], :order => 'created_at DESC')
+    offers = self.offers.find(:all, :conditions => ["expiration_date >= ?", today], :order => 'created_at DESC')
   end
 
   def current_and_active_reqs

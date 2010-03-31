@@ -11,7 +11,7 @@ class Offer < ActiveRecord::Base
   has_many :exchanges, :as => :metadata
   belongs_to :person
   attr_protected :person_id, :created_at, :updated_at
-  validates_presence_of :name
+  validates_presence_of :name, :expiration_date
   after_create :notify_workers, :if => :notifications
   after_create :log_activity
 
@@ -19,7 +19,7 @@ class Offer < ActiveRecord::Base
 
     def current(page=1)
       today = DateTime.now
-      Offer.paginate(:all, :page => page, :conditions => ["available_count > ? AND (expiration_date >= ? OR expiration_date is null)", 0, today], :order => 'created_at DESC')
+      Offer.paginate(:all, :page => page, :conditions => ["available_count > ? AND expiration_date >= ?", 0, today], :order => 'created_at DESC')
     end
   end
 
