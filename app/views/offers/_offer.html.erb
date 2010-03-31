@@ -21,9 +21,9 @@
   <%= display offer.listed_categories, :class => "meta" %>
   <p>
     <% if defined? short %>
-    <%= display offer.description.briefiate(100) %>
+    <%= display simple_format_without_paragraph(offer.description).briefiate(100) %>
     <% else %>
-    <%= display offer.description %>
+    <%= display simple_format_without_paragraph(offer.description) %>
     <% end %>
   </p>
 
