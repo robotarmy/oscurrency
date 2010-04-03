@@ -13,6 +13,10 @@
 
 class Category < ActiveRecord::Base
 
+  def self.all 
+    Category.find(:all, :order => "name").sort_by { |a| a.name }
+  end
+
   index do 
     name
     description
@@ -21,22 +25,23 @@ class Category < ActiveRecord::Base
   has_and_belongs_to_many :reqs
   has_and_belongs_to_many :offers
   has_and_belongs_to_many :people
-  acts_as_tree
+#  acts_as_tree
 
-  def descendants
-    children.map(&:descendants).flatten + children
-  end
+#   def descendants
+#     children.map(&:descendants).flatten + children
+#   end
 
-  def ancestors_name
-    if parent
-      parent.ancestors_name + parent.name + ':'
-    else
-      ""
-    end
-  end
+#   def ancestors_name
+#     if parent
+#       parent.ancestors_name + parent.name + ':'
+#     else
+#       ""
+#     end
+#   end
 
-  def long_name
-    ancestors_name + name
+  def long_name                 # +++ grep for this
+#    ancestors_name + name
+    name
   end
 
   def active_people
@@ -49,12 +54,12 @@ class Category < ActiveRecord::Base
     reqs.delete_if { |req| req.has_approved? }
   end
 
-  def descendants_current_and_active_reqs_count
-    descendants.map {|d| d.current_and_active_reqs.length}.inject(0) {|sum,element| sum + element}
-  end
+#   def descendants_current_and_active_reqs_count
+#     descendants.map {|d| d.current_and_active_reqs.length}.inject(0) {|sum,element| sum + element}
+#   end
 
-  def descendants_providers_count
-    # not going to the trouble of making sure people are counted only once
-    descendants.map {|d| d.active_people.length}.inject(0) {|sum,element| sum + element}
-  end
+#   def descendants_providers_count
+#     # not going to the trouble of making sure people are counted only once
+#     descendants.map {|d| d.active_people.length}.inject(0) {|sum,element| sum + element}
+#   end
 end
