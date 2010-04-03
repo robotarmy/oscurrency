@@ -22,7 +22,7 @@ class OffersController < ApplicationController
 
   def new
     @offer = Offer.new
-    @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @all_categories = Category.all
   end
 
   def create
@@ -37,7 +37,7 @@ class OffersController < ApplicationController
         format.html { redirect_to(@offer) }
         format.xml  { render :xml => @offer, :status => :created, :location => @offer }
       else
-        @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+        @all_categories = Category.all
         format.html { render :action => "new" }
         format.xml  { render :xml => @offer.errors, :status => :unprocessable_entity }
       end
@@ -46,7 +46,7 @@ class OffersController < ApplicationController
 
   def edit
     @offer = Offer.find(params[:id])
-    @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @all_categories = Category.all
   end
 
   def update
@@ -58,7 +58,7 @@ class OffersController < ApplicationController
         format.html { redirect_to(@offer) }
         format.xml  { head :ok }
       else
-        @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+        @all_categories = Category.all
         format.html { render :action => "edit" }
         format.xml  { render :xml => @offer.errors, :status => :unprocessable_entity }
       end
