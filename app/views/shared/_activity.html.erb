@@ -3,8 +3,14 @@
 <li>
   <div class="profile-image">
     <%= image_link activity.person, :image => :thumbnail %>
-    <%= feed_icon activity %>
+     <%= feed_icon activity %>
   </div>
+  <%- if activity.item_type == "Exchange" %>
+    </p>
+  <div class="customer-image">
+    <%= image_link activity.item.customer, :image => :thumbnail %>
+  </div>
+  <%- end -%>
   <p>
     <%= feed_message activity %>
       <%- if current_person?(activity.person) -%>
@@ -13,7 +19,7 @@
                           :method => :delete, 
                           :confirm => %(Are you sure you want to delete this activity from your profile?)) %>
   <%- end -%>
-    </p>
+
   <p class="meta published">
     <%= time_ago_in_words(activity.created_at).capitalize %> ago
   </p>

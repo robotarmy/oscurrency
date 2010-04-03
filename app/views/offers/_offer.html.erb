@@ -15,14 +15,14 @@
 <div class="col_content">
   <p>
     <%= link_to h(offer.name), offer, :class => "show-follow" %> (<%= h offer.price %> hrs)
-    Expires: <%= offer.expiration_date.nil? ? 'never' : relative_time_ago_in_words(offer.expiration_date) %>
+    Expires: <%= offer.expiration_date.nil? ? '' : relative_time_ago_in_words(offer.expiration_date) %>
   </p>
-  <%= display offer.formatted_categories, :class => "meta" %>
+  <%= display offer.listed_categories, :class => "meta" %>
   <p>
     <% if defined? short %>
-    <%= display offer.description.briefiate(100) %>
+    <%= display simple_format_without_paragraph(offer.description).briefiate(100) %>
     <% else %>
-    <%= display offer.description %>
+    <%= display simple_format_without_paragraph(offer.description) %>
     <% end %>
   </p>
 

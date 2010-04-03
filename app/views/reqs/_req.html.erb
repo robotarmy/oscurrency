@@ -34,9 +34,9 @@
   </p>
   <p>
     <% if defined? short %>
-    <%= display req.description.briefiate(100) %>
+    <%= display simple_format_without_paragraph(req.description).briefiate(100) %>
     <% else %>
-    <%= display req.description %>
+    <%= display simple_format_without_paragraph(req.description) %>
     <% end %>
   </p>
 

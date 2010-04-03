@@ -6,9 +6,9 @@
     <p><%= person_link person, :class => "url fn" %></p>
     <% if defined? short %>
     <%= display person.listed_categories, :class => "meta" %>
-    <%= display person.short_description, :class => "note" %><br/>    
+    <%= display simple_format_without_paragraph(person.short_description), :class => "note" %><br/>    
     <% else %>
-    <%= display person.description, :class => "note" %>
+    <%= display simple_format_without_paragraph(person.description), :class => "note" %>
     <% end %>
   </div>
 </li>

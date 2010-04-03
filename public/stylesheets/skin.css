@@ -226,6 +226,14 @@ p.welcome {
   top: 0;
 }
 
+
+.list .customer-image {
+  clear: right;
+  float: right;
+  display: inline;
+}
+
+
 .blog p {
   margin-left: 0;
   margin-bottom: 1em;

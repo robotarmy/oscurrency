@@ -336,25 +336,17 @@ class Person < ActiveRecord::Base
   end
 
   def formatted_categories
-    #i'm told that this is stupid, and it'd be better to go:
-    #categories.collect{|cat| cat.long_name}.join("<br />")
-    # but i haven't tested it
-    categories.collect { |cat| cat.long_name + "<br />"}.to_s.chop.chop.chop.chop
-  end
-
-  # from Columbia 
-  def listed_categories
-    categories.collect { |cat| cat.long_name + ", "}.to_s.chop.chop
+    categories.collect{|cat| ERB::Util.html_escape(cat.long_name)}.join("<br />")
   end
 
   # from Columbia
   def listed_categories
-    categories.collect { |cat| cat.long_name + ", "}.to_s.chop.chop
+    categories.collect{|cat| ERB::Util.html_escape(cat.long_name)}.join(",").briefiate(100)
   end
 
   def current_offers
     today = DateTime.now
-    offers = self.offers.find(:all, :conditions => ["expiration_date >= ? OR expiration_date is null", today], :order => 'created_at DESC')
+    offers = self.offers.find(:all, :conditions => ["expiration_date >= ?", today], :order => 'created_at DESC')
   end
 
   def current_and_active_reqs
@@ -556,7 +548,7 @@ class Person < ActiveRecord::Base
   end
   
   def short_description
-    self.description.briefiate(50)
+    self.description.briefiate(100)
   end
 
   def reset_password
