@@ -58,7 +58,7 @@ class PeopleController < ApplicationController
   def new
     @body = "register single-col"
     @person = Person.new
-    @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @all_categories = Category.all
     @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     respond_to do |format|
       format.html
@@ -89,7 +89,7 @@ class PeopleController < ApplicationController
         end
       else
         @body = "register single-col"
-        @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+        @all_categories = Category.all
         @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         format.html { if @person.identity_url.blank? 
                         render :action => 'new'
@@ -127,7 +127,7 @@ class PeopleController < ApplicationController
 
   def edit
     @person = Person.find(params[:id])
-    @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @all_categories = Category.all
     @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     respond_to do |format|
       format.html
@@ -155,7 +155,7 @@ class PeopleController < ApplicationController
           flash[:success] = 'Profile updated!'
           format.html { redirect_to(@person) }
         else
-          @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+          @all_categories = Category.all
           @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
           if preview?
             @preview = @person.description = params[:person][:description]
@@ -171,7 +171,7 @@ class PeopleController < ApplicationController
           flash[:success] = 'Password changed.'
           format.html { redirect_to(@person) }
         else
-          @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+          @all_categories = Category.all
           @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
           format.html { render :action => "edit" }
         end
