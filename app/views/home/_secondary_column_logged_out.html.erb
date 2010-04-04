@@ -1,5 +1,6 @@
-  <%- if logged_in? -%>
-      <%= render :partial => 'shared/minifeed' %>
+<%- if logged_in? -%>
+  <%= render :partial => 'shared/minifeed' %>
   <% unless global_prefs.gmail.blank? -%>
-  <%= render :partial => 'shared/calendar', :object => global_prefs.gmail %>
+     <%= render :partial => 'shared/calendar', :object => global_prefs.gmail %>
   <%- end -%>
+<%- end -%>
