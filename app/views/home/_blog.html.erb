@@ -1,4 +1,4 @@
-<%- if current_person.admin? %>
+<%- if logged_in? && current_person.admin? %>
       <h2>System Blog</h2>
       <%= link_to "refresh", '/home/refreshblog', :class => "small" %>
 <%- end -%>
