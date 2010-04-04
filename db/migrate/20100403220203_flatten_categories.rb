@@ -28,6 +28,7 @@ class FlattenCategories < ActiveRecord::Migration
     Person.find(:all).each { |p| p.categories = p.categories.map(&:root).uniq }
     Offer.find(:all).each { |p| p.categories = p.categories.map(&:root).uniq }
     Req.find(:all).each { |p| p.categories = p.categories.map(&:root).uniq }
+    Category.find(:all).each { |c| if c.parent != nil then c.destroy end }
     remove_column :categories, :parent_id
   end
 
