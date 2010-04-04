@@ -5,21 +5,21 @@
 
   <td  class="categorynumbercell">
     <% if subcategory.current_and_active_reqs.length  > 0 -%>
-    <a href="/categories/<%= subcategory.id %>/reqs">
+    <a class="categoryMenuItem" href="/categories/<%= subcategory.id %>/reqs">
 <%= subcategory.current_and_active_reqs.length %>
 </a>
     <% end -%>
   </td>
   <td class="categorynumbercell">
     <% if subcategory.offers.current.length  > 0 -%>
-    <a href="/categories/<%= subcategory.id %>/offers">
+    <a class="categoryMenuItem" href="/categories/<%= subcategory.id %>/offers">
     <%= subcategory.offers.current.length %>
   </a>
     <% end -%>
   </td>
   <td class="categorynumbercell">
     <% if subcategory.active_people.length  > 0 -%>
-    <a href="/categories/<%= subcategory.id %>/people">
+    <a class="categoryMenuItem" href="/categories/<%= subcategory.id %>/people">
     <%= subcategory.active_people.length %>
   </a>
     <% end -%>
