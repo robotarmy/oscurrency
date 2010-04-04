@@ -1,11 +1,11 @@
 <tr class="subcategories">
   <td class="subcategoryname" >
-    <%= link_to subcategory.name, subcategory, {:class => "categoryMenuItem" } %>
+    <%= h(subcategory.name) %>
   </td>
 
   <td  class="categorynumbercell">
     <% if subcategory.current_and_active_reqs.length  > 0 -%>
-    <%= subcategory.current_and_active_reqs.length %>
+    <a href="/categories/<%= subcategory.id %>/reqs"><%= subcategory.current_and_active_reqs.length %></a>
     <% end -%>
   </td>
   <td class="categorynumbercell">
