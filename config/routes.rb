@@ -33,6 +33,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :categories
 
+  map.resources :categories, :has_many => [:reqs, :offers, :people]
+
   map.resources :events, :member => { :attend => :get, 
                                       :unattend => :get } do |event|
     event.resources :comments

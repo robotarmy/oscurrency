@@ -56,13 +56,11 @@ class ReqsController < ApplicationController
     if params[:filter]
       if "all" == params[:filter]
         @reqs = Req.paginate(:all, :page => params[:page], :conditions => ["active = ?", 1], :order => 'created_at DESC')
-      elsif "current" == params[:filter]
-        @reqs = Req.current_and_active(params[:page])
       else
-        @reqs = Req.current_and_active(params[:page])
+        @reqs = Req.current_and_active(params[:page],params[:category_id])
       end
     else
-      @reqs = Req.current_and_active(params[:page])
+      @reqs = Req.current_and_active(params[:page],params[:category_id])
     end
 
     respond_to do |format|

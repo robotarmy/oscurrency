@@ -37,9 +37,13 @@ class Req < ActiveRecord::Base
 
   class << self
 
-    def current_and_active(page=1)
+    def current_and_active(page=1, category_id=nil)
       today = DateTime.now
-      @reqs = Req.paginate(:all, :page => page, :conditions => ["active = ? AND due_date >= ?", true, today], :order => 'created_at DESC')
+      if category_id
+        @reqs = Category.find(category_id).reqs.paginate(:all, :page => page, :conditions => ["active = ? AND due_date >= ?", true, today], :order => 'created_at DESC')
+      else
+        @reqs = Req.paginate(:all, :page => page, :conditions => ["active = ? AND due_date >= ?", true, today], :order => 'created_at DESC')
+end
       @reqs.delete_if { |req| req.has_approved? }
     end
 
