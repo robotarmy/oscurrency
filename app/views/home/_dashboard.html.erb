@@ -6,7 +6,10 @@
     <%= render :partial => '/shared/bid', :collection => @bids %>
   </ul>
 <%- end -%>
+<table><tr><td>
     <h2>My Active Offers</h2>
+    <td><%= render :partial => 'shared/add_button', :locals => { :button_text => "New Offer", :new_resource_path => new_offer_path } %></td>
+</tr></table>
 <%- if @offers.blank? -%>
     <h3 class="blankslate">No active offers</h3>
 <%- else -%>
@@ -14,7 +17,10 @@
     <%= render :partial => '/offers/offer', :collection => @offers %>
   </ul>
 <%- end -%>
-    <h2>My Active Requests</h2>
+<table><tr><td>
+    <h2>My Active Requests</h2></td>
+    <td><%= render :partial => 'shared/add_req_button' %></td>
+</tr></table>
 <%- if @reqs.blank? -%>
     <h3 class="blankslate">No active requests</h3>
 <%- else -%>
