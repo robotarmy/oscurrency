@@ -3,7 +3,7 @@ class OffersController < ApplicationController
   before_filter :correct_person_required, :only => [:edit, :update, :destroy]
 
   def index
-    @offers = Offer.current(params[:page])
+    @offers = Offer.current(params[:page], params[:category_id])
 
     respond_to do |format|
       format.html # index.html.erb

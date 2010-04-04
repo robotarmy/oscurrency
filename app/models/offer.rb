@@ -17,9 +17,13 @@ class Offer < ActiveRecord::Base
 
   class << self
 
-    def current(page=1)
+    def current(page=1, category_id=nil)
       today = DateTime.now
-      Offer.paginate(:all, :page => page, :conditions => ["available_count > ? AND expiration_date >= ?", 0, today], :order => 'created_at DESC')
+      if category_id
+        Category.find(category_id).offers.paginate(:all, :page => page, :conditions => ["available_count > ? AND expiration_date >= ?", 0, today], :order => 'created_at DESC')
+      else
+        Offer.paginate(:all, :page => page, :conditions => ["available_count > ? AND expiration_date >= ?", 0, today], :order => 'created_at DESC')
+      end
     end
   end
 
