@@ -21,9 +21,7 @@ module ApplicationHelper
     resources = menu_element("Resources", "http://docs.insoshi.com/")
     if logged_in? and not admin_view?
       profile  = menu_element("Profile",  person_path(current_person))
-      offers = menu_element("Offers", offers_path)
-      requests = menu_element("Requests", reqs_path)
-      messages = menu_element("Inbox", messages_path)
+      messages = menu_element("Mail", messages_path)
 #      blog     = menu_element("Blog",     blog_path(current_person.blog))
       photos   = menu_element("Photos",   photos_path)
       if global_prefs.group_option?
@@ -32,9 +30,9 @@ module ApplicationHelper
 #                              person_connections_path(current_person))
 #      links = [home, profile, contacts, messages, blog, people, forum]
       #events   = menu_element("Events", events_path)
-        links = [home, profile, categories, offers, requests, people, messages, groups, forum]
+        links = [home, profile, categories,  people, messages, groups, forum]
       else
-        links = [home, profile, categories, offers, requests, people, messages, forum]
+        links = [home, profile, categories,  people, messages, forum]
       end
       # TODO: remove 'unless production?' once events are ready.
       #links.push(events) #unless production?
