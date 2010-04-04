@@ -14,20 +14,5 @@
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
-  <h2>Offers</h2>
-  <%- if @offers.empty? -%>
-    <h3 class="blankstate">No offers (yet!)</h3>
-  <%- else -%>
-  <ul class="list full">
-    <%= render :partial => 'offers/offer', :collection => @offers, :locals => {:short => true}  %>
-  </ul>
-  <%- end -%>
-  <h2>Requests</h2>
-  <%- if @reqs.empty? -%>
-    <h3 class="blankstate">No reqs (yet!)</h3>
-  <%- else -%>
-  <ul class="list full">
-    <%= render :partial => 'reqs/req', :collection => @reqs, :locals => {:short => true}  %>
-  </ul>
-  <%- end -%>
+  <%= render :partial => '/home/secondary_conditional' %>
 <%- end -%>
