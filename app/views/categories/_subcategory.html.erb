@@ -1,6 +1,6 @@
 <tr class="subcategories">
   <td class="subcategoryname" >
-    <div class="categoryMenuItem"><%= h(subcategory.name) %></div>
+    <%= link_to subcategory.name, subcategory, {:class => "categoryMenuItem" } %>
   </td>
 
   <td  class="categorynumbercell">

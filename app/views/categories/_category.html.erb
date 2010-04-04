@@ -1,7 +1,7 @@
 <tr class="categories" >
   <td>
-     <div class="categoryMenuItem"><%= h(category.name) %></div>
- </td>
+     <%= link_to h(category.name), category, {:class => "categoryMenuItem" } %>
+</td>
 
   <td class="categorynumbercell">
     <% if category.current_and_active_reqs.length  > 0 -%>
