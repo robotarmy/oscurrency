@@ -1,11 +1,11 @@
 <%- column_div :type => :primary do -%>
   <h2>People<%= h @zipcode %></h2>
   <% unless @people.empty? -%>
-    <%= will_paginate @people, :draw_if_single => true, :next_previous_links => true %>
+    <%= will_paginate  %>
     <ul class="list people">
       <%= render :partial => @people, :locals => {:short => true} %>
     </ul>
-    <%= will_paginate @people, :draw_if_single => true, :next_previous_links => true %>
+    <%= will_paginate %>
   <% else %>
     <% if !@zipcode.empty? %>
       <div class="meta">No results for <%= h @zipcode %></div>
