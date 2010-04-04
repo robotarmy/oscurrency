@@ -16,8 +16,6 @@
     <%- else -%>
       <%= render :partial => 'shared/minifeed' %>
     <%- end -%>
-
-
   <%- else -%>
   <% unless global_prefs.gmail.blank? -%>
   <%= render :partial => 'shared/calendar', :object => global_prefs.gmail %>
