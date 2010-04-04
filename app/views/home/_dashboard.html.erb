@@ -1,3 +1,5 @@
+<h2>My Accounts</h2>
+<%= render :partial => '/people/account', :collection => @person.accounts %>
     <h2>My Active Work</h2>
 <%- if @bids.blank? -%>
     <h3 class="blankslate">No active bids</h3>
