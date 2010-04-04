@@ -1,11 +1,13 @@
 <tr class="subcategories">
   <td class="subcategoryname" >
-    <%= h(subcategory.name) %>
+    <div class="categoryMenuItem"><%= h(subcategory.name) %></div>
   </td>
 
   <td  class="categorynumbercell">
     <% if subcategory.current_and_active_reqs.length  > 0 -%>
-    <a href="/categories/<%= subcategory.id %>/reqs"><%= subcategory.current_and_active_reqs.length %></a>
+    <a href="/categories/<%= subcategory.id %>/reqs">
+<%= subcategory.current_and_active_reqs.length %>
+</a>
     <% end -%>
   </td>
   <td class="categorynumbercell">
