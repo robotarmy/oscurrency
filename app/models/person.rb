@@ -169,10 +169,16 @@ class Person < ActiveRecord::Base
   class << self
 
     # Return the paginated active users.
-    def active(page = 1)
-      paginate(:all, :page => page,
+    def active(page = 1, category_id = nil)
+      if category_id
+        Category.find(category_id).people.paginate(:all, :page => page,
                      :per_page => RASTER_PER_PAGE,
-                     :conditions => conditions_for_active)
+                      :conditions => conditions_for_active)
+      else
+        paginate(:all, :page => page,
+                 :per_page => RASTER_PER_PAGE,
+                 :conditions => conditions_for_active)
+      end
     end
     
     # Return the people who are 'mostly' active.
