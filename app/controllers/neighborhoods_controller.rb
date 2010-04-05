@@ -6,7 +6,8 @@ class NeighborhoodsController < ApplicationController
   # GET /neighborhoods
   # GET /neighborhoods.xml
   def index
-    @neighborhoods = Neighborhood.find(:all)
+    @top_level_neighborhoods = Neighborhood.find(:all, :conditions => "parent_id is NULL").sort_by {|a| a.name}
+    @neighborhoods = Neighborhood.find(:all).sort_by { |a| a.name }
 
     respond_to do |format|
       format.html # index.html.erb
