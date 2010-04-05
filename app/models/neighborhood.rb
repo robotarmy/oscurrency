@@ -1,8 +1,13 @@
 class Neighborhood < ActiveRecord::Base
   has_and_belongs_to_many :people
-  has_many :reqs, through :people
-  has_many :offers, through :people
+
   acts_as_tree
+
+  def reqs
+    Req.in_neighborhood(self)
+  end
+
+
 
   def ancestors_name
     if parent

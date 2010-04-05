@@ -35,7 +35,20 @@ class Req < ActiveRecord::Base
   after_create :notify_workers, :if => :notifications
   after_create :log_activity
 
+  
+  named_scope :in_neighborhood, lambda{ |neighborhood|
+    {
+      :joins      => :people,
+      :conditions => {:people => {:id => neighborhood.person_ids}},
+      :select     => "DISTINCT `reqs`.*" # kill duplicates
+    }
+  }
+
+
+
+
   class << self
+
 
     def current_and_active(page=1, category_id=nil)
       today = DateTime.now
