@@ -38,8 +38,10 @@ class Person < ActiveRecord::Base
   attr_accessor :password, :verify_password, :new_password, :sorted_photos
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description, :connection_notifications,
-                  :message_notifications, :wall_comment_notifications, :forum_notifications,
-                  :blog_comment_notifications, :identity_url, :category_ids, :address_ids, :neighborhood_ids,
+                  :message_notifications, :wall_comment_notifications, 
+                  :forum_notifications,
+                  :blog_comment_notifications, :identity_url, :category_ids, 
+                  :address_ids, :neighborhood_ids,
                   :twitter_name, :zipcode,
                   :phone, :phoneprivacy,
                   :accept_agreement
