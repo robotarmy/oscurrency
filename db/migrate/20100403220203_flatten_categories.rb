@@ -22,6 +22,7 @@ class FlattenCategories < ActiveRecord::Migration
         object.categories = newcats
       end
     end
+
   end
 
   class Person < ActiveRecord::Base
