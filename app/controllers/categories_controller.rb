@@ -6,8 +6,8 @@ class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.xml
   def index
-    @top_level_categories = Category.find(:all, :conditions => "parent_id is NULL").sort_by {|a| a.name}
-    @categories = Category.find(:all).sort_by { |a| a.long_name }
+    @top_level_categories = Category.all
+    @categories = Category.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -34,7 +34,7 @@ class CategoriesController < ApplicationController
   # GET /categories/new.xml
   def new
     @category = Category.new
-    @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @all_categories = Category.all
 
     respond_to do |format|
       format.html # new.html.erb
@@ -45,7 +45,7 @@ class CategoriesController < ApplicationController
   # GET /categories/1/edit
   def edit
     @category = Category.find(params[:id])
-    @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @all_categories = Category.all
   end
 
   # POST /categories
