@@ -15,7 +15,14 @@ class Account < ActiveRecord::Base
   belongs_to :person
   belongs_to :group
 
+  after_create :reset_totals
+
   INITIAL_BALANCE = 0
+
+  def reset_totals
+    self.total_paid = 0
+    self.total_earned = 0
+  end
 
   def withdraw(amount)
     self.total_paid += amount
