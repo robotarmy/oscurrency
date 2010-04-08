@@ -177,25 +177,30 @@ class Person < ActiveRecord::Base
     
     # Return the people who are 'mostly' active.
     # People are mostly active if they have logged in recently enough.
-    def mostly_active(sort_opts, page = 1)
+    def mostly_active(sort_opts, page = 1, category_id = nil)
       opts = { :page => page,
                :per_page => RASTER_PER_PAGE,
                :conditions => conditions_for_mostly_active }
       opts.merge!(sort_opts)
-      paginate(:all, opts)
+      if category_id
+        Category.find(category_id).people.paginate(:all, opts)
+      else
+        paginate(:all, opts)
+      end
     end
 
-    def mostly_active_alpha(page = 1)
+    def mostly_active_alpha(page = 1, category_id = nil)
       sort_opts = {:order => "name ASC", :group_by => "first_letter,name"}
-      mostly_active(sort_opts, page)
+      mostly_active(sort_opts, page, category_id)
     end
 
-    def mostly_active_newest(page = 1)
+    def mostly_active_newest(page = 1, category_id = nil)
       sort_opts = {:order => "created_at DESC"}
-      mostly_active(sort_opts, page)
+      mostly_active(sort_opts, page, category_id)
     end
 
     def mostly_active_with_zipcode(zipcode, page = 1)
+      #XXX this does not have the category id in yet
       addresses = Address.find(:all, :conditions => ['zipcode_plus_4 = ?', zipcode])
       people = addresses.map {|a| a.person}.uniq
       people.paginate(:page => page,

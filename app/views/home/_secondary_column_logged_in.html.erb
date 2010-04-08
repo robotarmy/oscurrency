@@ -1,0 +1,7 @@
+<%= render :partial => 'shared/minifeed' %>
+
+<% unless global_prefs.gmail.blank? -%>
+  <%= render :partial => 'shared/calendar', :object => global_prefs.gmail %>
+<%- end -%>
+
+<%= render :partial => '/home/blog' %>

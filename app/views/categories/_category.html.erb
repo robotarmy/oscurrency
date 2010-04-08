@@ -1,21 +1,27 @@
 <tr class="categories" >
   <td>
-    <%= link_to h(category.name), category, {:class => "categoryMenuItem" } %>
-  </td>
+    <div class=categoryMenuItem"><%= h(category.name) %></div>
+</td>
 
   <td class="categorynumbercell">
     <% if category.current_and_active_reqs.length  > 0 -%>
+    <a class="categoryMenuItem" href="/categories/<%= category.id %>/reqs">
     <%= category.current_and_active_reqs.length %>
+  </a>
     <% end -%>
   </td>
   <td class="categorynumbercell">
-    <% if category.offers.length  > 0 -%>
-    <%= category.offers.length %>
+    <% if category.offers.current.length  > 0 -%>
+    <a class="categoryMenuItem" href="/categories/<%= category.id %>/offers">
+    <%= category.offers.current.length %>
+  </a>
     <% end -%>
   </td>
   <td class="categorynumbercell">
     <% if category.active_people.length  > 0 -%>
-    <%= category.active_people.length %>
+    <a class="categoryMenuItem" href="/categories/<%= category.id %>/people">
+    <%= category.active_people.length %>  
+  </a>
     <% end -%>
   </td>
 </tr>

@@ -1,0 +1,13 @@
+<%- column_div :type => :primary do -%>
+      <%= render :partial => 'dashboard' %>
+<%- end -%>
+
+<%- column_div :type => :secondary do -%>
+     <%- if current_person.has_unread_messages? -%>
+	 <div class="notice">
+      <%= link_to "You have unread messages.",
+                  messages_path %>
+	 </div>
+	 <%- end -%>
+  <%= render :partial => 'secondary_column_logged_in' %>
+<%- end -%>

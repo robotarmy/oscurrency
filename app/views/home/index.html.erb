@@ -1,27 +1,7 @@
-<%- column_div :type => :primary do -%>
-  <%- if logged_in? -%>
-  <h2>Home</h2>
-    <ul id="message-nav">
-      <%= list_link_with_active "Exchanges", home_path %>
-      <%= list_link_with_active "Your Activity", home_path(:mode => 'dashboard') %>
-    </ul>
-  <%- if logged_in? && current_person.has_unread_messages? -%>
-    <div class="notice">
-      You have unread messages in your mailbox.
-      <%= link_to "Click here to see your messages",
-                  messages_path %>
-    </div>
-  <%- end -%>
-    <% if current_page?(home_path) %>
-      <%= render :partial => 'feed' %>
-    <% else %>
-      <%= render :partial => 'dashboard' %>
-    <% end %>
-  <%- else -%>
-    <%= render :partial => 'blog' %>
-  <%- end -%>
+<%- if logged_in? -%>
+  <%= render :partial => 'logged_in' %>
+<%- else -%>
+    <%= render :partial => 'logged_out' %>
 <%- end -%>
 
-<%- column_div :type => :secondary do -%>
-  <%= render :partial => 'secondary_column' %>
-<%- end -%>
+

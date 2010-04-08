@@ -10,17 +10,17 @@ class PeopleController < ApplicationController
   def index
     @zipcode = ""
     if global_prefs.zipcode_browsing? && params[:zipcode]
-      @people = Person.mostly_active_with_zipcode(params[:zipcode],params[:page])
+      @people = Person.mostly_active_with_zipcode(params[:zipcode],params[:page],params[:category_id])
       @zipcode = "(#{params[:zipcode]})"
     else
       if params[:sort]
         if "newest" == params[:sort]
-          @people = Person.mostly_active_newest(params[:page])
+          @people = Person.mostly_active_newest(params[:page], params[:category_id])
         end
       else
         # XXX temp hack for postgresql
-          @people = Person.mostly_active_newest(params[:page])
-        #@people = Person.mostly_active_alpha(params[:page])
+          @people = Person.mostly_active_newest(params[:page], params[:category_id])
+        #@people = Person.mostly_active_alpha(params[:page],  params[:category_id])
         #@people.add_missing_links(('A'..'Z').to_a)
       end
     end

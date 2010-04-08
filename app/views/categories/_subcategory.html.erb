@@ -1,21 +1,27 @@
 <tr class="subcategories">
   <td class="subcategoryname" >
-    <%= link_to subcategory.name, subcategory, {:class => "categoryMenuItem" } %>
+    <div class=categoryMenuItem"><%= h(subcategory.name) %></div>
   </td>
 
   <td  class="categorynumbercell">
     <% if subcategory.current_and_active_reqs.length  > 0 -%>
-    <%= subcategory.current_and_active_reqs.length %>
+    <a class="categoryMenuItem" href="/categories/<%= subcategory.id %>/reqs">
+<%= subcategory.current_and_active_reqs.length %>
+</a>
     <% end -%>
   </td>
   <td class="categorynumbercell">
-    <% if subcategory.offers.length  > 0 -%>
-    <%= subcategory.offers.length %>
+    <% if subcategory.offers.current.length  > 0 -%>
+    <a class="categoryMenuItem" href="/categories/<%= subcategory.id %>/offers">
+    <%= subcategory.offers.current.length %>
+  </a>
     <% end -%>
   </td>
   <td class="categorynumbercell">
     <% if subcategory.active_people.length  > 0 -%>
+    <a class="categoryMenuItem" href="/categories/<%= subcategory.id %>/people">
     <%= subcategory.active_people.length %>
+  </a>
     <% end -%>
   </td>
 </tr>
