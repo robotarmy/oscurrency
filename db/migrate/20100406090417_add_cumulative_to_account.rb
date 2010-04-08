@@ -11,7 +11,7 @@ class AddCumulativeToAccount < ActiveRecord::Migration
       b= t.worker.account
       b.total_earned += t.amount
       b.save!
-    end
+    end; nil
   end
 
   def self.down
