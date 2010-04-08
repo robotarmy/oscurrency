@@ -18,10 +18,12 @@ class Account < ActiveRecord::Base
   INITIAL_BALANCE = 0
 
   def withdraw(amount)
+    self.total_paid += amount
     adjust_balance_and_save(-amount)
   end
 
   def deposit(amount)
+    self.total_earned += amount
     adjust_balance_and_save(amount)
   end
 
