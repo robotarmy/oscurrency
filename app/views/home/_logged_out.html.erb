@@ -1,6 +1,8 @@
 <%- column_div :type => :primary do -%>
 <div class="welcome">
  <h3>Welcome to the BACE Timebank</h3><p>Having a hard time getting your basic needs met?</p><p>Want to earn services or goods for doing something you love?</p><p>Want to be able to share in the untapped resources of your community?</p><p>It's easy! Give what you want, get what you need. And make some friends inthe process!</p><p>Need help with yard work or home improvements? Want to learn a new skill?Need a ride to an appointment? Our timebank may be your solution.</p><p>You don’t need money, just time to help someone else.</p>
+ <%= link_to "Sign up to start timebanking now!", signup_path %>
+
 </div>
 <%= render :partial => 'blog' %>
 <%- end -%>
