@@ -1,8 +1,11 @@
 <%- column_div :type => :primary do -%>
-    <%= render :partial => 'blog' %>
+<div class="welcome">
+    <%= display global_prefs.welcome %>
+</div>
+<%= render :partial => 'blog' %>
 <%- end -%>
 
 
 <%- column_div :type => :secondary do -%>
-  <%= render :partial => 'secondary_column_logged_out' %>
+<%= render :partial => 'secondary_column_logged_out' %>
 <%- end -%>
