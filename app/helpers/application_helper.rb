@@ -151,7 +151,7 @@ module ApplicationHelper
     path = person_account_path(account.person,account) # XXX link to transactions
     img = image_tag("icons/bargraph.gif")
     if account.group.nil?
-      action = "Main Account: #{account.balance} hours<br />(#{account.total_paid} given, #{account.total_earned} received)"
+      action = "Main Account: #{account.balance} hours&nbsp;(#{account.total_paid} given, #{account.total_earned} received)"
     else
       if  not account.group.unit.nil?
         action = "#{account.group.name}: #{account.balance} #{account.group.unit} "
