@@ -152,6 +152,16 @@
     <br />
 
     <div class="form_row">
+      <label for="welcome">Welcome Text</label>
+      <br />
+      <p><%= formatting_note %></p>
+
+      <%= f.text_area :welcome, :rows => 10 %>
+    </div>
+    
+    <br />
+
+    <div class="form_row">
       <label for="about">About</label>
       <br />
       <p><%= formatting_note %></p>
@@ -161,6 +171,15 @@
     
     <br />
 
+    <div class="form_row">
+      <label for="about">About (abbreviated version)</label>
+      <br />
+      <p><%= formatting_note %></p>
+
+      <%= f.text_area :short_about, :rows => 10 %>
+    </div>
+    
+    <br />
     <div class="form_row">
       <label for="practice">Practice</label>
       <br />
