@@ -1,29 +1,15 @@
 <tr class="neighborhoods" >
   <td>
     <div class=categoryMenuItem"><%= h(neighborhood.name) %></div>
-</td>
+				</td>
 
-  <td class="categorynumbercell">
-    <% if neighborhood.reqs.current_and_active.length  > 0 -%>
-    <a class="categoryMenuItem" href="/neighborhoods/<%= neighborhood.id %>/reqs">
+<td class="categorynumbercell">
+  <% if neighborhood.reqs.current_and_active.length  > 0 -%>
+  <a class="categoryMenuItem" href="/neighborhoods/<%= neighborhood.id %>/reqs">
     <%= neighborhood.reqs.current_and_active.length %>
   </a>
-    <% end -%>
-  </td>
-  <td class="categorynumbercell">
-    <% if neighborhood.offers.current.length  > 0 -%>
-    <a class="categoryMenuItem" href="/neighborhoods/<%= neighborhood.id %>/offers">
-    <%= neighborhood.offers.current.length %>
-  </a>
-    <% end -%>
-  </td>
-  <td class="categorynumbercell">
-    <% if neighborhood.people.active.length  > 0 -%>
-    <a class="categoryMenuItem" href="/neighborhoods/<%= neighborhood.id %>/people">
-    <%= neighborhood.active_people.length %>  
-  </a>
-    <% end -%>
-  </td>
+  <% end -%>
+</td>
 </tr>
 <% unless neighborhood.children.empty? -%>
 <%= render :partial => 'subneighborhood', :collection => neighborhood.children %>
