@@ -6,7 +6,11 @@ class CollapseCategories < ActiveRecord::Migration
     has_and_belongs_to_many :reqs
 
     def self.cc(f_id, t_id)
-      Category.find(t_id).collapse(Category.find(f_id))
+      begin
+        Category.find(t_id).collapse(Category.find(f_id))
+      rescue => whoops
+        puts "Failed: #{whoops}" 
+      end
     end
 
     def collapse(othercat)
