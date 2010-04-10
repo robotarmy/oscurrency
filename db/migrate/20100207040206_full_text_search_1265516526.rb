@@ -1,5 +1,9 @@
 class FullTextSearch1265516526 < ActiveRecord::Migration
   def self.up
+
+    adapter = ActiveRecord::Base.connection.instance_variable_get("@config")[:adapter]
+    if adapter == "postgresql"
+
       ActiveRecord::Base.connection.execute(<<-'eosql')
         DROP index IF EXISTS people_fts_idx
       eosql
@@ -66,5 +70,6 @@ class FullTextSearch1265516526 < ActiveRecord::Migration
         USING gin((to_tsvector('english', coalesce(reqs.name, '') || ' ' || coalesce(reqs.description, ''))))
 
       eosql
+    end
   end
 end
