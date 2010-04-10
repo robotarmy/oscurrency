@@ -13,10 +13,6 @@
 
 class Category < ActiveRecord::Base
 
-  def self.all 
-    Category.find(:all, :order => "name").sort_by { |a| a.name }
-  end
-
   index do 
     name
     description
@@ -54,9 +50,16 @@ class Category < ActiveRecord::Base
     reqs.delete_if { |req| req.has_approved? }
   end
 
+
+  def self.all_sorted
+    Category.find(:all, :order => "name").sort_by { |a| a.name }
+  end
+
+
 #   def descendants_current_and_active_reqs_count
 #     descendants.map {|d| d.current_and_active_reqs.length}.inject(0) {|sum,element| sum + element}
 #   end
+
 
 #   def descendants_providers_count
 #     # not going to the trouble of making sure people are counted only once
