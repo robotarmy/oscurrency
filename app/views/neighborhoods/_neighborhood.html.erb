@@ -1,12 +1,17 @@
 <tr class="subcategories" >
   <td>
-    <div class=categoryMenuItem"><%= h(neighborhood.name) %></div>
+    <div class=categoryMenuItem">
+      <%= h(neighborhood.name) %>
+    </div>
   </td>
-
-<td class="categorynumbercell">
-  <% if neighborhood.reqs.current_and_active.length  > 0 -%>
-  <a class="categoryMenuItem" href="/neighborhoods/<%= neighborhood.id %>/reqs">
-    <%= neighborhood.reqs.current_and_active.length %>
+  <td class="categorynumbercell">
+  </td>
+  <td class="categorynumbercell">
+  </td>
+  <td  class="categorynumbercell">
+    <% if neighborhood.people.length  > 0 -%>
+    <a class="categoryMenuItem" href="/neighborhoods/<%= neighborhood.id %>/people">
+    <%= neighborhood.people.length %>
   </a>
   <% end -%>
 </td>
