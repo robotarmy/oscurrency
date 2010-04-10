@@ -6,8 +6,8 @@ class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.xml
   def index
-    @top_level_categories = Category.all
-    @categories = Category.all
+    @top_level_categories = Category.all_sorted
+    @categories = Category.all_sorted
 
     respond_to do |format|
       format.html # index.html.erb
@@ -34,7 +34,7 @@ class CategoriesController < ApplicationController
   # GET /categories/new.xml
   def new
     @category = Category.new
-    @all_categories = Category.all
+    @all_categories = Category.all_sorted
 
     respond_to do |format|
       format.html # new.html.erb
@@ -45,7 +45,7 @@ class CategoriesController < ApplicationController
   # GET /categories/1/edit
   def edit
     @category = Category.find(params[:id])
-    @all_categories = Category.all
+    @all_categories = Category.all_sorted
   end
 
   # POST /categories
