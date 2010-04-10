@@ -13,9 +13,6 @@
 
 class Category < ActiveRecord::Base
 
-  def self.all 
-    Category.find(:all, :order => "name").sort_by { |a| a.name }
-  end
 
   index do 
     name
