@@ -35,6 +35,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :categories, :has_many => [:reqs, :offers, :people]
 
+  map.resources :neighborhoods, :has_many => [:reqs, :offers, :people]
+
   map.resources :events, :member => { :attend => :get, 
                                       :unattend => :get } do |event|
     event.resources :comments
@@ -53,6 +55,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :people, :member => { :verify_email => :get,
                                       :common_contacts => :get }
+
+
   map.connect 'people/verify/:id', :controller => 'people',
                                     :action => 'verify_email'
 

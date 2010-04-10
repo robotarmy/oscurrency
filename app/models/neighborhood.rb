@@ -7,6 +7,9 @@ class Neighborhood < ActiveRecord::Base
     Req.in_neighborhood(self)
   end
 
+  def active_people
+    active_people = self.people.find(:all, :conditions => Person.conditions_for_mostly_active)
+  end
 
 
   def ancestors_name

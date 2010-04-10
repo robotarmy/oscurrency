@@ -41,7 +41,7 @@ class Category < ActiveRecord::Base
   end
 
   def active_people
-    active_people = self.people.find(:all, :conditions => Person.conditions_for_active)
+    active_people = self.people.find(:all, :conditions => Person.conditions_for_mostly_active)
   end
 
   def current_and_active_reqs

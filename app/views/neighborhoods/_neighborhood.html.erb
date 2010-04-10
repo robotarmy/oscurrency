@@ -9,9 +9,9 @@
   <td class="categorynumbercell">
   </td>
   <td  class="categorynumbercell">
-    <% if neighborhood.people.length  > 0 -%>
+    <% if neighborhood.active_people.length  > 0 -%>
     <a class="categoryMenuItem" href="/neighborhoods/<%= neighborhood.id %>/people">
-    <%= neighborhood.people.length %>
+    <%= neighborhood.active_people.length %>
   </a>
   <% end -%>
 </td>
