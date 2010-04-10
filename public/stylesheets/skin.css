@@ -485,10 +485,12 @@ table.categories a
     color:#333;
 }
 
+
 table.categories a.categoryMenuItem, table.categories td.selected a.selected
 {
     color:#777;
 }
+
 a.categoryMenuItem:hover
 {
   text-decoration:underline;
