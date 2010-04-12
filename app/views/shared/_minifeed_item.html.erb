@@ -1,17 +1,18 @@
 <%- unless minifeed_item.item.nil? -%>
-  <li>
-    <div class="profile-image">
+<li>
+  <div class="profile-image">
     <%= image_link minifeed_item.person %>
   </div>
   <%- if minifeed_item.item_type == "Exchange" %>
-    </p>
   <div class="customer-image">
     <%= image_link minifeed_item.item.customer %>
   </div>
   <%- end -%>
-  <p><%= minifeed_message minifeed_item %></p>
+  <p>
+    <%= minifeed_message minifeed_item %>
+  </p>
   <p class="meta published">
     <%= time_ago_in_words minifeed_item.created_at %> ago
   </p>
-  </li>
+</li>
 <%- end -%>
