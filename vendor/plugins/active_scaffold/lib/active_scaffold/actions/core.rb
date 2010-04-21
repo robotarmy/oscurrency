@@ -29,8 +29,8 @@ module ActiveScaffold::Actions
     # override this method if you want to do something after render_field
     def after_render_field(record, column); end
 
-    def authorized_for?(*args)
-      active_scaffold_config.model.authorized_for?(*args)
+    def authorized_for?(options = {})
+      active_scaffold_config.model.authorized_for?(options)
     end
 
     def clear_flashes
@@ -61,7 +61,11 @@ module ActiveScaffold::Actions
     end
 
     def response_status
-      successful? ? 200 : 422
+      if successful?
+        action_name == 'create' ? 201 : 200
+      else
+        422
+      end
     end
 
     # API response object that will be converted to XML/YAML/JSON using to_xxx
@@ -102,8 +106,8 @@ module ActiveScaffold::Actions
     end
   
     #Overide this method on your controller to provide model with named scopes
-    def named_scopes_for_collection
-      nil
+    def beginning_of_chain
+      active_scaffold_config.model
     end
         
     # Builds search conditions by search params for column names. This allows urls like "contacts/list?company_id=5".

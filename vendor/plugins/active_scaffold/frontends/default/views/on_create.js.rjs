@@ -1,4 +1,5 @@
-cancel_selector = "##{element_form_id(:action => :create)} a.cancel".to_json
+form = element_form_id(:action => :create)
+cancel_selector = "##{form} a.cancel".to_json
 
 if controller.send :successful?
   if @insert_row
@@ -6,20 +7,22 @@ if controller.send :successful?
     page << "ActiveScaffold.stripe($('#{active_scaffold_tbody_id}'))"
     page << "ActiveScaffold.hide_empty_message('#{active_scaffold_tbody_id}','#{empty_message_id}');"
     page << "ActiveScaffold.increment_record_count('#{active_scaffold_id}');"
+    page[element_row_id(:action => :list, :id => @record.id)].highlight
   end
 
   if (active_scaffold_config.create.persistent)
     page << "$$(#{cancel_selector}).first().link.reload();"
   else
-    page << "$$(#{cancel_selector}).first().link.close#{'_with_refresh' unless @insert_row}();"
+    page << "$$(#{cancel_selector}).first().link.close();"
   end
   if (active_scaffold_config.create.edit_after_create)
     page << "var link = $('#{action_link_id 'edit', @record.id}');"
     page << "if (link) (function() { link.action_link.open() }).defer();"
   end
 else
-  page << "l = $$(#{cancel_selector}).first().link;"
-  page.replace element_form_id(:action => :create), :partial => 'create_form'
-  page << "l.register_cancel_hooks();"
+  page << "var l = $$(#{cancel_selector}).first().link;"
+  page.replace form, :partial => 'create_form', :locals => {:xhr => true}
+  page << "if (l) l.register_cancel_hooks();"
+  page[form].scroll_to
 end
 page.replace_html active_scaffold_messages_id, :partial => 'messages'

@@ -1,0 +1,4 @@
+<% form_tag searches_path, :method => :get do %>
+    <%= text_field_tag :q, h(params[:q]), :maxlength => 50 %>
+    <%= submit_tag "Search", :name => nil  %>
+<% end %>
