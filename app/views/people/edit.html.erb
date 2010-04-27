@@ -143,14 +143,15 @@
     </table>
     <% end %>
     <br />
-    <%= button_to "Add a photo", new_photo_path, :class => "button" %>
+    <input type="button" name="update" value="Add Photo" id="update-submit" onclick="window.open('<%= new_person_photo_path(@person) %>', 'photo', 'height = 650, width = 750, top = 20, left = 100, scrollbars = 0, toolbar = 0, status = 0, menubar = 0, location = 0');" />
+
   </div>
 
   <br />
   <h3>Addresses</h3>
   <%= render :partial => 'address', :collection => @person.addresses %>
   <div class="status-btn" style="float: left">
-    <input type="button" name="update" value="Add address" id="update-submit" onclick="document.location='<%= new_person_address_path(@person) %>';" />
+    <input type="button" name="update" value="Add address" id="update-submit" onclick="window.open('<%= new_person_address_path(@person) %>', 'address', 'height = 650, width = 750, top = 20, left = 100, scrollbars = 0, toolbar = 0, status = 0, menubar = 0, location = 0');" />
   </div>
   <br />
 <%- end -%>

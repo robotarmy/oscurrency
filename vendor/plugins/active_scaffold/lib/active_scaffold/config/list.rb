@@ -16,6 +16,8 @@ module ActiveScaffold::Config
 
       # inherit from global scope
       @empty_field_text = self.class.empty_field_text
+      @pagination = self.class.pagination
+      @show_search_reset = true
     end
 
     # global level configuration
@@ -31,6 +33,13 @@ module ActiveScaffold::Config
     # what string to use when a field is empty
     cattr_accessor :empty_field_text
     @@empty_field_text = '-'
+
+    # What kind of pagination to use:
+    # * true: The usual pagination
+    # * :infinite: Treat the source as having an infinite number of pages (i.e. don't count the records; useful for large tables where counting is slow and we don't really care anyway)
+    # * false: Disable pagination
+    cattr_accessor :pagination
+    @@pagination = true
 
     # instance-level configuration
     # ----------------------------
@@ -49,8 +58,17 @@ module ActiveScaffold::Config
     # how many page links around current page to show
     attr_accessor :page_links_window
 
+    # What kind of pagination to use:
+    # * true: The usual pagination
+    # * :infinite: Treat the source as having an infinite number of pages (i.e. don't count the records; useful for large tables where counting is slow and we don't really care anyway)
+    # * false: Disable pagination
+    attr_accessor :pagination
+
     # what string to use when a field is empty
     attr_accessor :empty_field_text
+
+    # show a link to reset the search next to filtered message
+    attr_accessor :show_search_reset
 
     # the default sorting. should be an array of hashes of {column_name => direction}, e.g. [{:a => 'desc'}, {:b => 'asc'}]. to just sort on one column, you can simply provide a hash, though, e.g. {:a => 'desc'}.
     def sorting=(val)

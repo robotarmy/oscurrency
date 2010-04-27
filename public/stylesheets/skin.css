@@ -584,3 +584,19 @@ li.req .profile-image .name
 {
     font-size:12px;
 }
+
+.welcome{  
+  font-family:	Georgia,"Times New Roman",Times,serif;
+  font-size:	14px;
+  font-weight:	400;
+  font-style:	normal;
+  color:	#009908;
+  margin-top: 20px;
+  line-height:	19.6px;
+}
+
+h3.welcome{ 
+  font-family:	Georgia,"Times New Roman",Times,serif;
+  font-size:	20px;
+  font-weight:	bold;
+ }
