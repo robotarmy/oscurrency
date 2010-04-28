@@ -18,7 +18,8 @@ class PersonMailer < ActionMailer::Base
   end
   
   def message_notification(message)
-    from         "#{message.sender.name} <message@#{domain}>"
+    from         "#{message.sender.name} <#{message.sender.email}>"
+    reply_to         "#{message.sender.name} <#{message.sender.email}>"
     recipients   message.recipient.email
     subject      formatted_subject(message.subject)
     content_type "text/html"
@@ -27,7 +28,7 @@ class PersonMailer < ActionMailer::Base
   end
   
   def connection_request(connection)
-    from         "#{connection.contact..name} <connection@#{domain}>"
+    from         "#{connection.contact.name} <connection@#{domain}>"
     recipients   connection.person.email
     subject      formatted_subject("New contact request")
     body         "server" => server,
@@ -136,7 +137,8 @@ class PersonMailer < ActionMailer::Base
   end
 
   def req_notification(req, recipient)
-    from         "#{req.person.name} <request@#{domain}>"
+    from         "#{req.person.name} <#{req.person.email}>"
+    reply_to     "#{req.person.name} <#{req.person.email}>"
     recipients   recipient.email
     subject      formatted_subject("#{req.name} request")
     body         "name" => req.name,
@@ -147,7 +149,8 @@ class PersonMailer < ActionMailer::Base
   end
 
   def offer_notification(offer, recipient)
-    from         "#{offer.person.name} <offer@#{domain}>"
+    from         "#{offer.person.name} <#{offer.person.email}>"
+    reply_to     "#{offer.person.name} <#{offer.person.email}>"
     recipients   recipient.email
     subject      formatted_subject("#{offer.name} offered")
     body         "name" => offer.name,
