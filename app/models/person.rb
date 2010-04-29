@@ -214,6 +214,10 @@ class Person < ActiveRecord::Base
       find(:all, :conditions => conditions_for_active)
     end
 
+    def all_mostly_active
+      find(:all, :conditions => conditions_for_mostly_active)
+    end
+
     def all_listening_to_forum_posts
       find(:all, :conditions => conditions_for_active_and_forum_notifications)
     end

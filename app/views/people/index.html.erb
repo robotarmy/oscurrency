@@ -15,6 +15,6 @@
 
 <%- column_div :type => :secondary do -%>
 <p></p>
-  <h3>Timebank now has <%= Person.active.length  %> members and growing</h3>
+  <h3>Timebank has <%= Person.all_mostly_active.length  %> active members and growing</h3>
   <%= render :partial => '/home/secondary_conditional' %>
 <%- end -%>
