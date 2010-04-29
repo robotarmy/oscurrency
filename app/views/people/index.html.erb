@@ -1,5 +1,8 @@
 <%- column_div :type => :primary do -%>
-  <h2>People<%= h @zipcode %></h2>
+<p>
+</p>
+  <h3>Timebank now has <%= Person.active.length  %> members and growing</h3>
+  <h2>Newest Members</h2>
   <% unless @people.empty? -%>
     <%= will_paginate  %>
     <ul class="list people">
