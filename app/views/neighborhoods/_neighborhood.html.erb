@@ -4,12 +4,14 @@
       <%= h(neighborhood.name) %>
     </div>
   </td>
+<!--
   <td class="categorynumbercell">
   </td>
   <td class="categorynumbercell">
   </td>
+-->
   <td  class="categorynumbercell">
-    <% if neighborhood.active_people.length  > 0 -%>
+    <% if neighborhood.sub_people  > 0 -%>
     <a class="categoryMenuItem" href="/neighborhoods/<%= neighborhood.id %>/people">
     <%= neighborhood.active_people.length %>
   </a>

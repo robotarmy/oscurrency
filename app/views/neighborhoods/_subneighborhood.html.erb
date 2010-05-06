@@ -1,22 +1,25 @@
+<% if subneighborhood.sub_people  > 0 -%>
 <tr class="subcategories">
   <td class="subcategoryname" >
     <div class=categoryMenuItem"><%= h(subneighborhood.name) %></div>
   </td>
 
+<!--
 <td  class="categorynumbercell">
 </td>
 <td  class="categorynumbercell">
 </td>
+-->
   <td  class="categorynumbercell">
-    <% if subneighborhood.people.length  > 0 -%>
     <a class="categoryMenuItem" href="/neighborhoods/<%= subneighborhood.id %>/people">
-    <%= subneighborhood.people.length %>
+    <%= subneighborhood.active_people.length %>
   </a>
-  <% end -%>
 </td>
 
 
 </tr>
+<% end -%>
+
 <% if !subneighborhood.children.empty? %>
 <%= render :partial => 'subneighborhood', :collection => subneighborhood.children %>
 <% end %>

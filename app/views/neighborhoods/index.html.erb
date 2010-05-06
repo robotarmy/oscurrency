@@ -9,8 +9,10 @@
       <tr class="neighborhoods">
         <td>
         </td>
+<!--
         <td>Requests</td>
         <td>Offers</td>
+-->
         <td>Providers</td>
       </tr>
       <%= render :partial => 'neighborhood', :collection => @top_level_neighborhoods[0,halfish] %>
@@ -21,8 +23,10 @@
       <tr class="neighborhoods">
         <td>
         </td>
+<!--
         <td>Requests</td>
         <td>Offers</td>
+-->
         <td>Providers</td>
       </tr>
       <%= render :partial => 'neighborhood', :collection => @top_level_neighborhoods[-(total-halfish),(total-halfish)] %>
