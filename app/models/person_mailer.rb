@@ -6,31 +6,32 @@ class PersonMailer < ActionMailer::Base
   end
   
   def server
-    @server_name ||= PersonMailer.global_prefs.server_name
+    @server ||= PersonMailer.global_prefs.server_name
   end
   
   def password_reset(person)
     from         "Password reset <password-reset@#{domain}>"
     recipients   person.email
     subject      formatted_subject("Password reset")
-    body         "domain" => server, "person" => person
+    body         "server" => server, "person" => person
     content_type "text/html"
   end
   
   def message_notification(message)
-    from         "#{message.sender.name} <message@#{domain}>"
+    from         "#{message.sender.name} <#{message.sender.email}>"
+    reply_to         "#{message.sender.name} <#{message.sender.email}>"
     recipients   message.recipient.email
     subject      formatted_subject(message.subject)
     content_type "text/html"
-    body         "domain" => server, "message" => message,
+    body         "server" => server, "message" => message,
     "preferences_note" => preferences_note(message.recipient)
   end
   
   def connection_request(connection)
-    from         "#{connection.contact..name} <connection@#{domain}>"
+    from         "#{connection.contact.name} <connection@#{domain}>"
     recipients   connection.person.email
     subject      formatted_subject("New contact request")
-    body         "domain" => server,
+    body         "server" => server,
     "connection" => connection,
     "url" => edit_connection_path(connection),
     "preferences_note" => preferences_note(connection.person)
@@ -40,7 +41,7 @@ class PersonMailer < ActionMailer::Base
     from         "#{membership.group.name} <membership@#{domain}>"
     recipients   membership.group.owner.email
     subject      formatted_subject("#{membership.person.name} joined group #{membership.group.name}")
-    body         "domain" => server,
+    body         "server" => server,
     "membership" => membership,
     "url" => members_group_path(membership.group),
     "preferences_note" => preferences_note(membership.group.owner)
@@ -50,7 +51,7 @@ class PersonMailer < ActionMailer::Base
     from         "#{membership.group.name} <membership@#{domain}>"
     recipients   membership.group.owner.email
     subject      formatted_subject("#{membership.person.name} wants to join group #{membership.group.name}")
-    body         "domain" => server,
+    body         "server" => server,
     "membership" => membership,
     "url" => members_group_path(membership.group),
     "preferences_note" => preferences_note(membership.group.owner)
@@ -60,7 +61,7 @@ class PersonMailer < ActionMailer::Base
     from         "#{membership.group.name} <membership@#{domain}>"
     recipients   membership.person.email
     subject      formatted_subject("You have been accepted to join #{membership.group.name}")
-    body         "domain" => server,
+    body         "server" => server,
     "membership" => membership,
     "url" => group_path(membership.group),
     "preferences_note" => preferences_note(membership.person)
@@ -70,7 +71,7 @@ class PersonMailer < ActionMailer::Base
     from         "#{membership.group.name} <invitation#{domain}>"
     recipients   membership.person.email
     subject      formatted_subject("Invitation from group #{membership.group.name}")
-    body         "domain" => server,
+    body         "server" => server,
     "membership" => membership,
     "url" => edit_membership_path(membership),
     "preferences_note" => preferences_note(membership.person)
@@ -80,7 +81,7 @@ class PersonMailer < ActionMailer::Base
     from         "#{membership.group.name} <invitation@#{domain}>"
     recipients   membership.group.owner.email
     subject      formatted_subject("#{membership.person.name} accepted the invitation")
-    body         "domain" => server,
+    body         "server" => server,
     "membership" => membership,
     "url" => members_group_path(membership.group),
     "preferences_note" => preferences_note(membership.group.owner)
@@ -90,7 +91,7 @@ class PersonMailer < ActionMailer::Base
     from         "Blog <comment@#{domain}>"
     recipients   comment.commented_person.email
     subject      formatted_subject("New blog comment")
-    body         "domain" => server, "comment" => comment,
+    body         "server" => server, "comment" => comment,
     "url" => 
       blog_post_path(comment.commentable.blog, comment.commentable),
     "preferences_note" => 
@@ -101,7 +102,7 @@ class PersonMailer < ActionMailer::Base
     from         "Wall <comment@#{domain}>"
     recipients   comment.commented_person.email
     subject      formatted_subject("New wall comment")
-    body         "domain" => server, "comment" => comment,
+    body         "server" => server, "comment" => comment,
     "url" => person_path(comment.commentable, :anchor => "wall"),
     "preferences_note" => 
       preferences_note(comment.commented_person)
@@ -112,7 +113,7 @@ class PersonMailer < ActionMailer::Base
     recipients   subscriber.email
     subject      formatted_group_subject(forum_post.topic.forum.group, forum_post.topic.name)
     content_type "text/html"
-    body         "domain" => server, "forum_post" => forum_post,
+    body         "server" => server, "forum_post" => forum_post,
     "preferences_note" => 
       preferences_note(subscriber)
   end
@@ -131,28 +132,30 @@ class PersonMailer < ActionMailer::Base
     subject      formatted_subject("New registration")
     body         "email" => new_peep.email,
     "name" => new_peep.name,
-    "domain" => server,
+    "server" => server,
     "url" => person_path(new_peep)
   end
 
   def req_notification(req, recipient)
-    from         "#{req.person.name} <request@#{domain}>"
+    from         "#{req.person.name} <#{req.person.email}>"
+    reply_to     "#{req.person.name} <#{req.person.email}>"
     recipients   recipient.email
     subject      formatted_subject("#{req.name} request")
     body         "name" => req.name,
                  "description" => req.description,
-                 "domain" => server,
+                 "server" => server,
                  "requestor" => req.person.name,
                  "url" => req_path(req)
   end
 
   def offer_notification(offer, recipient)
-    from         "#{offer.person.name} <offer@#{domain}>"
+    from         "#{offer.person.name} <#{offer.person.email}>"
+    reply_to     "#{offer.person.name} <#{offer.person.email}>"
     recipients   recipient.email
     subject      formatted_subject("#{offer.name} offered")
     body         "name" => offer.name,
                  "description" => offer.description,
-                 "domain" => server,
+                 "server" => server,
                  "offerer" => offer.person.name,
                  "url" => offer_path(offer)
   end

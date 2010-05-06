@@ -1,8 +1,7 @@
 <%- column_div :type => :primary do -%>
-  <h2>People<%= h @zipcode %></h2>
+  <h2>Newest Members</h2>
   <% unless @people.empty? -%>
-    <%= will_paginate  %>
-    <ul class="list people">
+       <ul class="list people">
       <%= render :partial => @people, :locals => {:short => true} %>
     </ul>
     <%= will_paginate %>
@@ -15,5 +14,7 @@
 
 
 <%- column_div :type => :secondary do -%>
+<p></p>
+  <h3>Timebank has <%= Person.all_mostly_active.length  %> active members and growing</h3>
   <%= render :partial => '/home/secondary_conditional' %>
 <%- end -%>

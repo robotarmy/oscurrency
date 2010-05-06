@@ -29,14 +29,15 @@ module ActiveScaffold
   #     'location' => '12'
   # }
   module AttributeParams
+    protected
     # Takes attributes (as from params[:record]) and applies them to the parent_record. Also looks for
     # association attributes and attempts to instantiate them as associated objects.
     #
     # This is a secure way to apply params to a record, because it's based on a loop over the columns
     # set. The columns set will not yield unauthorized columns, and it will not yield unregistered columns.
     def update_record_from_params(parent_record, columns, attributes)
-      action = parent_record.new_record? ? :create : :update
-      return parent_record unless parent_record.authorized_for?(:action => action)
+      crud_type = parent_record.new_record? ? :create : :update
+      return parent_record unless parent_record.authorized_for?(:crud_type => crud_type)
 
       multi_parameter_attributes = {}
       attributes.each do |k, v|
@@ -46,27 +47,26 @@ module ActiveScaffold
         multi_parameter_attributes[column_name] << [k, v]
       end
 
-      columns.each :for => parent_record, :action => action, :flatten => true do |column|
+      columns.each :for => parent_record, :crud_type => crud_type, :flatten => true do |column|
+        # Set any passthrough parameters that may be associated with this column (ie, file column "keep" and "temp" attributes)
+        unless column.params.empty?
+          column.params.each{|p| parent_record.send("#{p}=", attributes[p]) if attributes.has_key? p}
+        end
+
         if multi_parameter_attributes.has_key? column.name
           parent_record.send(:assign_multiparameter_attributes, multi_parameter_attributes[column.name])
         elsif attributes.has_key? column.name
           value = column_value_from_param_value(parent_record, column, attributes[column.name]) 
 
           # we avoid assigning a value that already exists because otherwise has_one associations will break (AR bug in has_one_association.rb#replace)
-          parent_record.send("#{column.name}=", value) unless column.through_association? or parent_record.send(column.name) == value
+          parent_record.send("#{column.name}=", value) unless parent_record.send(column.name) == value
           
-          # Set any passthrough parameters that may be associated with this column (ie, file column "keep" and "temp" attributes)
-          unless column.params.empty?
-            column.params.each{|p| parent_record.send("#{p}=", attributes[p])}
-          end
-
         # plural associations may not actually appear in the params if all of the options have been unselected or cleared away.
-        # NOTE: the "form_ui" check isn't really necessary, except that without it we have problems
+        # the "form_ui" check is necessary, becuase without it we have problems
         # with subforms. the UI cuts out deep associations, which means they're not present in the
         # params even though they're in the columns list. the result is that associations were being
-        # emptied out way too often. BUT ... this means there's still a lingering bug in the default association
-        # form code: you can't delete the last association in the list.
-        elsif column.form_ui and column.plural_association? and not column.through_association?
+        # emptied out way too often.
+        elsif column.form_ui and column.plural_association?
           parent_record.send("#{column.name}=", [])
         end
       end
@@ -162,7 +162,7 @@ module ActiveScaffold
           return klass.find(params[:id])
         end
       else
-        if klass.authorized_for?(:action => :create)
+        if klass.authorized_for?(:crud_type => :create)
           if parent_column.singular_association?
             return parent_record.send("build_#{parent_column.name}")
           else
