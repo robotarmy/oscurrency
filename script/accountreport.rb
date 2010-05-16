@@ -33,8 +33,6 @@ Person.find(:all).each do |p|
   earndiff= totalearned - a.total_earned 
   if earndiff != 0
     file.puts "WRONG!<br />off by #{earndiff}"
-    a.total_earned = totalearned
-    a.save!
   else
     file.puts "&nbsp;"
   end
@@ -42,8 +40,6 @@ Person.find(:all).each do |p|
   paidiff = totalpaid - a.total_paid 
   if paidiff != 0
     file.puts "WRONG!<br />off by #{paidiff}"
-    a.total_paid = totalpaid
-    a.save!
   else
     file.puts "&nbsp;"
   end
