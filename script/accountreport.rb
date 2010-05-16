@@ -20,25 +20,30 @@ Person.find(:all).each do |p|
       end 
     end
   end
-  file.puts "<tr><td><a href='http://localhost:3000/people/#{p.id}'>#{p.name}</a><br />since #{p.created_at}</td><td>#{totalearned}</td><td>#{totalpaid}</td><td>#{p.account.balance}</td><td>"
+  a=p.account
+  file.puts "<tr><td><a href='http://localhost:3000/people/#{p.id}'>#{p.name}</a><br />since #{p.created_at}</td><td>#{totalearned}</td><td>#{totalpaid}</td><td>#{a.balance}</td><td>"
   calc=totalearned - totalpaid
-  if  calc!= p.account.balance
-    offby = calc - p.account.balance
+  if  calc!= a.balance
+    offby = calc - a.balance
     file.puts "WRONG!<br />S/B #{calc}<br /> off by #{offby}"
   else
     file.puts "&nbsp;"
   end
-  file.puts "</td><td>#{p.account.total_earned}</td><td>"
-  earndiff= totalearned - p.account.total_earned 
+  file.puts "</td><td>#{a.total_earned}</td><td>"
+  earndiff= totalearned - a.total_earned 
   if earndiff != 0
     file.puts "WRONG!<br />off by #{earndiff}"
+    a.total_earned = totalearned
+    a.save!
   else
     file.puts "&nbsp;"
   end
-  file.puts "</td><td>#{p.account.total_paid}</td><td>"
-  paidiff = totalpaid - p.account.total_paid 
+  file.puts "</td><td>#{a.total_paid}</td><td>"
+  paidiff = totalpaid - a.total_paid 
   if paidiff != 0
     file.puts "WRONG!<br />off by #{paidiff}"
+    a.total_paid = totalpaid
+    a.save!
   else
     file.puts "&nbsp;"
   end
