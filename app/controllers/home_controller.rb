@@ -19,7 +19,6 @@ class HomeController < ApplicationController
     else
       @body = "blog"
     end    
-    @posts = FeedPost.paginate(:all, :page => params[:page], :order => 'date_published DESC')
   end
 
   def show

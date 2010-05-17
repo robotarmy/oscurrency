@@ -24,5 +24,10 @@ class Post < ActiveRecord::Base
     body
   end
 
-
+  class << self
+    def recent_posts(params)
+      @posts = FeedPost.paginate(:all, :page => params[:page], :order => 'date_published DESC')
+      return @posts
+    end
+  end
 end
