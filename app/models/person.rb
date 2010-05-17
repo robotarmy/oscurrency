@@ -403,7 +403,7 @@ class Person < ActiveRecord::Base
   end
 
   def account
-    accounts.first
+    accounts.first(:conditions => ["group_id IS ?", nil])
   end
 
   def notifications
