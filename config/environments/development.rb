@@ -21,3 +21,8 @@ config.active_record.colorize_logging = false
 # to save sanity when debugging
 require 'ruby-debug'
 require 'ap'
+IRB::Irb.class_eval do
+  def output_value
+    ap @context.last_value
+  end
+end
