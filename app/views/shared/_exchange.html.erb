@@ -1,17 +1,19 @@
+  <% if exchange.group.nil? %>
 <li>
   <div class="profile-image">
     <%= image_link exchange.customer, :image => :thumbnail %>
     <%= image_tag "icons/switch.gif", :class => "icon", :alt => "Transactions" %>
   </div>
+  <div class="customer-image">
+    <%= image_link exchange.worker :image => :thumbnail %>
+  </div>
   <p>
-  <% if exchange.group.nil? %>
-    <%= person_link exchange.customer %><%= " paid #{exchange.amount.to_s} hours for " %><%= link_to h(exchange.metadata.name), exchange.metadata %>
-  <% else %>
-    <%= person_link exchange.customer %><%= " paid #{exchange.amount.to_s} #{exchange.group.unit} for " %><%= link_to h(exchange.metadata.name), exchange.metadata %>
-  <%- end -%>
+    <%= person_link exchange.customer %> paid <%= person_link exchange.worker %> <%= "#{exchange.amount.to_s} hours for " %><%= link_to h(exchange.metadata.name), exchange.metadata %>
+
   </p>
   <p class="meta published">
     <%= time_ago_in_words(exchange.created_at).capitalize %> ago
   </p>
 
 </li>
+  <%- end -%>
