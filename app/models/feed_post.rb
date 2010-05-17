@@ -4,6 +4,8 @@ require 'open-uri'
 class FeedPost < ActiveRecord::Base
   extend PreferencesHelper
 
+  validates_presence_of :title, :date_published, :content
+
   class << self
     def update_posts
       posts = find(:all, :select => "feedid") 
