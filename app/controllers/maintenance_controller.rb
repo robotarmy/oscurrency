@@ -1,5 +1,7 @@
 class MaintenanceController < ApplicationController
 
+  before_filter :login_required, :admin_required
+
   def fix_cumulative
     result=""
     Person.find(:all).each do |p|  
