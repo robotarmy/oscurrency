@@ -119,6 +119,19 @@ ActionController::Routing::Routes.draw do |map|
   map.test_request '/oauth/test_request', :controller => 'oauth', :action => 'test_request'
   map.oauth '/oauth', :controller => 'oauth', :action => 'index'
 
+
+
+
+  
+  map.with_options :controller => 'reports', :action => 'show' do |report|
+    report.account 'account', :id => 'account'
+  end
+  
+
+
+
+
+
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
