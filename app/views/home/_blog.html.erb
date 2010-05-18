@@ -2,7 +2,7 @@
    Blog
 </h2>
 <ul class="list blog full">
-<%= render :partial => 'posts/blog_post', :collection => Post.recent_posts(params)  %>
+<%= render :partial => 'posts/blog_post', :collection => Post.recent_posts(params), :locals => {:short => true}  %>
 </ul>
 
 
