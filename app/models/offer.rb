@@ -15,6 +15,13 @@ class Offer < ActiveRecord::Base
   after_create :notify_workers, :if => :notifications
   after_create :log_activity
 
+  named_scope :in_neighborhood, lambda{ |neighborhood|
+    {
+      :joins      => "JOIN people ON people.id = offers.person_id JOIN neighborhoods_people ON neighborhoods_people.person_id = people.id JOIN neighborhoods ON neighborhoods.id  = neighborhoods_people.neighborhood_id ",
+      :select     => "DISTINCT `offers`.*" # kill duplicates
+    }
+  }
+
   class << self
 
     def current(page=1, category_id=nil)

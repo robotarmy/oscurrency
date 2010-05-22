@@ -35,14 +35,23 @@ class Req < ActiveRecord::Base
   after_create :notify_workers, :if => :notifications
   after_create :log_activity
 
+
+  named_scope :in_neighborhood, lambda{ |neighborhood|
+    {
+      :joins      => "JOIN people ON people.id = reqs.person_id JOIN neighborhoods_people ON neighborhoods_people.person_id = people.id JOIN neighborhoods ON neighborhoods.id  = neighborhoods_people.neighborhood_id ",
+      :select     => "DISTINCT `reqs`.*" # kill duplicates
+    }
+  }
+
   class << self
+
 
     def current_and_active(page=1, category_id=nil)
       today = DateTime.now
       if category_id
         @reqs = Category.find(category_id).reqs.paginate(:all, :page => page, :conditions => ["active = ? AND due_date >= ?", true, today], :order => 'created_at DESC')
       else
-        @reqs = Req.paginate(:all, :page => page, :conditions => ["active = ? AND due_date >= ?", true, today], :order => 'created_at DESC')
+        @reqs = Req.paginate(:all, :page => page, :conditions => ["reqs.active = ? AND due_date >= ?", true, today], :order => 'created_at DESC')
 end
       @reqs.delete_if { |req| req.has_approved? }
     end

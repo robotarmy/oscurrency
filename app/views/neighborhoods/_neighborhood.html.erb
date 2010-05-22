@@ -1,0 +1,23 @@
+<tr class="categories" >
+  <td>
+    <div class=categoryMenuItem">
+      <%= h(neighborhood.name) %>
+    </div>
+  </td>
+<!--
+  <td class="categorynumbercell">
+  </td>
+  <td class="categorynumbercell">
+  </td>
+-->
+  <td  class="categorynumbercell">
+    <% if neighborhood.sub_people  > 0 -%>
+    <a class="categoryMenuItem" href="/neighborhoods/<%= neighborhood.id %>/people">
+    <%= neighborhood.active_people.length %>
+  </a>
+  <% end -%>
+</td>
+</tr>
+<% unless neighborhood.children.empty? -%>
+<%= render :partial => 'subneighborhood', :collection => neighborhood.children %>
+<% end -%>

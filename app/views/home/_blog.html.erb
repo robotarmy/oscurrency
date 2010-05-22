@@ -1,18 +1,8 @@
-<%- if logged_in? && current_person.admin? %>
-      <h2>System Blog</h2>
-      <%= link_to "refresh", '/home/refreshblog', :class => "small" %>
-<%- end -%>
-
-<%- unless @posts.blank? -%>
 <h2>
-<%- unless global_prefs.app_name.blank? -%>  
-  <%= global_prefs.app_name %> blog
-<%- else -%>
    Blog
 </h2>
-<%- end -%>
 <ul class="list blog full">
-<%= render :partial => 'posts/blog_post', :collection => @posts %>
+<%= render :partial => 'posts/blog_post', :collection => Post.recent_posts(params), :locals => {:short => true}  %>
 </ul>
-<%- end -%>
+
 

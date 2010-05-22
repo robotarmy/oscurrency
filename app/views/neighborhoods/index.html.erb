@@ -1,24 +1,38 @@
-<h1>Listing neighborhoods</h1>
+<div class="categorycol">
+  <%- if @top_level_neighborhoods.empty? -%>
+  <h3 class="blankslate">No neighborhoods (yet!)</h3>
+  <%- else -%>
+  <% total = @top_level_neighborhoods.length %>
+  <% halfish = (total/2.0).ceil %>
+  <table id="categoryMenu" class="neighborhoods">
+    <tbody>
+      <tr class="neighborhoods">
+        <td>
+        </td>
+<!--
+        <td>Requests</td>
+        <td>Offers</td>
+-->
+        <td>People</td>
+      </tr>
+      <%= render :partial => 'neighborhood', :collection => @top_level_neighborhoods[0,halfish] %>
+    </tbody>
+  </table>
+  <table id="categoryMenu2" class="neighborhoods">
+    <tbody>
+      <tr class="neighborhoods">
+        <td>
+        </td>
+<!--
+        <td>Requests</td>
+        <td>Offers</td>
+-->
+        <td>People</td>
+      </tr>
+      <%= render :partial => 'neighborhood', :collection => @top_level_neighborhoods[-(total-halfish),(total-halfish)] %>
+    </tbody>
+  </table>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Parent</th>
-  </tr>
 
-<% for neighborhood in @neighborhoods %>
-  <tr>
-    <td><%=h neighborhood.name %></td>
-    <td><%=h neighborhood.description %></td>
-    <td><%=h neighborhood.parent_id %></td>
-    <td><%= link_to 'Show', neighborhood %></td>
-    <td><%= link_to 'Edit', edit_neighborhood_path(neighborhood) %></td>
-    <td><%= link_to 'Destroy', neighborhood, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New neighborhood', new_neighborhood_path %>
+  <%- end -%>
+</div>

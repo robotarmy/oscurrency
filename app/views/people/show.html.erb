@@ -65,6 +65,9 @@
     <%= display simple_format_without_paragraph @person.description %>
   </div>
 
+  <%= render :partial => 'people/recent_exchanges' %>
+
+
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>

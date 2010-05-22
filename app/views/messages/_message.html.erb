@@ -1,9 +1,11 @@
 <li class="message">
   <div class="profile-image">
-    <%= image_link message.other_person(current_person),
+    <%- if message.other_person(current_person) != nil -%>
+       <%= image_link message.other_person(current_person),
                    :image => :thumbnail,
                    :image_options => { :class => "photo" } %>
 
+    <%- end -%>    
     <%- if not message.read? and not current_person?(message.sender) -%>
       <%= image_tag("icons/email.gif", :class => "icon") %>
     <%- elsif message.replied_to? -%>

@@ -1,5 +1,5 @@
 <%- unless @person.recent_activity.empty? -%>
-  <h2>Recent Transactions (Main Account)</h2>
+  <h2>Recent Transactions</h2>
   
 
   <%- unless @person.last_logged_in_at.nil? or current_person?(@person) -%>
@@ -11,6 +11,6 @@
   
   <ul class="list activity full">
      <%= render :partial => 'shared/exchange',
-                :collection => @person.received_exchanges %>
+                :collection => @person.transactions %>
   </ul>
 <%- end -%>

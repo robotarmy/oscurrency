@@ -13,6 +13,7 @@ module ApplicationHelper
     home     = menu_element("Home",   home_path)
     categories = menu_element("Directory", categories_path)
     people   = menu_element("People", people_path)
+    places   = menu_element("Places", neighborhoods_path)
     if Forum.count == 1
       forum = menu_element("Forum", forum_path(Forum.find(:first)))
     else
@@ -30,9 +31,9 @@ module ApplicationHelper
 #                              person_connections_path(current_person))
 #      links = [home, profile, contacts, messages, blog, people, forum]
       #events   = menu_element("Events", events_path)
-        links = [home, profile, categories,  people, messages, groups, forum]
+        links = [home, profile, categories,  people, places, messages, groups, forum]
       else
-        links = [home, profile, categories,  people, messages, forum]
+        links = [home, profile, categories,  people, places, messages, forum]
       end
       # TODO: remove 'unless production?' once events are ready.
       #links.push(events) #unless production?

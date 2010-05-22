@@ -17,7 +17,7 @@
 
 <p>
   <b>Smtp server:</b>
-  <%=h @preferences.smtp_server %>
+  <%=h ENV['GMAIL_SMTP_SERVER']  %> (we are using GMAIL and this is all set in the Rails environment now)
 </p>
 
 <p>

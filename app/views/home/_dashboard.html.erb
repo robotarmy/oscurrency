@@ -1,33 +1,33 @@
 <h2>My Accounts</h2>
 <%= render :partial => '/people/account', :collection => @person.accounts %>
     <h2>My Active Work</h2>
-<%- if @bids.blank? -%>
+<%- if @person.current_and_active_bids.length < 1 -%>
     <h3 class="blankslate">No active bids</h3>
 <%- else -%>
 <ul class="list full">
-    <%= render :partial => '/shared/bid', :collection => @bids %>
+    <%= render :partial => '/shared/bid', :collection => @person.current_and_active_bids %>
   </ul>
 <%- end -%>
 <table><tr><td>
     <h2>My Active Offers</h2>
     <td><%= render :partial => 'shared/add_button', :locals => { :button_text => "New Offer", :new_resource_path => new_offer_path } %></td>
 </tr></table>
-<%- if @offers.blank? -%>
+<%- if @person.current_offers.length < 1 -%>
     <h3 class="blankslate">No active offers</h3>
 <%- else -%>
 <ul class="list full">
-    <%= render :partial => '/offers/offer', :collection => @offers %>
+    <%= render :partial => '/offers/offer', :collection => @person.current_offers %>
   </ul>
 <%- end -%>
 <table><tr><td>
     <h2>My Active Requests</h2></td>
     <td><%= render :partial => 'shared/add_req_button' %></td>
 </tr></table>
-<%- if @reqs.blank? -%>
+<%- if @person.current_and_active_reqs.length < 1 -%>
     <h3 class="blankslate">No active requests</h3>
 <%- else -%>
 <ul class="list full">
-    <%= render :partial => '/reqs/req', :collection => @reqs %>
+    <%= render :partial => '/reqs/req', :collection => @person.current_and_active_reqs %>
   </ul>
   <%- end -%>
-  <%= render :partial => 'shared/recent_sent_exchanges' %>
+  <%= render :partial => 'people/recent_exchanges' %>

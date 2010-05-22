@@ -4,7 +4,11 @@
     <%= link_to sanitize(blog_post.title), {:controller => 'home', :action => 'show', :id => blog_post.id},
                 :class => "show-follow" %>
   </h3>
-  <%= blog_post.content %>
+  <%= if defined? short ; 
+       blog_post.content.briefiate(100); 
+      else 
+         blog_post.content; 
+       end %>
   <p class="meta">
     Posted <%= time_ago_in_words(blog_post.date_published) %> ago
   </p>
