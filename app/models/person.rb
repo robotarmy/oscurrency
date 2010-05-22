@@ -67,7 +67,7 @@ class Person < ActiveRecord::Base
   NUM_WALL_COMMENTS = 10
   NUM_RECENT = 8
   FEED_SIZE = 10
-  TIME_AGO_FOR_MOSTLY_ACTIVE = 3.months.ago
+  TIME_AGO_FOR_MOSTLY_ACTIVE = 6.months.ago
   DEFAULT_ZIPCODE_STRING = ''
   # These constants should be methods, but I couldn't figure out how to use
   # methods in the has_many associations.  I hope you can do better.
@@ -553,7 +553,7 @@ class Person < ActiveRecord::Base
   end
   
   def short_description
-    self.description.briefiate(100)
+    self.description.briefiate(180)
   end
 
   def reset_password
