@@ -237,10 +237,19 @@ class PeopleController < ApplicationController
 
   def expand
     @person = Person.find(params[:id])
+    # +++ warning: this fails in Rails 2.3.6, works in Rails 2.3.2, no idea why
     render :update do |page|
-      page.replace("p#{@person.id}", :partial => 'person', :locals => { :person => @person })
+      page.replace("p#{@person.id}", :partial => 'person', :locals => { :person => @person, :long => true })
     end
   end
+
+  def contract
+    @person = Person.find(params[:id])
+    render :update do |page|
+      page.replace("p#{@person.id}", :partial => 'person', :locals => { :person => @person, :short => true })
+    end
+  end
+
 
   private
 

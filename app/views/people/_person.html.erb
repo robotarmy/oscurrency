@@ -11,7 +11,10 @@
        <%= link_to_remote('[More]', :url => {:action => 'expand', :id => person.id }) %>
     <% end %>
     <% else %>
-    <%= display simple_format_without_paragraph(person.description), :class => "note" %>
+    <%= simple_format_without_paragraph(person.description) %>
+    <% if defined? long %>
+       <%= link_to_remote('[Less]', :url => {:action => 'contract', :id => person.id }) %>    
+    <% end %>
     <% end %>
   </div>
 </li>

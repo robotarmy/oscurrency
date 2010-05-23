@@ -19,10 +19,11 @@ config.action_mailer.raise_delivery_errors = true
 config.active_record.colorize_logging = false
 
 # to save sanity when debugging
-require 'ruby-debug'
-require 'ap'
-IRB::Irb.class_eval do
-  def output_value
-    ap @context.last_value
-  end
-end
+# this stopped working for me in Snow Leopard
+# require 'ruby-debug'
+# require 'ap'                    # requires gem awesome_print
+# IRB::Irb.class_eval do
+#   def output_value
+#     ap @context.last_value
+#   end
+# end
