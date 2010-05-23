@@ -8,25 +8,6 @@ describe PersonMailer do
     @domain = @preferences.domain
   end
   
-  describe "password reminder" do
-     before(:each) do
-       @person = people(:quentin)
-       @email = PersonMailer.create_password_reminder(@person)    
-     end
-   
-     it "should have the right sender" do
-       @email.from.first.should == "password-reminder@#{@domain}"
-     end
-   
-     it "should have the right recipient" do
-       @email.to.first.should == @person.email
-     end
-   
-     it "should have the unencrypted password in the body" do
-       @email.body.should =~ /#{@person.unencrypted_password}/
-     end
-   end
-   
    describe "message notification" do
      before(:each) do
        @message = people(:quentin).received_messages.first

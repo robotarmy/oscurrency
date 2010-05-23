@@ -5,6 +5,8 @@ module Cheepnis
 
   # usage: set environment variables HEROKU_USER and HEROKU_PASSWORD
   # Call Cheepnis.enqueue(obj) in place of Delayed::Job.enqueue(obj)
+  # A cron job that calls Cheepnis.maybe_stop is a good idea; will terminate workers if the usual method fails 
+  # (hm, should have called this DownSizer)
 
   def self.enqueue(object)
     # enqueue the object in the normal way
@@ -45,7 +47,7 @@ module Cheepnis
   # this needs some experimentation
   def self.maybe_stop
     count = Delayed::Job.count
-    if count == 1
+    if count <= 1
       stop
     else
       # if there are actual jobs, fail so we will run again

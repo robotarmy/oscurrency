@@ -19,9 +19,9 @@ class PeopleController < ApplicationController
         end
       else
         # XXX temp hack for postgresql
-          @people = Person.mostly_active_newest(params)
-        #@people = Person.mostly_active_alpha(params[:page],  params[:category_id, :neighborhood_id])
-        #@people.add_missing_links(('A'..'Z').to_a)
+        @people = Person.mostly_active_newest(params)
+        # @people = Person.mostly_active_alpha(params[:page],  params[:category_id, :neighborhood_id])
+        # @people.add_missing_links(('A'..'Z').to_a)
       end
     end
 
@@ -232,6 +232,13 @@ class PeopleController < ApplicationController
     else
       flash[:success] = "You have been logged in.  Please choose a new password below"
       self.current_person = @person
+    end
+  end
+
+  def expand
+    @person = Person.find(params[:id])
+    render :update do |page|
+      page.replace("p#{@person.id}", :partial => 'person', :locals => { :person => @person })
     end
   end
 

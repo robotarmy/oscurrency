@@ -342,6 +342,10 @@ p.welcome {
 .profile .note {
   margin-left: 252px;
 }
+
+.note {
+  margin-bottom: 1px;
+}
 .profile .toolbox ul {
   background: url(/images/blue-grad.jpg) bottom repeat-x;
   border: 1px solid #ccc;
@@ -535,8 +539,7 @@ p.formatting span
     width:425px;
     margin-left:103px;
     margin-right:2px;
-    border:1px solid #ddd;
-    background:white url(/images/black-grad.jpg) bottom repeat-x;
+    border:2px solid #cdc;
 }
 
 .col_content p { margin-left:0 }
