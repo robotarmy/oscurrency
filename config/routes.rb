@@ -18,8 +18,6 @@ ActionController::Routing::Routes.draw do |map|
     group.resources :memberships
   end
 
-  map.resources :broadcast_emails
-
   map.resources :bids
 
   map.twitter_oauth_client '/reqs/twitter_oauth_client', :controller => "reqs", :action => "twitter_oauth_client"
