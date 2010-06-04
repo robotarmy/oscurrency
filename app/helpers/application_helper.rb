@@ -31,9 +31,9 @@ module ApplicationHelper
 #                              person_connections_path(current_person))
 #      links = [home, profile, contacts, messages, blog, people, forum]
       #events   = menu_element("Events", events_path)
-        links = [home, profile, categories,  people, places, messages, groups, forum]
+        links = [home, profile, categories,  people, places, messages, groups]
       else
-        links = [home, profile, categories,  people, places, messages, forum]
+        links = [home, profile, categories,  people, places, messages]
       end
       # TODO: remove 'unless production?' once events are ready.
       #links.push(events) #unless production?
