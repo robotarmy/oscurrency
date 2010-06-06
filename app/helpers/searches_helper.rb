@@ -1,5 +1,7 @@
 module SearchesHelper
   
+  # Most of this machinery is obsolete, since we no longer have category-specific search boxes
+
   # Return the model to be searched based on params.
   def search_model
     return "Req"       if params[:controller] =~ /home/
