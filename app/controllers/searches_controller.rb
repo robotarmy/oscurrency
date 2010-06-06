@@ -1,6 +1,9 @@
 class SearchesController < ApplicationController
   include ApplicationHelper
 
+  # see app/helpers/searches_helper.rb
+  SEARCHABLE_CLASSES = [Person, Req, Offer, Message, ForumPost, Category, Group]
+
   before_filter :login_required
 
   def index
@@ -11,8 +14,12 @@ class SearchesController < ApplicationController
     model = params[:model]
     klass = nil
     if !model.blank?
-      klass = model.constantize
-      unless [Person, Req, Offer, Message, ForumPost].include?(klass)
+      begin
+        klass = model.constantize
+      rescue NameError => e
+        klass = nil
+      end
+      unless SEARCHABLE_CLASSES.include?(klass)
        flash[:error] = "Invalid search"
        redirect_to home_url and return
       end
@@ -20,7 +27,7 @@ class SearchesController < ApplicationController
     page  = params[:page] || 1
 
     @results = []
-    for klass in klass ? [klass] : [Person, Req, Offer, Message, ForumPost]
+    for klass in klass ? [klass] : SEARCHABLE_CLASSES
       @results.concat(klass.search(query))
     end
     # I'd like to sort the list here, but each search comes back rank ordered and I hate to throw that away...we could sort by time though
