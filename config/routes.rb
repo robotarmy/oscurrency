@@ -127,7 +127,7 @@ ActionController::Routing::Routes.draw do |map|
   
 
 
-  map.about '/maintenance/fix-cumulative', :controller => 'maintenance', :action => 'fix_cumulative'
+  map.fix-cumulative '/maintenance/fix-cumulative', :controller => 'maintenance', :action => 'fix_cumulative'
 
 
 
