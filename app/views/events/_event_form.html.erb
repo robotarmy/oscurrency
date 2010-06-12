@@ -3,7 +3,7 @@
 <% form_for(@event) do |f| %>
 <div class="form_row full">
   <%= f.label :title %>
-  <%= f.text_field :title %>
+  <%= f.text_field :title, :size => 80, :maxlength => 255 %>
 </div>
 <div class="form_row full">
   <%= f.label :description %>
