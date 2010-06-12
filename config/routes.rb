@@ -127,9 +127,6 @@ ActionController::Routing::Routes.draw do |map|
   
 
 
-  map.about '/maintenance/fix-cumulative', :controller => 'maintenance', :action => 'fix_cumulative'
-
-
 
   # The priority is based upon order of creation: first created -> highest priority.
 
