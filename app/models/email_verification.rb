@@ -16,6 +16,10 @@ class EmailVerification < ActiveRecord::Base
   before_validation_on_create :make_code
   after_create :send_verification_email
   
+  def perform
+    actually_send_verification_email
+  end
+
   private
   
     # Make a unique verification code.
@@ -27,10 +31,6 @@ class EmailVerification < ActiveRecord::Base
       perform
     end
     
-    def perform
-      actually_send_verification_email
-    end
-
     def actually_send_verification_email
       PersonMailer.deliver_email_verification(self)
     end

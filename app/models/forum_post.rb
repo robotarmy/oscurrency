@@ -35,17 +35,17 @@ class ForumPost < Post
   after_create :log_activity
   after_create :send_forum_notifications
 
-#  private
+  def perform
+    do_send_forum_notifications
+  end
+
+  private
 
   def send_forum_notifications
 #    MailingsWorker.async_send_forum_post_mailing(:forum_post_id => self.id)
     Cheepnis.enqueue(self)
   end
   
-  def perform
-    do_send_forum_notifications
-  end
-
   # was in MailingsWorker
   def do_send_forum_notifications
     group = topic.forum.group

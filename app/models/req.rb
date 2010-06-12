@@ -115,6 +115,10 @@ end
     end
   end
 
+  def perform
+    actually_notify_workers
+  end
+
   private
 
   def validate
@@ -125,10 +129,6 @@ end
 
   def notify_workers
     Cheepnis.enqueue(self)
-  end
-
-  def perform
-    actually_notify_workers
   end
 
   def actually_notify_workers

@@ -51,6 +51,10 @@ class Comment < ActiveRecord::Base
                           end
   end
   
+  def perform
+    actually_send_receipt_reminer
+  end
+
   private
     
     def wall_comment?
@@ -84,10 +88,6 @@ class Comment < ActiveRecord::Base
     
     def send_receipt_reminder
       Cheepnis.enqueue(self)
-    end
-
-    def perform
-      actually_send_receipt_reminer
     end
 
     def actually_send_receipt_reminer

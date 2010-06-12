@@ -50,6 +50,9 @@ class Offer < ActiveRecord::Base
     categories.collect{|cat| ERB::Util.html_escape(cat.long_name)}.join(",").briefiate(100)
   end
 
+  def perform
+    actually_notify_workers
+  end
 
   private
 
@@ -61,10 +64,6 @@ class Offer < ActiveRecord::Base
 
   def notify_workers
     Cheepnis.enqueue(self)
-  end
-
-  def perform
-    actually_notify_workers
   end
 
   def actually_notify_workers

@@ -138,6 +138,10 @@ class Message < Communication
     !recipient_read_at.nil?
   end
 
+  def perform
+    actually_send_receipt_reminer
+  end
+
   private
 
     # Assign the conversation id.
@@ -166,10 +170,6 @@ class Message < Communication
     
     def send_receipt_reminder
       Cheepnis.enqueue(self)
-    end
-
-    def perform
-      actually_send_receipt_reminer
     end
 
     def actually_send_receipt_reminer
