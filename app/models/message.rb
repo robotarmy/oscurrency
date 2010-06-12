@@ -165,6 +165,14 @@ class Message < Communication
     end
     
     def send_receipt_reminder
+      Cheepnis.enqueue(self)
+    end
+
+    def perform
+      actually_send_receipt_reminer
+    end
+
+    def actually_send_receipt_reminer
       return if sender == recipient
       @send_mail ||= Message.global_prefs.email_notifications? &&
                      recipient.message_notifications?

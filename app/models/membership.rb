@@ -45,6 +45,8 @@ class Membership < ActiveRecord::Base
             create(:person => person, :group => group, :status => PENDING)
             if send_mail
               membership = person.memberships.find(:first, :conditions => ['group_id = ?',group])
+              # +++ this and other mail should be done through Cheepnis, but it would require
+              # some work to separate out the different tasks, so deferring for now.
               PersonMailer.deliver_membership_request(membership)
             end
           end

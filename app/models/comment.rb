@@ -83,6 +83,14 @@ class Comment < ActiveRecord::Base
     end
     
     def send_receipt_reminder
+      Cheepnis.enqueue(self)
+    end
+
+    def perform
+      actually_send_receipt_reminer
+    end
+
+    def actually_send_receipt_reminer
       return if commenter == commented_person
       if wall_comment?
         @send_mail ||= Comment.global_prefs.email_notifications? &&

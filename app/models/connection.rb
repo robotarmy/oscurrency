@@ -62,6 +62,7 @@ class Connection < ActiveRecord::Base
         if send_mail
           # The order here is important: the mail is sent *to* the contact,
           # so the connection should be from the contact's point of view.
+          # +++ needs to go through Cheepnis
           connection = conn(contact, person)
           PersonMailer.deliver_connection_request(connection)
         end

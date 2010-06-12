@@ -24,6 +24,14 @@ class EmailVerification < ActiveRecord::Base
     end
     
     def send_verification_email
+      perform
+    end
+    
+    def perform
+      actually_send_verification_email
+    end
+
+    def actually_send_verification_email
       PersonMailer.deliver_email_verification(self)
     end
 end

@@ -124,6 +124,14 @@ end
   end
 
   def notify_workers
+    Cheepnis.enqueue(self)
+  end
+
+  def perform
+    actually_notify_workers
+  end
+
+  def actually_notify_workers
     workers = []
     # even though pseudo-reqs created by direct payments do not have associated categories, let's
     # be extra cautious and check for the active property as well
