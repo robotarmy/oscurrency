@@ -47,7 +47,7 @@ class MessagesController < ApplicationController
   def reply
     original_message = Message.find(params[:id])
     recipient = original_message.other_person(current_person)
-    @message = Message.unsafe_build(:parent_id    => original_message.id,
+    @message = Message.unsafe_build(:parent    => original_message,
                                     :subject      => original_message.subject,
                                     :sender       => current_person,
                                     :recipient    => recipient)

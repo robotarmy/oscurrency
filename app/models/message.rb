@@ -23,18 +23,14 @@
 class Message < Communication
   extend PreferencesHelper
   
-  attr_accessor :reply, :parent, :send_mail
+  attr_accessor :reply, :send_mail # :parent
 
+  # sadly not implemented by texticle
+  #              :conditions => "recipient_deleted_at IS NULL"
   index do
     subject
     content
   end
-    
-
-# not sure how to do condition in texticle
-#   is_indexed :fields => [ 'subject', 'content', 'recipient_id',
-#                           'recipient_deleted_at' ],
-#              :conditions => "recipient_deleted_at IS NULL"
 
   MAX_CONTENT_LENGTH = 5000
   SEARCH_LIMIT = 20
@@ -42,27 +38,30 @@ class Message < Communication
 
   attr_accessible :subject, :content
   
+  belongs_to :parent, :class_name => 'Message', :foreign_key => 'parent_id'
   belongs_to :sender, :class_name => 'Person', :foreign_key => 'sender_id'
-  belongs_to :recipient, :class_name => 'Person',
-                         :foreign_key => 'recipient_id'
+  belongs_to :recipient, :class_name => 'Person', :foreign_key => 'recipient_id'
   belongs_to :conversation
   validates_presence_of :subject, :content
-  validates_length_of :subject, :maximum => 80
+  validates_length_of :subject, :maximum => 200
   validates_length_of :content, :maximum => MAX_CONTENT_LENGTH
 
-  before_create :assign_conversation
+# lets say this is optional
+# the only place conversations are actually used is ./views/messages/show.html.erb, maybe they could be flushed. +++
+#  before_create :assign_conversation
   after_create :update_recipient_last_contacted_at,
                :save_recipient, :set_replied_to, :send_receipt_reminder
   
-  def parent
-    return @parent unless @parent.nil?
-    return Message.find(parent_id) unless parent_id.nil?
-  end
+  # this shouldn't be necessary?
+  # def parent
+  #   return @parent unless @parent.nil?
+  #   return Message.find(parent_id) unless parent_id.nil?
+  # end
   
-  def parent=(message)
-    self.parent_id = message.id
-    @parent = message
-  end
+  # def parent=(message)
+  #   self.parent_id = message.id
+  #   @parent = message
+  # end
   
   # Return the sender/recipient that *isn't* the given person.
   def other_person(person)
@@ -139,7 +138,7 @@ class Message < Communication
   end
 
   def perform
-    actually_send_receipt_reminer
+    actually_send_receipt_reminder
   end
 
   private
@@ -149,7 +148,7 @@ class Message < Communication
     # in which case we create a new conversation.
     def assign_conversation
       self.conversation = parent.nil? ? Conversation.create :
-                                        parent.conversation
+        parent.conversation
     end
   
     # Mark the parent message as replied to if the current message is a reply.
@@ -172,10 +171,11 @@ class Message < Communication
       Cheepnis.enqueue(self)
     end
 
-    def actually_send_receipt_reminer
+    def actually_send_receipt_reminder
       return if sender == recipient
       @send_mail ||= Message.global_prefs.email_notifications? &&
                      recipient.message_notifications?
       PersonMailer.deliver_message_notification(self) if @send_mail
+      self.destroy
     end
 end
