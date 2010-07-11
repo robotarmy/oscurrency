@@ -8,7 +8,7 @@
 <% form_for(@req) do |f| %>
   <div class="form_row">
     <%= f.label 'Title' %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :size => 80, :maxlength => 255 %>
   </div>
   <div class="form_row">
     <%= f.label :estimated_hours %>
