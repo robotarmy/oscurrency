@@ -18,8 +18,11 @@ class PersonMailer < ActionMailer::Base
   end
   
   def message_notification(message)
-    from         "#{message.sender.name} <#{message.sender.email}>"
-    reply_to         "#{message.sender.name} <#{message.sender.email}>"
+    # +++ these probably want to be parameters
+    sender_name = message.sender ? message.sender.name : "Time Exchange Notes"
+    sender_email = message.sender ? message.sender.email : "notes@#{Req.global_prefs.domain}"
+    from         "#{sender_name} <#{sender_email}>"
+    reply_to     "#{sender_name} <#{sender_email}>"
     recipients   message.recipient.email
     subject      formatted_subject(message.subject)
     content_type "text/html"

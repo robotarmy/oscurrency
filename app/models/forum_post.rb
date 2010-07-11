@@ -59,7 +59,7 @@ class ForumPost < Post
     
     peeps.each do |peep|
       logger.info("forum_post: sending email to #{peep.id}: #{peep.name}")
-      PersonMailer.deliver_forum_post_notification(peep, self)
+      Message.queue(PersonMailer.create_forum_post_notification(peep, self), person, peep)
     end
   end
 

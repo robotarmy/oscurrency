@@ -6,19 +6,15 @@
 #  id                   :integer(4)      not null, primary key
 #  subject              :string(255)     
 #  content              :text            
-
 #  parent_id            :integer(4)      
 #  conversation_id      :integer(4)      
-
 #  sender_id            :integer(4)      
 #  recipient_id         :integer(4)      
-
 #  sender_deleted_at    :datetime        
 #  sender_read_at       :datetime        
 #  recipient_deleted_at :datetime        
 #  recipient_read_at    :datetime        
 #  replied_at           :datetime        
-
 #  type                 :string(255)     
 #  created_at           :datetime        
 #  updated_at           :datetime        
@@ -41,7 +37,8 @@ class Message < Communication
   SEARCH_LIMIT = 20
   SEARCH_PER_PAGE = 8
 
-  attr_accessible :subject, :content
+# ARGH, this breaks Message.create in some horrible way. Who designed this POS (Rails that is)?
+#  attr_accessible :subject, :content
   
   belongs_to :parent, :class_name => 'Message', :foreign_key => 'parent_id'
   belongs_to :sender, :class_name => 'Person', :foreign_key => 'sender_id'
@@ -99,6 +96,7 @@ class Message < Communication
   end
   
   # Return true if the sender/recipient pair is valid for a given parent.
+  # +++ check that this works for nil sender
   def valid_reply?
     # People can send multiple replies to the same message, in which case
     # the recipient is the same as the parent recipient.
@@ -135,6 +133,14 @@ class Message < Communication
     actually_send_receipt_reminder
   end
 
+  def self.queue(tmail, from, to)
+    Message.create(:sender => from, # tmail.from[0],
+                   :recipient => to, # tmail.to[0],
+                   :subject => tmail.subject,
+                   :content => tmail.body,
+                   :transient => true)
+  end
+
   private
 
     # Assign the conversation id.
@@ -166,9 +172,12 @@ class Message < Communication
     end
 
     def actually_send_receipt_reminder
-      return if sender == recipient
+#      return if sender == recipient
       @send_mail ||= Message.global_prefs.email_notifications? &&
                      recipient.message_notifications?
       PersonMailer.deliver_message_notification(self) if @send_mail
+      if transient
+        destroy
+      end
     end
 end

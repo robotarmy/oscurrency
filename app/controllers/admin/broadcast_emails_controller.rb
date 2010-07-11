@@ -50,7 +50,6 @@ class Admin::BroadcastEmailsController < ApplicationController
     respond_to do |format|
       if @broadcast_email.save
         flash[:notice] = 'Admin::BroadcastEmail was successfully created.'
-#        MailingsWorker.async_send_mailing(:mailing_id => @broadcast_email.id)
         Cheepnis.enqueue(@broadcast_email)
 
         format.html { redirect_to(admin_broadcast_email_path(@broadcast_email)) }

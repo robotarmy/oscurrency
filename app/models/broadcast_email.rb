@@ -12,27 +12,32 @@
 
 class BroadcastEmail < ActiveRecord::Base
 
-  def broadcast_sender
-    Person.find_by_email("notes@#{Req.global_prefs.domain}") ||
-      Person.create(:email => "notes@#{Req.global_prefs.domain}",
-                    :name => "Time Exchange Notes",
-                    :password => "ughfoo",
-                    :password_confirmation => "ughfoo",
-                    :accept_agreement => true
-                    ).save!
-  end
-
   def perform
-    sender = broadcast_sender
     peeps = Person.all_active
     peeps.each do |peep|
       logger.info("BroadcaseEmail: sending email to #{peep.id}: #{peep.name}")
-#      email = BroadcastMailer.create_spew(peep, subject, message)
-#      email.set_content_type("text/html")
-#      BroadcastMailer.deliver(email)
-      Message.build(:recipient => peep, :subject => subject, :content => message)
-
+      Message.create(:recipient => peep, 
+                     :sender => nil, # indicates from system
+                     :subject => formatted_subject(subject), 
+                     :content => message + preferences_note(recipient))
     end
+  end
+
+  # was in broadcase_mailer.rb
+  # Prepend the application name to subjects if present in preferences.
+  def formatted_subject(text)
+    name = PersonMailer.global_prefs.app_name
+    label = name.blank? ? "" : "[#{name}] "
+    "#{label}#{text}"
+  end
+
+  # was in broadcase_mailer.rb
+  def preferences_note(person)
+    %(
+
+To change your email notification preferences, visit
+      
+http://#{server}/people/#{person.to_param}/edit)
   end
 
 end
