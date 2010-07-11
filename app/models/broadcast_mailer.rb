@@ -1,4 +1,5 @@
 class BroadcastMailer < ActionMailer::Base
+
   extend PreferencesHelper 
   
   def spew(person, subject, message, sent_at = Time.now)

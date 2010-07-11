@@ -6,24 +6,29 @@
 #  id                   :integer(4)      not null, primary key
 #  subject              :string(255)     
 #  content              :text            
+
 #  parent_id            :integer(4)      
+#  conversation_id      :integer(4)      
+
 #  sender_id            :integer(4)      
 #  recipient_id         :integer(4)      
+
 #  sender_deleted_at    :datetime        
 #  sender_read_at       :datetime        
 #  recipient_deleted_at :datetime        
 #  recipient_read_at    :datetime        
 #  replied_at           :datetime        
+
 #  type                 :string(255)     
 #  created_at           :datetime        
 #  updated_at           :datetime        
-#  conversation_id      :integer(4)      
+
 #
 
 class Message < Communication
   extend PreferencesHelper
   
-  attr_accessor :reply, :send_mail # :parent
+  attr_accessor :reply, :send_mail
 
   # sadly not implemented by texticle
   #              :conditions => "recipient_deleted_at IS NULL"
@@ -51,17 +56,6 @@ class Message < Communication
 #  before_create :assign_conversation
   after_create :update_recipient_last_contacted_at,
                :save_recipient, :set_replied_to, :send_receipt_reminder
-  
-  # this shouldn't be necessary?
-  # def parent
-  #   return @parent unless @parent.nil?
-  #   return Message.find(parent_id) unless parent_id.nil?
-  # end
-  
-  # def parent=(message)
-  #   self.parent_id = message.id
-  #   @parent = message
-  # end
   
   # Return the sender/recipient that *isn't* the given person.
   def other_person(person)
@@ -176,6 +170,5 @@ class Message < Communication
       @send_mail ||= Message.global_prefs.email_notifications? &&
                      recipient.message_notifications?
       PersonMailer.deliver_message_notification(self) if @send_mail
-      self.destroy
     end
 end
