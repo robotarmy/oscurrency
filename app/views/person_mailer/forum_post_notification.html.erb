@@ -5,7 +5,7 @@
 <% if !@forum_post.topic.forum.group %>
   http://<%= @server %>/forums/1
 <% else %>
-  http://<%= @server %>/groups/<%= forum_post.topic.forum.group.id %>
+  http://<%= @server %>/groups/<%= @forum_post.topic.forum.group.id %>
 <% end %>
 <br>
 <%= @preferences_note %>
