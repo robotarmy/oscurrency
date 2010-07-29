@@ -15,6 +15,7 @@
 #  app_name                              :string(255)     
 #  about                                 :text            
 #  demo                                  :boolean(1)      
+#  email_notices                                  :boolean(1)      
 #  whitelist                             :boolean(1)      
 #  gmail                                 :string(255)     
 #  exception_notification                :string(255)     
@@ -37,7 +38,7 @@ class Preference < ActiveRecord::Base
   attr_accessible :app_name, :server_name, :domain, :smtp_server, 
                   :exception_notification, :new_member_notification,
                   :email_notifications, :email_verifications, :analytics,
-                  :about, :demo, :whitelist, :gmail, :welcome, :short_about,
+                  :about, :demo, :email_notices, :whitelist, :gmail, :welcome, :short_about,
                   :practice, :steps, :questions, :contact,
                   :registration_intro,
                   :agreement,

@@ -31,6 +31,7 @@
   <%= render :partial => "shared/select_categories", :locals => { :model_name => 'offer' } %>
 </div>
 
+<% if global_prefs.email_notices? %>
 <div id="providersDisplay" style="height: 95px;" class="form_row full">
   <label>People to be notified:</label>
   <div id="followMe">
@@ -40,6 +41,7 @@
   <label for="notifications" class="checkbox">Notify members shown above?</label>
   <%= check_box_tag 'offer[notifications]', '1', true %>
 </div>
+<%- end -%>
 
 <div class="form_row">
   <%= f.submit "Create" -%>
