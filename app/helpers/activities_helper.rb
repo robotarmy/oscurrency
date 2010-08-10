@@ -65,9 +65,13 @@ module ActivitiesHelper
     when "Exchange"
       exchange = activity.item
       if exchange.group.nil?
+<<<<<<< HEAD:app/helpers/activities_helper.rb
         %(#{person_link(person)} earned #{exchange.amount} hours from #{person_link(exchange.customer)} for #{metadata_link(exchange.metadata.name,exchange.metadata)}.)
+=======
+        %(#{person_link(person)} earned #{exchange.amount} hours for #{metadata_link(exchange.metadata)}.)
+>>>>>>> 84effde... handle exchange activity item if associated req is missing:app/helpers/activities_helper.rb
       else
-        %(#{person_link(person)} earned #{exchange.amount} #{exchange.group.unit} for #{metadata_link(exchange.metadata.name,exchange.metadata)} in #{group_link(exchange.group)}.)
+        %(#{person_link(person)} earned #{exchange.amount} #{exchange.group.unit} for #{metadata_link(exchange.metadata)} in #{group_link(exchange.group)}.)
       end
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
@@ -134,9 +138,15 @@ module ActivitiesHelper
     when "Exchange"
       exchange = activity.item
       if exchange.group.nil?
+<<<<<<< HEAD:app/helpers/activities_helper.rb
         %(#{person_link(person)} earned #{exchange.amount} hours from #{person_link(exchange.customer)} for #{metadata_link(exchange.metadata.name,exchange.metadata).briefiate(50)}.)
       else
         %(#{person_link(person)} earned #{exchange.amount} #{exchange.group.unit} from #{person_link(exchange.customer)}  for #{metadata_link(exchange.metadata.name,exchange.metadata).briefiate(50)} in #{group_link(exchange.group)}.)
+=======
+        %(#{person_link(person)} earned #{exchange.amount} hours for #{metadata_link(exchange.metadata)}.)
+      else
+        %(#{person_link(person)} earned #{exchange.amount} #{exchange.group.unit} for #{metadata_link(exchange.metadata)} in #{group_link(exchange.group)}.)
+>>>>>>> 84effde... handle exchange activity item if associated req is missing:app/helpers/activities_helper.rb
       end
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
@@ -217,11 +227,13 @@ module ActivitiesHelper
     link_to(text, event_path(event))
   end
 
-  def metadata_link(text, metadata)
-    if metadata.class == Req
-      link_to(text, req_path(metadata))
+  def metadata_link(metadata)
+    if metadata.nil?
+      "unknown!" # this should never happen.
+    elsif metadata.class == Req
+      link_to(h(metadata.name), req_path(metadata))
     else
-      link_to(text, offer_path(metadata))
+      link_to(h(metadata.name), offer_path(metadata))
     end
   end
 
