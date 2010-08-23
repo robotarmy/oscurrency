@@ -11,7 +11,7 @@
   
   <h3 class="subject"><%= sanitize @message.subject %></h3>
   <ul class="list person">
-    <% all_messages =  @message.conversation.messages %>
+    <% all_messages =  @message.conversation ? @message.conversation.messages : [message] %>
     <%= render :partial => 'full_message',
                :collection => all_messages,
                :locals => { :n_messages => all_messages.length } %>

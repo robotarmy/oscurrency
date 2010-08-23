@@ -37,8 +37,8 @@ class Message < Communication
   SEARCH_LIMIT = 20
   SEARCH_PER_PAGE = 8
 
-# ARGH, this breaks Message.create in some horrible way. Who designed this POS (Rails that is)?
-#  attr_accessible :subject, :content
+  # ARGH, this breaks Message.create in some horrible way. Who designed this POS (Rails that is)?
+  #  attr_accessible :subject, :content
   
   belongs_to :parent, :class_name => 'Message', :foreign_key => 'parent_id'
   belongs_to :sender, :class_name => 'Person', :foreign_key => 'sender_id'
@@ -48,11 +48,11 @@ class Message < Communication
   validates_length_of :subject, :maximum => 200
   validates_length_of :content, :maximum => MAX_CONTENT_LENGTH
 
-# lets say this is optional
-# the only place conversations are actually used is ./views/messages/show.html.erb, maybe they could be flushed. +++
-#  before_create :assign_conversation
+  # lets say this is optional
+  # the only place conversations are actually used is ./views/messages/show.html.erb
+  before_create :assign_conversation
   after_create :update_recipient_last_contacted_at,
-               :save_recipient, :set_replied_to, :send_receipt_reminder
+  :save_recipient, :set_replied_to, :send_receipt_reminder
   
   # Return the sender/recipient that *isn't* the given person.
   def other_person(person)
@@ -86,7 +86,7 @@ class Message < Communication
       !sender_deleted_at.nil? and sender_deleted_at > Person::TRASH_TIME_AGO
     when recipient
       !recipient_deleted_at.nil? and 
-       recipient_deleted_at > Person::TRASH_TIME_AGO
+        recipient_deleted_at > Person::TRASH_TIME_AGO
     end
   end
   
@@ -133,51 +133,40 @@ class Message < Communication
     actually_send_receipt_reminder
   end
 
-  def self.queue(tmail, from, to)
-    Message.create(:sender => from, # tmail.from[0],
-                   :recipient => to, # tmail.to[0],
-                   :subject => tmail.subject,
-                   :content => tmail.body,
-                   :transient => true)
-  end
-
   private
 
-    # Assign the conversation id.
-    # This is the parent message's conversation unless there is no parent,
-    # in which case we create a new conversation.
-    def assign_conversation
-      self.conversation = parent.nil? ? Conversation.create :
-        parent.conversation
-    end
+  # Assign the conversation id.
+  # This is the parent message's conversation unless there is no parent,
+  # in which case we create a new conversation.
+  def assign_conversation
+    self.conversation = parent.nil? ? Conversation.create :
+      parent.conversation
+  end
   
-    # Mark the parent message as replied to if the current message is a reply.
-    def set_replied_to
-      if reply?
-        parent.replied_at = Time.now
-        parent.save!
-      end
+  # Mark the parent message as replied to if the current message is a reply.
+  def set_replied_to
+    if reply?
+      parent.replied_at = Time.now
+      parent.save!
     end
-    
-    def update_recipient_last_contacted_at
-      self.recipient.last_contacted_at = updated_at
-    end
-    
-    def save_recipient
-      self.recipient.save(perform_validation = false) || raise(RecordNotSaved)
-    end
-    
-    def send_receipt_reminder
-      Cheepnis.enqueue(self)
-    end
+  end
+  
+  def update_recipient_last_contacted_at
+    self.recipient.last_contacted_at = updated_at
+  end
+  
+  def save_recipient
+    self.recipient.save(perform_validation = false) || raise(RecordNotSaved)
+  end
+  
+  def send_receipt_reminder
+    Cheepnis.enqueue(self)
+  end
 
-    def actually_send_receipt_reminder
-#      return if sender == recipient
-      @send_mail ||= Message.global_prefs.email_notifications? &&
-                     recipient.message_notifications?
-      PersonMailer.deliver_message_notification(self) if @send_mail
-      if transient
-        destroy
-      end
-    end
+  def actually_send_receipt_reminder
+    #      return if sender == recipient
+    @send_mail ||= Message.global_prefs.email_notifications? &&
+      recipient.message_notifications?
+    PersonMailer.deliver_message_notification(self) if @send_mail
+  end
 end

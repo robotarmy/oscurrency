@@ -80,7 +80,7 @@ class Offer < ActiveRecord::Base
       workers.uniq!
       workers.each do |worker|
         if worker.active?
-          Message.queue(PersonMailer.create_offer_notification(self, worker), nil, worker) if worker.connection_notifications?
+          TempMessage.queue(PersonMailer.create_offer_notification(self, worker), nil, worker) if worker.connection_notifications?
         end
       end
     end
