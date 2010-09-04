@@ -1,8 +1,7 @@
-[<%= h @name %>] is offering something in a category you are watching
+<%= h(@offerer) %> is offering something in category [<%= h @name %>] which you are watching:
 
 http://<%= @server %><%= @url %>
 
 Description:
 <%= h @description %>
 
-Offered by: <%= h(@offerer) %>
