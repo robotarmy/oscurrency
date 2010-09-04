@@ -130,7 +130,13 @@ class Message < Communication
   end
 
   def perform
-    actually_send_receipt_reminder
+    begin
+      actually_send_receipt_reminder
+    rescue Net::SMTPServerBusy => e
+      # +++ all mail sending should have this apparatus around it.  
+      # message should stay queued
+      logger.info "Temp SMTP error #{e} for #{self}"
+    end
   end
 
   private
