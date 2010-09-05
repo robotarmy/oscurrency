@@ -26,7 +26,7 @@
 <%- end -%>
         <%- unless Membership.exist?(current_person,@group) -%>
           <li>
-            <%= link_to "Join to group",
+            <%= link_to "Join group",
                       group_memberships_path(@group), :method => :post %>
           </li>
         <%- else -%>
@@ -65,7 +65,7 @@
         <%- end -%>
         <%- if current_person.admin? -%>
           <li>
-          <%= link_to "delete group",
+          <%= link_to "Delete group",
                 admin_group_path(@group),:confirm => 'Are you sure?', :method => :delete%> 
           </li>
         <%- end -%>

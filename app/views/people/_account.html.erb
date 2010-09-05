@@ -1,3 +1,4 @@
-<%- unless account.group  -%>
+<!-- I don't understand what this conditional is trying to do, so leave it out for now -->
+<!-- <%- unless account.group && !account.group.adhoc_currency? -->
 <li><%= account_link account %></li>
-<%- end -%>
+

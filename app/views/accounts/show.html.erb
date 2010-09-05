@@ -9,6 +9,10 @@
 <% if @account.group.nil? %>
       <%= link_to( image_tag( @worker.main_photo, :class => "profile-image photo",
                                         :alt => h(@worker.name) ), person_path(@worker) ) %>
+<% else %>
+      <%= link_to( image_tag( @account.group.main_photo, :class => "profile-image photo",
+                                               :alt => h(@account.group.name)), group_path(@account.group)) %>
+
 <%- end -%>
     <ul class="tools">
       <li>

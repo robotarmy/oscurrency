@@ -24,6 +24,16 @@
     </div>
 
     <div class="form_row">
+      <label for="adhoc_currency" class="checkbox">Create ad-hoc currency</label>
+      <%= f.check_box :adhoc_currency, :onclick => "toggle_currency_unit(this);" %>
+    </div>
+
+    <div class="form_row">
+      <label for="unit">Currency unit (plural)</label>
+      <%= f.text_field :unit, :disabled => true %>
+    </div>
+
+    <div class="form_row">
       <label for="description">Description</label>
       <%= f.text_area :description %>
     </div>
