@@ -2,6 +2,10 @@ class MembershipsController < ApplicationController
   before_filter :login_required
   before_filter :authorize_person, :only => [:edit, :update, :destroy, :suscribe, :unsuscribe]
   
+  def index
+    @group = Group.find(params[:group_id])
+    @memberships = @group.memberships
+  end
   
   def edit
     @membership = Membership.find(params[:id])
