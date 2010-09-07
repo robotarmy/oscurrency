@@ -48,12 +48,14 @@ module SearchesHelper
       dir  = klass.tableize  # E.g., 'Person' becomes 'people'
       part = dir.singularize # E.g., 'people' becomes 'person'
     end
-    admin_search? ? "admin/#{dir}/#{part}" : "#{dir}/#{part}"
+    # I don't think this is valid any more
+    # admin_search? ? "admin/#{dir}/#{part}" : "#{dir}/#{part}"
+    "#{dir}/#{part}"
   end
 
   private
   
-    def admin_search?
-      params[:model] =~ /Admin/
-    end
+#    def admin_search?
+#      params[:model] =~ /Admin/
+#    end
 end

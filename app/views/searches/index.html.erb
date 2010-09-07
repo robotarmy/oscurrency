@@ -5,10 +5,13 @@
       <h3>No results</h3>
     <%- else -%>
     <%- for object in @page_results do -%>
-      <ul class="list people">
-	<%= object.class.to_s -%>
-        <%= render :partial => partial(object), :object => object %>
-      </ul>
+    <%- partial = partial(object) -%>
+      <%- if partial -%>
+        <ul class="list people">
+  	  <%= object.class.to_s -%>
+          <%= render :partial => partial(object), :object => object %>
+        </ul>
+        <%- end -%>
       <%- end -%>
     <%- end -%>
   <%= will_paginate(@page_results) %>
