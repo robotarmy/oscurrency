@@ -44,6 +44,8 @@ module SearchesHelper
     when "AllPerson"
       dir  = 'people'
       part = 'person'
+    when "TempMessage"
+      return nil
     else
       dir  = klass.tableize  # E.g., 'Person' becomes 'people'
       part = dir.singularize # E.g., 'people' becomes 'person'
