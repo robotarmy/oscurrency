@@ -12,6 +12,8 @@
 
 class BroadcastEmail < ActiveRecord::Base
 
+  extend PreferencesHelper
+
   def perform
     peeps = Person.all_active
     peeps.each do |peep|
@@ -37,7 +39,7 @@ class BroadcastEmail < ActiveRecord::Base
 
 To change your email notification preferences, visit
       
-http://#{server}/people/#{person.to_param}/edit)
+http://#{BroadcastEmail.global_prefs.server_name}/people/#{person.to_param}/edit)
   end
 
 end
