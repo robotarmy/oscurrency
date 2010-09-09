@@ -19,7 +19,7 @@ class BroadcastEmail < ActiveRecord::Base
       Message.create(:recipient => peep, 
                      :sender => nil, # indicates from system
                      :subject => formatted_subject(subject), 
-                     :content => message + preferences_note(recipient))
+                     :content => message + preferences_note(peep))
     end
   end
 
