@@ -76,6 +76,12 @@ class ReqsController < ApplicationController
     @bid = Bid.new
     @bid.estimated_hours = @req.estimated_hours
 
+    unless @req.group.nil?
+      unless Membership.exist?(current_person,@req.group)
+        flash[:notice] = 'Making a bid requires group membership.'
+      end
+    end
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @req }
@@ -87,6 +93,8 @@ class ReqsController < ApplicationController
   def new
     @req = Req.new
     @all_categories = Category.all
+    @groups = current_person.groups
+    @groups.delete_if {|g| !g.adhoc_currency?}
 
     respond_to do |format|
       format.html # new.html.erb

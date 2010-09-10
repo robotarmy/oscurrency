@@ -27,6 +27,7 @@ class Req < ActiveRecord::Base
   
   has_and_belongs_to_many :categories
   belongs_to :person
+  belongs_to :group
   has_many :bids, :order => 'created_at DESC', :dependent => :destroy
   has_many :exchanges, :as => :metadata
 
@@ -56,6 +57,14 @@ end
       @reqs.delete_if { |req| req.has_approved? }
     end
 
+  end
+
+  def unit
+    if group.nil?
+      "hours"
+    else
+      group.unit
+    end
   end
 
   def formatted_categories

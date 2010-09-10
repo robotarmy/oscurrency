@@ -604,4 +604,20 @@ h3.welcome{
   font-family:	Georgia,"Times New Roman",Times,serif;
   font-size:	20px;
   font-weight:	bold;
- }
+}
+
+#flash_notice, #flash_error {
+  padding: 5px 8px;
+  margin: 10px 0;
+}
+
+#flash_notice {
+  background-color: #CFC;
+  border: solid 1px #6C6;
+}
+
+#flash_error {
+  background-color: #FCC;
+  border: solid 1px #C66;
+}
+

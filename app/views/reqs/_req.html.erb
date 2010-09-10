@@ -17,7 +17,7 @@
 
   
   <% if req.active %>
-  (<%= h req.estimated_hours %> Hours)
+    (<%= h req.estimated_hours %> <%= h req.unit %>)
   <span class="meta">Due: <%= relative_time_ago_in_words(req.due_date) %>
   </span>
   <% else %>	

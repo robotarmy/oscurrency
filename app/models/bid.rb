@@ -20,7 +20,7 @@
 #
 
 class Bid < ActiveRecord::Base
-  before_validation_on_create :setup_estimated_hours
+  before_validation_on_create :setup
   after_validation_on_create :trigger_offered
 
   include ActionController::UrlWriter
@@ -28,6 +28,7 @@ class Bid < ActiveRecord::Base
 
   belongs_to :req
   belongs_to :person
+  belongs_to :group
   validates_presence_of :estimated_hours, :person_id
   attr_readonly :estimated_hours
 
@@ -86,9 +87,16 @@ class Bid < ActiveRecord::Base
     unless estimated_hours > 0
       errors.add(:estimated_hours, "must be greater than zero")
     end
+
+    unless self.group.nil?
+      unless self.person.groups.include?(self.group)
+        errors.add(:group_id, "does not include you as a member")
+      end
+    end
   end
 
-  def setup_estimated_hours
+  def setup
+    self.group = self.req.group
     if self.expiration_date.blank?
       self.expiration_date = 7.days.from_now
     else

@@ -10,6 +10,7 @@ class Offer < ActiveRecord::Base
   has_and_belongs_to_many :categories
   has_many :exchanges, :as => :metadata
   belongs_to :person
+  belongs_to :group
   attr_protected :person_id, :created_at, :updated_at
   validates_presence_of :name, :expiration_date
   after_create :notify_workers, :if => :notifications
