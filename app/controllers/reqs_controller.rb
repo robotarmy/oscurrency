@@ -77,8 +77,10 @@ class ReqsController < ApplicationController
     @bid.estimated_hours = @req.estimated_hours
 
     unless @req.group.nil?
-      unless Membership.exist?(current_person,@req.group)
-        flash[:notice] = 'Making a bid requires group membership.'
+      if logged_in?
+        unless Membership.exist?(current_person,@req.group)
+          flash[:notice] = 'Making a bid requires group membership.'
+        end
       end
     end
 
