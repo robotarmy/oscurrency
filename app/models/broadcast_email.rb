@@ -18,10 +18,10 @@ class BroadcastEmail < ActiveRecord::Base
     peeps = Person.all_active
     peeps.each do |peep|
       logger.info("BroadcaseEmail: sending email to #{peep.id}: #{peep.name}")
-      Message.create(:recipient => peep, 
-                     :sender => nil, # indicates from system
-                     :subject => formatted_subject(subject), 
-                     :content => message + preferences_note(peep))
+      TempMessage.create(:recipient => peep, 
+                         :sender => nil, # indicates from system
+                         :subject => formatted_subject(subject), 
+                         :content => message + preferences_note(peep))
     end
   end
 
