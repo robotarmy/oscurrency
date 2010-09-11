@@ -4,6 +4,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.column :username, :string
     t.column :password, :string
     t.column :activated, :boolean
+    t.column :suspended_at, :datetime
     t.column :logins, :integer, :default => 0
     t.column :created_at, :datetime
     t.column :updated_at, :datetime
@@ -12,7 +13,7 @@ ActiveRecord::Schema.define(:version => 0) do
   create_table :companies, :force => true do |t|
     t.column :name, :string
   end
-  
+
   create_table :audits, :force => true do |t|
     t.column :auditable_id, :integer
     t.column :auditable_type, :string
@@ -22,6 +23,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.column :action, :string
     t.column :changes, :text
     t.column :version, :integer, :default => 0
+    t.column :comment, :string
     t.column :created_at, :datetime
   end
   
