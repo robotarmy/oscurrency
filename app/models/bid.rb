@@ -21,7 +21,7 @@
 
 class Bid < ActiveRecord::Base
   before_validation_on_create :setup
-  after_validation_on_create :trigger_offered
+  after_create :trigger_offered
 
   include ActionController::UrlWriter
   include AASM
@@ -34,6 +34,7 @@ class Bid < ActiveRecord::Base
 
   attr_protected :person_id, :created_at, :updated_at
   attr_protected :status_id, :state
+  attr_protected :group_id
 
   aasm_column :state
 
