@@ -82,6 +82,14 @@ class Bid < ActiveRecord::Base
     b_events.find_all {|event| ['commit','complete'].include? event}
   end
 
+  def unit
+    if group.nil?
+      "hours"
+    else
+      group.unit
+    end
+  end
+
   private
 
   def validate
