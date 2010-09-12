@@ -32,7 +32,7 @@
           <%= f.text_area :private_message_to_requestor, :rows => 5 %>
         </div>
         <div class="form_row">
-          <%= f.submit "Submit" %>
+          <%= f.submit "Submit" %><span class='wait' style='display:none'><img alt='wait' class='wait' src='/images/loading.gif'></span>
         </div>
       <% end %>
    <%- end -%>

@@ -13,6 +13,7 @@ buttonImageOnly: true
     });
 
   $("#new_bid").submit(function(){
+    $('span.wait').show();
     $.post($(this).attr('action'),$(this).serialize(),null,'script');
     return false;
   });
