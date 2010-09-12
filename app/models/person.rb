@@ -406,10 +406,6 @@ class Person < ActiveRecord::Base
     accounts.first(:conditions => ["group_id IS ?", nil])
   end
 
-  def notifications
-    connection_notifications
-  end
-
   ## Photo helpers
 
   def photo
