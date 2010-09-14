@@ -32,6 +32,7 @@ class Req < ActiveRecord::Base
   has_many :exchanges, :as => :metadata
 
   attr_protected :person_id, :created_at, :updated_at
+  attr_readonly :group_id
   validates_presence_of :name, :due_date
   after_create :notify_workers, :if => :notifications
   after_create :log_activity
