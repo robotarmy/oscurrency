@@ -12,6 +12,8 @@ class ApplicationController < ActionController::Base
 
   before_filter  :require_activation,  :admin_warning
 #  :create_page_view, 
+  
+  layout proc{ |c| c.request.xhr? ? false : "application" }
 
   ActiveScaffold.set_defaults do |config|
     config.ignore_columns.add [ :created_at, :updated_at ]

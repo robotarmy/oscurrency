@@ -11,7 +11,11 @@ class TopicsController < ApplicationController
   def show
     @group = @forum.group
     @topic = Topic.find(params[:id])
-    @posts = @topic.posts.paginate(:page => params[:page])
+    @posts = @topic.posts.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def new
@@ -33,8 +37,9 @@ class TopicsController < ApplicationController
 
     respond_to do |format|
       if @topic.save
-        flash[:success] = 'Topic was successfully created.'
+        flash[:notice] = 'Topic was successfully created.'
         format.html { redirect_to forum_topic_path(@forum, @topic) }
+        format.js
       else
         format.html { render :action => "new" }
       end

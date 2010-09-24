@@ -1,0 +1,6 @@
+jQuery('span.wait').hide();
+jQuery('#reqs_canvas').html('<%= escape_javascript(render :partial => '/reqs/req_full') %>');
+<% flash.each do |key, msg| %>
+  jQuery('#reqs_canvas').before("<div id='flash_<%= key %>'><%= escape_javascript(flash.delete(key)) %></div>");
+  jQuery('#flash_<%= key %>').fadeOut(5000);
+<% end %>

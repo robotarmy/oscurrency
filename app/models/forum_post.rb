@@ -63,6 +63,15 @@ class ForumPost < Post
     end
   end
 
+  private
+
+  def validate
+    unless self.topic.forum.group.nil?
+      unless self.person.groups.include?(self.topic.forum.group)
+        errors.add_to_base("group does not include you as a member")
+      end
+    end
+  end
 
  def log_activity
     add_activities(:item => self, :person => person)
