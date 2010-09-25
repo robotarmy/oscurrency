@@ -72,7 +72,6 @@ Rails::Initializer.run do |config|
   config.gem 'rubyist-aasm', :lib => 'aasm'
   #config.gem 'aasm'
   # installed with `rake gems:install`
-  config.gem 'twitter', :version => '>= 0.8.4'
   config.gem 'ruby-openid', :lib => 'openid', :version => '>= 2.1.6'
   config.gem 'rack-openid', :lib => 'rack/openid', :version => '>= 1.0.1'
   config.gem 'starling-starling', :lib => 'starling'

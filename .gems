@@ -1,7 +1,6 @@
 oauth --version '= 0.3.6'
 chronic
 rubyist-aasm --source http://gems.github.com
-twitter --version '= 0.8.4'
 starling-starling --source http://gems.github.com
 feed-normalizer
 texticle
