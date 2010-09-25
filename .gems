@@ -1,4 +1,4 @@
-oauth --version '>= 0.3.6'
+oauth
 chronic
 rubyist-aasm --source http://gems.github.com
 twitter
