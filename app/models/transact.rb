@@ -39,8 +39,8 @@ class Transact < Exchange
     results.to_xml(options.merge(:root => "txn"))
   end
 
-  def to_json(options={})
-    results.to_json
+  def as_json(options={})
+    results.as_json
   end
 
   protected
@@ -58,7 +58,7 @@ class Transact < Exchange
   end
 
   def perform_callback
-    if callback_url
+    if !callback_url.blank?
       request = Net::HTTP::Post.new(callback_uri.path+(callback_uri.query || '' ))
       request.set_form_data(results)
       response = http.request(request)
