@@ -1,0 +1,16 @@
+<%- if Membership.exist?(current_person,@group) -%>
+  <%- if @group.has_invited?(current_person) -%>
+    <li>You have been invited <%= link_to "(respond)", invitations_person_path(current_person)+"#group_#{@group.id}" %></li>
+  <%- end -%>
+<% end %>
+<span id="membership_wrapper">
+  <li class="add_to_memberships <%= @add_membership_display %>">
+  <%= link_to "Join group",group_memberships_path(@group), {:id => 'join_group'} %>
+  </li>
+  <li class="add_to_memberships <%= @membership_display %>">
+    You are <strong><%= h @group.name%></strong>'s member
+    <br />
+    (<%= link_to "Leave group",membership_path(Membership.mem(current_person, @group)), {:id => 'leave_group'} %>) 
+  </li>
+  <%= waiting_image %>
+</span>

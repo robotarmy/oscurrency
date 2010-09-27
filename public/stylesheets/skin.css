@@ -632,3 +632,10 @@ h3.welcome{
 #tabs {
   height: 860px;
 }
+
+#memberships_wrapper .add_to_memberships {
+}
+
+#memberships_wrapper .add_to_memberships.hide {
+  display: none;
+}

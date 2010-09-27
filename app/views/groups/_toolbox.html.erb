@@ -2,31 +2,12 @@
       <%= image_tag @group.main_photo, :class => "profile-image photo",
                                         :alt => h(@group.name) %>
         <ul class="tools">
-<%- if @group.adhoc_currency? -%>
+        <%- if @group.adhoc_currency? -%>
         <li>
           Currency Unit: <%= @group.unit %>
         </li>
-<%- end -%>
-        <%- unless Membership.exist?(current_person,@group) -%>
-          <li>
-            <%= link_to "Join group",
-                      group_memberships_path(@group), :method => :post %>
-          </li>
-        <%- else -%>
-            <%- if @group.has_invited?(current_person) -%>
-                <li>You have been invited <%= link_to "(respond)", invitations_person_path(current_person)+"#group_#{@group.id}" %></li>
-            <%- end -%>
         <%- end -%>
-        <%- if Membership.connected?(current_person,@group) -%>
-          <li>You are <strong><%= h @group.name%></strong>'s member
-              <br />
-              (<%= link_to "Leave group",
-                      membership_path(Membership.mem(current_person, @group)), 
-                      :method => :delete,
-                      :confirm => 
-                      "Are you sure you want to leave #{h @group.name}?" %>)
-          </li>
-        <%- end -%>
+        <%= render :partial => 'membership' %>
         <%- if Membership.pending?(current_person, @group) -%>
           <li>
             You have requested to be member of <strong><%= h @group.name%></strong>
