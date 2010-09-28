@@ -45,24 +45,24 @@
 <%- end -%>
 <script type='text/javascript'>
 show_openid = function() {
-    $('openid').show();
-    $('standard').hide();
-    $('openid_link').hide();
-    $('standard_link').show();
+    $('#openid').show();
+    $('#standard').hide();
+    $('#openid_link').hide();
+    $('#standard_link').show();
     createCookie('use_openid', 1, 30);
-    $('openid_url').value = 'http://';
+    $('#openid_url').value = 'http://';
 }
 show_standard = function() {
-    $('openid').hide();
-    $('standard').show();
-    $('openid_link').show();
-    $('standard_link').hide();
+    $('#openid').hide();
+    $('#standard').show();
+    $('#openid_link').show();
+    $('#standard_link').hide();
     eraseCookie('use_openid');
-    $('openid_url').value = '';
+    $('#openid_url').value = '';
 }
-$('openid').hide();
-$('standard_link').hide();
-$('noscript').show();
+$('#openid').hide();
+$('#standard_link').hide();
+$('#noscript').show();
 
 if (readCookie('use_openid')){
     show_openid();
