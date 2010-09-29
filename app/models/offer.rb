@@ -12,6 +12,7 @@ class Offer < ActiveRecord::Base
   belongs_to :person
   belongs_to :group
   attr_protected :person_id, :created_at, :updated_at
+  attr_readonly :group_id
   validates_presence_of :name, :expiration_date
   after_create :notify_workers, :if => :notifications
   after_create :log_activity

@@ -79,6 +79,10 @@ module ApplicationHelper
     "<span class='wait' style='display:none'><img alt='wait' class='wait' src='/images/loading.gif'></span>"
   end
 
+  def currency_units
+    '<span id="units" class="small">hours</span>'
+  end
+
   def menu_element(content, address)
     { :content => content, :href => address }
   end

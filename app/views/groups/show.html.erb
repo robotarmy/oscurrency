@@ -32,8 +32,11 @@
       <%= render :partial => 'forum_canvas' %>
       <%= render :partial => 'forum_form' %>
     <% end %>
-    <% tab.create('requests', 'Requests') do %>
+    <% tab.create('requests', 'Reqs') do %>
       <%= render :partial => 'reqs_canvas' %>
+    <% end if @group.adhoc_currency? %>
+    <% tab.create('offers', 'Offers') do %>
+      <%= render :partial => 'offers_canvas' %>
     <% end if @group.adhoc_currency? %>
   <% end %>
   

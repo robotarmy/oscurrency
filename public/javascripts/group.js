@@ -70,7 +70,18 @@ $(function() {
     $.getScript(document.location.href+'?tab=requests');
     });
 
+  $('a[href=#offers]').bind('click',function() {
+    $('span.wait').show();
+    $.getScript(document.location.href+'?tab=offers');
+    });
+
   $('.req a.show-follow').live('click',function() {
+    $('span.wait').show();
+    $.getScript(this.href);
+    return false;
+    });
+
+  $('.offer a.show-follow').live('click',function() {
     $('span.wait').show();
     $.getScript(this.href);
     return false;

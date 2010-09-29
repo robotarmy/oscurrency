@@ -1,5 +1,21 @@
 <% content_for(:jquery_support) do %>
 <%= javascript_include_tag 'jquery-ui-1.8.4.custom.min' %>
 <%= javascript_include_tag jscript_file_name %>
+<% unless @groups.nil? %>
+<script type="text/javascript">
+  function update_currency_units(i) {
+    var group_units = {
+      <%- @groups.each do |g| -%>
+        <%= "'#{g.id}': '#{h g.unit}'," %> 
+      <%- end -%>
+    };
+    elem = document.getElementById('units');
+    if(!i)
+      elem.innerHTML = "hours";
+    else
+      elem.innerHTML = group_units[i];
+}
+</script>
+<%- end -%>
 <% end -%>
 
