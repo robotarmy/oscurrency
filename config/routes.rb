@@ -11,6 +11,8 @@ ActionController::Routing::Routes.draw do |map|
                  :members => :get, 
                  :invite => :get,
                  :invite_them => :post,
+                 :new_req => :get,
+                 :create_req => :post,
                  :photos => :get,
                  :new_photo => :post,
                  :save_photo => :post,

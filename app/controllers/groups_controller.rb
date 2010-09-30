@@ -12,6 +12,39 @@ class GroupsController < ApplicationController
     end
   end
 
+  def new_req
+    @group = Group.find(params[:id])
+    @req = Req.new
+    @all_categories = Category.all
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def create_req
+    @group = Group.find(params[:id])
+    @req = Req.new(params[:req])
+    @req.group = @group
+
+    if @req.due_date.blank?
+      @req.due_date = 7.days.from_now
+    else
+      @req.due_date += 1.day - 1.second # make due date at end of day
+    end
+    @req.person_id = current_person.id
+
+    respond_to do |format|
+      if @req.save
+        flash[:notice] = 'Request was successfully created.'
+        format.js
+      else
+        @all_categories = Category.all
+        format.js {render :action => 'new_req'}
+      end
+    end
+  end
+
   def show
     @group = Group.find(params[:id])
     @forum = @group.forum

@@ -1,4 +1,6 @@
+<span class='req small' style='float:right;'><%= link_to "New req", new_req_group_path(@group), {:class => 'show-follow'} %></span>
       <h2>Reqs<%= waiting_image %></h2>
       <ul class="list activity full">
         <%= render :partial => '/reqs/req', :collection => @group.reqs %>
       </ul>
+
