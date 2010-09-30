@@ -33,10 +33,14 @@
       <%= render :partial => 'forum_form' %>
     <% end %>
     <% tab.create('requests', 'Reqs') do %>
-      <%= render :partial => 'reqs_canvas' %>
+      <div id="reqs_canvas">
+        <%= render :partial => 'reqs_canvas' %>
+      </div>
     <% end if @group.adhoc_currency? %>
     <% tab.create('offers', 'Offers') do %>
-      <%= render :partial => 'offers_canvas' %>
+      <div id="offers_canvas">
+        <%= render :partial => 'offers_canvas' %>
+      </div>
     <% end if @group.adhoc_currency? %>
   <% end %>
   

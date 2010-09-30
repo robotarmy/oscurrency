@@ -44,6 +44,14 @@ class Offer < ActiveRecord::Base
     add_activities(:item => self, :person => self.person)
   end
 
+  def unit
+    if group.nil?
+      "hours"
+    else
+      group.unit
+    end
+  end
+
   def formatted_categories
     categories.collect{|cat| ERB::Util.html_escape(cat.long_name)}.join("<br />")
   end

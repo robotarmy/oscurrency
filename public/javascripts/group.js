@@ -38,6 +38,12 @@ $(function() {
     return false;
     });
 
+  $('#new_exchange').live('submit',function() {
+    $('span.wait').show();
+    $.post($(this).attr('action'),$(this).serialize(),null,'script');
+    return false;
+    });
+
   $('.add_to_memberships').live('click', function() {
       id_name = $(this).children('a').attr('id');
       $(this).parent().children('.wait').show();
@@ -82,6 +88,12 @@ $(function() {
     });
 
   $('.offer a.show-follow').live('click',function() {
+    $('span.wait').show();
+    $.getScript(this.href);
+    return false;
+    });
+
+  $('a.pay_now').live('click',function() {
     $('span.wait').show();
     $.getScript(this.href);
     return false;

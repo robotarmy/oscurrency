@@ -34,6 +34,11 @@ class ExchangesController < ApplicationController
 
     @groups = Person.find(params[:person_id]).groups
     @groups.delete_if {|g| !g.adhoc_currency?}
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # this method expects that the form is either referencing an existing offer or accepting a name field for a new req to be created 
@@ -47,6 +52,7 @@ class ExchangesController < ApplicationController
       @offer = Offer.find(params[:offer][:id])
       @exchange.amount = @offer.price
       @exchange.metadata = @offer
+      @exchange.group = @offer.group
     else
       @req = Req.new(params[:req])
 
@@ -67,12 +73,14 @@ class ExchangesController < ApplicationController
         format.html { redirect_to person_path(@worker) and return }
         format.xml { render :xml => @exchange, :status => :created, :location => [@worker, @exchange] }
         format.json { render :json => @exchange, :status => :created, :location => [@worker, @exchange] }
+        format.js
       else
         flash[:error] = "Error with credit transfer."
         @groups = Person.find(params[:person_id]).groups
         format.html { render :action => "new" }
         format.xml { render :xml => @exchange.errors, :status => :unprocessable_entity }
         format.json { render :json => @exchange.errors, :status => :unprocessable_entity }
+        format.js { render :nothing => true } # XXX
       end
     end
   end

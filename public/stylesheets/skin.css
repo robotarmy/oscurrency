@@ -606,6 +606,10 @@ h3.welcome{
   font-weight:	bold;
 }
 
+#exchanges h2 {
+  background: none;
+}
+
 #forum_canvas h2 {
   background: none;
 }
