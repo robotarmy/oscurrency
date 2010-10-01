@@ -107,6 +107,11 @@ $(function() {
     $.getScript(document.location.href+'?tab=offers');
     });
 
+  $('a[href=#exchanges]').bind('click',function() {
+    $('span.wait').show();
+    $.getScript(document.location.href+'?tab=exchanges');
+    });
+
   $('.req a.show-follow').live('click',function() {
     $('span.wait').show();
     $.getScript(this.href);

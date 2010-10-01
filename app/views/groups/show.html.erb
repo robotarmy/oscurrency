@@ -23,10 +23,9 @@
       </div>
     <% end %>
     <% tab.create('exchanges', 'Exchanges') do %>
-      <h2>Recent Exchanges</h2>
-      <ul class="list activity full">
-        <%= render :partial => 'exchange', :collection => @group.exchanges %>
-      </ul>
+      <div id="exchanges_canvas">
+        <%= render :partial => 'exchanges_canvas' %>
+      </div>
     <% end if @group.adhoc_currency? %>
     <% tab.create('forum', 'Forum') do %>
       <%= render :partial => 'forum_canvas' %>
