@@ -17,6 +17,13 @@ $(function() {
       });
     });
 
+  $("input#offer_expiration_date").live('focus', function() {
+    $(this).datepicker({
+      buttonImage: "/images/calendar.gif",
+      buttonImageOnly: true
+      });
+    });
+
   $.ajaxSetup({
     'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
     });
@@ -34,6 +41,12 @@ $(function() {
   });
 
   $("#new_req").live('submit',function(){
+    $('span.wait').show();
+    $.post($(this).attr('action'),$(this).serialize(),null,'script');
+    return false;
+  });
+
+  $("#new_offer").live('submit',function(){
     $('span.wait').show();
     $.post($(this).attr('action'),$(this).serialize(),null,'script');
     return false;

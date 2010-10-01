@@ -45,6 +45,35 @@ class GroupsController < ApplicationController
     end
   end
 
+  def new_offer
+    @group = Group.find(params[:id])
+    @offer = Offer.new
+    @all_categories = Category.all
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def create_offer
+    @group = Group.find(params[:id])
+    @offer = Offer.new(params[:offer])
+    @offer.group = @group
+    ##TODO: move this to the model, a before_create method?
+    @offer.available_count = @offer.total_available
+    @offer.person_id = current_person.id
+
+    respond_to do |format|
+      if @offer.save
+        flash[:notice] = 'Offer was successfully created.'
+        format.js
+      else
+        @all_categories = Category.all
+        format.js {render :action => 'new_offer'}
+      end
+    end
+  end
+
   def show
     @group = Group.find(params[:id])
     @forum = @group.forum

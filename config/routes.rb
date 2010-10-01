@@ -13,6 +13,8 @@ ActionController::Routing::Routes.draw do |map|
                  :invite_them => :post,
                  :new_req => :get,
                  :create_req => :post,
+                 :new_offer => :get,
+                 :create_offer => :post,
                  :photos => :get,
                  :new_photo => :post,
                  :save_photo => :post,
