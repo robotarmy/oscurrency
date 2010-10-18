@@ -16,7 +16,7 @@
 </div>
 <div class="form_row">
   <%= f.label 'Estimated' %>
-  <%= f.text_field :price, :size => 5 %>&nbsp;<%= collection_select( 'req', 'group_id', @groups, :id, :unit, { :include_blank => 'hours' }) %>
+  <%= f.text_field :price, :size => 5 %>&nbsp;<%= collection_select( 'offer', 'group_id', @groups, :id, :unit, { :include_blank => 'hours' }) %>
 </div>
 <div class="form_row">
   <%= f.label :expiration_date %>
