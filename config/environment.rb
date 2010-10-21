@@ -75,6 +75,7 @@ Rails::Initializer.run do |config|
   config.gem 'feed-normalizer'
   config.gem 'json'
   config.gem 'heroku'
+  config.gem 'cancan'
 
   config.action_controller.session = {
     :session_key => '_oscurrency_session',

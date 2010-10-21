@@ -1,8 +1,8 @@
 class GroupsController < ApplicationController
+  authorize_resource
   skip_before_filter :require_activation
   before_filter :login_or_oauth_required
-  before_filter :group_owner, :only => [:edit, :update, :destroy, 
-    :new_photo, :save_photo, :delete_photo]
+  before_filter :group_owner, :only => [:new_photo, :save_photo, :delete_photo] 
   
   def index
     @groups = Group.not_hidden(params[:page])
