@@ -8,6 +8,11 @@ class ApplicationController < ActionController::Base
   include PreferencesHelper
   include ExceptionNotifiable
 
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] = exception.message
+    redirect_to root_url
+  end
+
   filter_parameter_logging :password
 
   before_filter  :require_activation,  :admin_warning

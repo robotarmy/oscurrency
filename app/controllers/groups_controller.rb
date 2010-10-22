@@ -1,11 +1,12 @@
 class GroupsController < ApplicationController
-  authorize_resource
+  load_and_authorize_resource
   skip_before_filter :require_activation
   before_filter :login_or_oauth_required
   before_filter :group_owner, :only => [:new_photo, :save_photo, :delete_photo] 
   
   def index
-    @groups = Group.not_hidden(params[:page])
+    # XXX can't define abilities w/ blocks (accessible_by) http://github.com/ryanb/cancan/wiki/Upgrading-to-1.4
+    @groups = @groups.not_hidden(params[:page])
 
     respond_to do |format|
       format.html
@@ -13,7 +14,6 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @group = Group.find(params[:id])
     @forum = @group.forum
     @topics = Topic.find_recently_active(@forum, params[:page]) 
     @contacts = contacts_to_invite
@@ -21,19 +21,15 @@ class GroupsController < ApplicationController
   end
 
   def new
-    @group = Group.new
-
     respond_to do |format|
       format.html
     end
   end
 
   def edit
-    @group = Group.find(params[:id])
   end
 
   def create
-    @group = Group.new(params[:group])
     @group.owner = current_person
 
     respond_to do |format|
@@ -49,8 +45,6 @@ class GroupsController < ApplicationController
   end
 
   def update
-    @group = Group.find(params[:id])
-
     respond_to do |format|
       if @group.update_attributes(params[:group])
         flash[:notice] = 'Group was successfully updated.'
@@ -62,7 +56,6 @@ class GroupsController < ApplicationController
   end
 
   def destroy
-    @group = Group.find(params[:id])
     @group.destroy
 
     respond_to do |format|
