@@ -56,7 +56,7 @@ class TransactsController < ApplicationController
 
     @transact.metadata = @transact.create_req(params[:memo])
 
-    if @transact.save
+    if can? :create, @transact && @transact.save
       if @transact.redirect_url.blank?
         flash[:notice] = "Transfer succeeded."
         respond_to do |format|

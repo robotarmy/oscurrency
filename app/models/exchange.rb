@@ -34,6 +34,15 @@ class Exchange < ActiveRecord::Base
     add_activities(:item => self, :person => self.worker)
   end
 
+  # XXX person_id hacks for cancan's load_and_authorize_resource
+  def person_id
+    self.worker_id
+  end
+
+  def person_id=(worker_id)
+    self.worker_id = worker_id
+  end
+
   private
 
   def validate
@@ -90,6 +99,8 @@ class Exchange < ActiveRecord::Base
   end
 
   def send_payment_notification_to_worker
+    # XXX fix wierdness from cancan integration
+=begin
     exchange_note = Message.new()
     subject = "PAYMENT: " + self.amount.to_s + " hours - for " + self.metadata.name 
     exchange_note.subject =  subject.length > 75 ? subject.slice(0,75).concat("...") : subject 
@@ -97,6 +108,7 @@ class Exchange < ActiveRecord::Base
     exchange_note.sender = self.customer
     exchange_note.recipient = self.worker
     exchange_note.save!
+=end
   end
 
   def send_suspend_payment_notification_to_worker

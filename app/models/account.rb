@@ -47,7 +47,11 @@ class Account < ActiveRecord::Base
       exchange.amount = amount
       exchange.metadata = metadata
       exchange.group_id = metadata.group_id
-      exchange.save!
+      if can? :create, @exchange
+        exchange.save!
+      else
+        raise "fail"
+      end
     end
   end
 end

@@ -13,6 +13,8 @@ class Membership < ActiveRecord::Base
   INVITED   = 1
   PENDING   = 2
   
+  ROLES = %w[individual admin moderator org]
+
   # Accept a membership request (instance method).
   def accept
     Membership.accept(person, group)
@@ -21,7 +23,21 @@ class Membership < ActiveRecord::Base
   def breakup
     Membership.breakup(person, group)
   end
-  
+
+  def roles=(roles)
+    self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.sum
+  end
+
+  def roles
+    ROLES.reject do |r|
+      ((roles_mask || 0) & 2**ROLES.index(r)).zero?
+    end
+  end
+
+  def is?(role)
+    roles.include?(role.to_s)
+  end
+
   class << self
     
     # Return true if the person is member of the group.
@@ -134,7 +150,7 @@ class Membership < ActiveRecord::Base
         account.balance = Account::INITIAL_BALANCE 
         account.person = person
         account.group = group
-        account.save
+        account.save!
       end
     end
   
