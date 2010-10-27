@@ -95,8 +95,9 @@ class GroupsController < ApplicationController
   end
   
   def members
-    @group = Group.find(params[:id])
-    @members = @group.people.paginate(:page => params[:page],
+    @memberships = @group.memberships.paginate(:page => params[:page],
+                                          :conditions => ['status = ?', 0],
+                                          :include => :person,
                                           :per_page => RASTER_PER_PAGE)
     @pending = @group.pending_request.paginate(:page => params[:page],
                                           :per_page => RASTER_PER_PAGE)

@@ -40,6 +40,10 @@ class Group < ActiveRecord::Base
                      :order => "name ASC")
     end
   end
+
+  def admins
+    memberships.with_role('admin').map {|m| m.person}
+  end
   
   def public?
     self.mode == PUBLIC

@@ -2,6 +2,8 @@ class Membership < ActiveRecord::Base
   extend ActivityLogger
   extend PreferencesHelper
   
+  named_scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }
+
   belongs_to :group
   belongs_to :person
   has_many :activities, :foreign_key => "item_id", :conditions => "item_type = 'Membership'" #, :dependent => :destroy

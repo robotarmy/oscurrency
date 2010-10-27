@@ -8,7 +8,9 @@ class Ability
       membership = Membership.mem(person,group)
       membership && membership.is?(:admin)
     end
+    can :members, Group
     can [:new_photo, :save_photo, :delete_photo], Group, :owner => person
+
     can :read, Exchange
     can :destroy, Exchange, :customer => person
 
