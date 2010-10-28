@@ -118,8 +118,10 @@ class Membership < ActiveRecord::Base
     # Update the db with one side of an accepted connection request.
     def accept_one_side(person, group, accepted_at)
       mem = mem(person, group)
-      mem.update_attributes!(:status => ACCEPTED,
-                              :accepted_at => accepted_at)
+      mem.status = ACCEPTED
+      mem.accepted_at = accepted_at
+      mem.roles = ['individual']
+      mem.save
 
       if person.accounts.find(:first,:conditions => ["group_id = ?",group.id]).nil?
         account = Account.new( :name => group.name ) # group name can change

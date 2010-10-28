@@ -7,7 +7,6 @@ class MembershipsController < ApplicationController
   
   def create
     @group = Group.find(params[:group_id])
-    @membership.roles = ['individual']
 
     respond_to do |format|
       if Membership.request(current_person, @group)
