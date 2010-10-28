@@ -132,14 +132,4 @@ class GroupsController < ApplicationController
       format.html { redirect_to(edit_group_path(@group)) }
     end
   end
-  
-  private
-  
-  def group_owner
-    redirect_to home_url unless current_person == Group.find(params[:id]).owner
-  end
-  
-  def group_redirect_if_not_public
-  end
-  
 end

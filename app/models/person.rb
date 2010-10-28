@@ -394,6 +394,11 @@ class Person < ActiveRecord::Base
     accounts.first(:conditions => ["group_id IS ?", nil])
   end
 
+  def is?(role,group)
+    mem = Membership.mem(self,group)
+    mem && mem.is?(role)
+  end
+
   ## Photo helpers
 
   def photo
