@@ -8,7 +8,6 @@ class HomeController < ApplicationController
       @body = "home"
       @person = current_person
       @requested_memberships = current_person.requested_memberships
-      @invitations = current_person.invitations
       if params[:mode]
         @reqs = current_person.current_and_active_reqs
         @bids = current_person.current_and_active_bids

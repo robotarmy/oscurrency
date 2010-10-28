@@ -29,10 +29,6 @@
             <%= link_to "Join group",
                       group_memberships_path(@group), :method => :post %>
           </li>
-        <%- else -%>
-            <%- if @group.has_invited?(current_person) -%>
-                <li>You have been invited <%= link_to "(respond)", invitations_person_path(current_person)+"#group_#{@group.id}" %></li>
-            <%- end -%>
         <%- end -%>
         <%- if Membership.connected?(current_person,@group) -%>
           <li>You are <strong><%= h @group.name%></strong>'s member
@@ -57,11 +53,6 @@
           <li>
             Mode: <%= get_groups_modes[@group.mode][0] %>
           </li>
-          <% if @group.hidden? %>
-              <li>
-                  <%= link_to "Invite contacts", invite_group_path(@group) %>
-              </li>
-          <% end %>
         <%- end -%>
         <%- if current_person.admin? -%>
           <li>

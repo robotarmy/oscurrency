@@ -5,7 +5,7 @@ class GroupsController < ApplicationController
   
   def index
     # XXX can't define abilities w/ blocks (accessible_by) http://github.com/ryanb/cancan/wiki/Upgrading-to-1.4
-    @groups = @groups.not_hidden(params[:page])
+    @groups = @groups.name_sorted_and_paginated(params[:page])
 
     respond_to do |format|
       format.html
@@ -15,8 +15,10 @@ class GroupsController < ApplicationController
   def show
     @forum = @group.forum
     @topics = Topic.find_recently_active(@forum, params[:page]) 
-    @contacts = contacts_to_invite
-    group_redirect_if_not_public 
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => @group.to_xml(:methods => [:icon,:thumbnail], :only => [:id,:name,:description,:mode,:person_id,:created_at,:updated_at,:unit,:icon,:thumbnail]) }
+    end
   end
 
   def new
@@ -63,37 +65,6 @@ class GroupsController < ApplicationController
     end
   end
   
-  def invite
-    @group = Group.find(params[:id])
-    @contacts = contacts_to_invite
-
-    respond_to do |format|
-      if current_person.own_groups.include?(@group) and @group.hidden?
-        if @contacts.length == 0
-          flash[:error] = "You have no contacts or you have invited all of them"
-          format.html { redirect_to(group_path(@group)) }
-        end
-        format.html
-      else
-        format.html { redirect_to(group_path(@group)) }
-      end
-    end
-  end
-  
-  def invite_them
-    @group = Group.find(params[:id])
-    invitations = params[:checkbox].collect{|x| x if  x[1]=="1" }.compact
-    invitations.each do |invitation|
-      if Membership.find_all_by_group_id(@group, :conditions => ['person_id = ?',invitation[0].to_i]).empty?
-        Membership.invite(Person.find(invitation[0].to_i),@group)
-      end
-    end
-    respond_to do |format|
-      flash[:notice] = "You have invite some of your contacts to '#{@group.name}'"
-      format.html { redirect_to(group_path(@group)) }
-    end
-  end
-  
   def members
     @memberships = @group.memberships.paginate(:page => params[:page],
                                           :conditions => ['status = ?', 0],
@@ -101,7 +72,9 @@ class GroupsController < ApplicationController
                                           :per_page => RASTER_PER_PAGE)
     @pending = @group.pending_request.paginate(:page => params[:page],
                                           :per_page => RASTER_PER_PAGE)
-    group_redirect_if_not_public
+    respond_to do |format|
+      format.html
+    end
   end
   
   def photos
@@ -162,25 +135,11 @@ class GroupsController < ApplicationController
   
   private
   
-  def contacts_to_invite
-    current_person.contacts - 
-      Membership.find_all_by_group_id(current_person.own_hidden_groups).collect{|x| x.person}
-  end
-  
   def group_owner
     redirect_to home_url unless current_person == Group.find(params[:id]).owner
   end
   
   def group_redirect_if_not_public
-    respond_to do |format|
-      if @group.is_viewable?(current_person)
-        format.html
-        format.xml { render :xml => @group.to_xml(:methods => [:icon,:thumbnail], :only => [:id,:name,:description,:mode,:person_id,:created_at,:updated_at,:unit,:icon,:thumbnail]) }
-      else
-        format.html { redirect_to(groups_path) }
-        format.xml { render :nothing => true, :status => :unauthorized }
-      end
-    end
   end
   
 end

@@ -70,26 +70,6 @@ class PersonMailer < ActionMailer::Base
     "preferences_note" => preferences_note(membership.person)
   end
   
-  def invitation_notification(membership)
-    from         "#{membership.group.name} <invitation#{domain}>"
-    recipients   membership.person.email
-    subject      formatted_subject("Invitation from group #{membership.group.name}")
-    body         "server" => server,
-    "membership" => membership,
-    "url" => edit_membership_path(membership),
-    "preferences_note" => preferences_note(membership.person)
-  end
-  
-  def invitation_accepted(membership)
-    from         "#{membership.group.name} <invitation@#{domain}>"
-    recipients   membership.group.owner.email
-    subject      formatted_subject("#{membership.person.name} accepted the invitation")
-    body         "server" => server,
-    "membership" => membership,
-    "url" => members_group_path(membership.group),
-    "preferences_note" => preferences_note(membership.group.owner)
-  end
-  
   def blog_comment_notification(comment)
     from         "Blog <comment@#{domain}>"
     recipients   comment.commented_person.email

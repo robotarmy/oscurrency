@@ -9,8 +9,6 @@ ActionController::Routing::Routes.draw do |map|
     :member => { :join => :post, 
                  :leave => :post, 
                  :members => :get, 
-                 :invite => :get,
-                 :invite_them => :post,
                  :photos => :get,
                  :new_photo => :post,
                  :save_photo => :post,
@@ -61,7 +59,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/do_reset_password', :controller => 'people', :action => 'do_reset_password'
 
   map.resources :people, :member => {:groups => :get, 
-    :admin_groups => :get, :request_memberships => :get, :invitations => :get} do |person|
+    :admin_groups => :get} do |person|
      person.resources :messages
      person.resources :accounts
      person.resources :exchanges
