@@ -5,6 +5,6 @@
     <%= check_box_tag "membership[roles][]", role, @membership.roles.include?(role) %>
     <%=h role.humanize %><br />
   <% end %>
-  <%= hidden_field_tag "user[roles][]", "" %>
+  <%= hidden_field_tag "membership[roles][]", "" %>
   <%= f.submit "Update" %>
 <% end %>
