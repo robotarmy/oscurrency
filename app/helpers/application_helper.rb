@@ -23,21 +23,13 @@ module ApplicationHelper
     if logged_in? and not admin_view?
       profile  = menu_element("Profile",  person_path(current_person))
       messages = menu_element("Mail", messages_path)
-#      blog     = menu_element("Blog",     blog_path(current_person.blog))
       photos   = menu_element("Photos",   photos_path)
-      if global_prefs.group_option?
-        groups = menu_element("Groups", groups_path())
-#      contacts = menu_element("Contacts",
-#                              person_connections_path(current_person))
-#      links = [home, profile, contacts, messages, blog, people, forum]
-      #events   = menu_element("Events", events_path)
-        links = [home, profile, categories,  people, places, messages, groups]
-      else
+      #if global_prefs.group_option?
+      #  groups = menu_element("Groups", groups_path())
+      #  links = [home, profile, categories,  people, places, messages, groups]
+      #else
         links = [home, profile, categories,  people, places, messages]
-      end
-      # TODO: remove 'unless production?' once events are ready.
-      #links.push(events) #unless production?
-      
+      #end
     elsif logged_in? and admin_view?
       home =    menu_element("Home", home_path)
       spam = menu_element("eNews", admin_broadcast_emails_path)
