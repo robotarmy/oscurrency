@@ -17,7 +17,7 @@ class BroadcastEmail < ActiveRecord::Base
   def perform
     peeps = Person.all_active
     peeps.each do |peep|
-      logger.info("BroadcaseEmail: sending email to #{peep.id}: #{peep.name}")
+      logger.info("BroadcastEmail: sending email to #{peep.id}: #{peep.name}")
       TempMessage.create(:recipient => peep, 
                          :sender => nil, # indicates from system
                          :subject => formatted_subject(subject), 
@@ -25,7 +25,7 @@ class BroadcastEmail < ActiveRecord::Base
     end
   end
 
-  # was in broadcase_mailer.rb
+  # was in broadcast_mailer.rb
   # Prepend the application name to subjects if present in preferences.
   def formatted_subject(text)
     name = PersonMailer.global_prefs.app_name
@@ -33,7 +33,7 @@ class BroadcastEmail < ActiveRecord::Base
     "#{label}#{text}"
   end
 
-  # was in broadcase_mailer.rb
+  # was in broadcast_mailer.rb
   def preferences_note(person)
     %(
 
