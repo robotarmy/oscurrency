@@ -152,10 +152,10 @@ class Person < ActiveRecord::Base
   before_create :create_blog, :check_config_for_deactivation
   after_create :create_account
   after_create :create_address
+  after_create :join_mandatory_groups
   before_save :encrypt_password
   before_save :update_group_letter
   before_validation :prepare_email, :handle_nil_description
-  #after_create :connect_to_admin
 
   before_update :set_old_description
   after_update :log_activity_description_changed
@@ -375,6 +375,12 @@ class Person < ActiveRecord::Base
     address.zipcode_plus_4 = self.zipcode.blank? ? DEFAULT_ZIPCODE_STRING : self.zipcode
     address.person = self
     address.save
+  end
+
+  def join_mandatory_groups
+    Group.all(:conditions => ["mandatory = ?", true]).each do |g|
+      Membership.request(self,g,false)
+    end
   end
 
   def address
@@ -630,16 +636,6 @@ class Person < ActiveRecord::Base
     
     def destroy_feeds
       Feed.find_all_by_person_id(self).each {|f| f.destroy}
-    end
-
-    # Connect new users to "Tom".
-    def connect_to_admin
-      # Find the first admin created.
-      # The ununitiated should Google "tom myspace".
-      tom = Person.find_first_admin
-      unless tom.nil? or tom == self
-        Connection.connect(self, tom)
-      end
     end
 
     ## Other private method(s)
