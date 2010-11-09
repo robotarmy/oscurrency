@@ -1,4 +1,3 @@
-  <% if exchange.group.nil? %>
 <li>
   <div class="profile-image">
     <%= image_link exchange.customer, :image => :thumbnail %>
@@ -8,7 +7,7 @@
     <%= image_link exchange.worker :image => :thumbnail %>
   </div>
   <p>
-    <%= person_link exchange.customer %> paid <%= person_link exchange.worker %> <%= "#{exchange.amount.to_s} hours for " %><%= link_to h(exchange.metadata.name), exchange.metadata %>
+  <%= person_link exchange.customer %> paid <%= person_link exchange.worker %> <%= "#{exchange.amount.to_s} #{exchange.unit} for " %><%= link_to h(exchange.metadata.name), exchange.metadata %>
 
   </p>
   <p class="meta published">
@@ -16,4 +15,3 @@
   </p>
 
 </li>
-  <%- end -%>

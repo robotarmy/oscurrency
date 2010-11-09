@@ -34,6 +34,14 @@ class Exchange < ActiveRecord::Base
     add_activities(:item => self, :person => self.worker)
   end
 
+  def unit
+    if group.nil?
+      "hours"
+    else
+      group.unit
+    end
+  end
+
   # XXX person_id hacks for cancan's load_and_authorize_resource
   def person_id
     self.worker_id
