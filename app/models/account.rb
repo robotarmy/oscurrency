@@ -42,15 +42,16 @@ class Account < ActiveRecord::Base
   def self.transfer(from, to, amount, metadata)
     transaction do
       exchange = Exchange.new()
-      exchange.customer = from.person
-      exchange.worker = to.person
+      exchange.customer = from
+      exchange.worker = to
       exchange.amount = amount
       exchange.metadata = metadata
       exchange.group_id = metadata.group_id
-      if can? :create, @exchange
+      # permission depends on current_user and policy of group specified in request
+      if metadata.ability.can? :create, exchange
         exchange.save!
       else
-        raise "fail"
+        raise CanCan::AccessDenied.new("Payment declined.", :create, Exchange)
       end
     end
   end

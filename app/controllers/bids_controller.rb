@@ -40,6 +40,7 @@ class BidsController < ApplicationController
       end
     when 'pay'
       if current_person?(@bid.req.person)
+        @bid.req.ability = current_ability
         @bid.pay!
         flash[:notice] = 'Work marked verified. Approval notification sent'
       end
