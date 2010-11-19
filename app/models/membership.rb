@@ -26,6 +26,12 @@ class Membership < ActiveRecord::Base
     Membership.breakup(person, group)
   end
 
+  def add_role(new_role)
+    a = self.roles
+    a << new_role
+    self.roles = a
+  end
+  
   def roles=(roles)
     self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.sum
   end
@@ -120,7 +126,7 @@ class Membership < ActiveRecord::Base
       mem = mem(person, group)
       mem.status = ACCEPTED
       mem.accepted_at = accepted_at
-      mem.roles = ['individual']
+      mem.add_role('individual')
       mem.save
 
       if person.accounts.find(:first,:conditions => ["group_id = ?",group.id]).nil?
