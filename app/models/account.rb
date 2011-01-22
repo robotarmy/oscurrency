@@ -20,8 +20,12 @@ class Account < ActiveRecord::Base
   INITIAL_BALANCE = 0
 
   def reset_totals
-    self.total_paid = 0
-    self.total_earned = 0
+    begin
+      self.total_paid = 0
+      self.total_earned = 0
+    rescue
+      $stderr.puts "warning - ignore reset_totals exception"
+    end
   end
 
   def withdraw(amount)

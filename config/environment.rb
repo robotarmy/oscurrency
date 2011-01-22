@@ -69,12 +69,18 @@ Rails::Initializer.run do |config|
   # add source:
   # `gem sources -a http://gems.github.com`
   config.gem 'rubyist-aasm', :lib => 'aasm'
+  #config.gem 'aasm'
   # installed with `rake gems:install`
-  config.gem 'twitter'
+  config.gem 'twitter', :version => '1.1.1'
   config.gem 'ruby-openid', :lib => 'openid', :version => '>= 2.1.6'
+  config.gem 'rack-openid', :lib => 'rack/openid', :version => '>= 1.2.0'
   config.gem 'starling-starling', :lib => 'starling'
+  #config.gem 'starling'
   config.gem 'feed-normalizer'
   config.gem 'json'
+  config.gem 'heroku'
+  config.gem 'rmagick', :lib => 'RMagick'
+  config.gem 'aws-s3', :lib => 'aws/s3'
   config.gem 'heroku'
 
   config.action_controller.session = {
