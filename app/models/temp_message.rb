@@ -16,7 +16,9 @@ class TempMessage < Message
   end
 
   def actually_send_receipt_reminder
-    super
+    @send_mail ||= Message.global_prefs.email_notifications? &&
+      recipient.message_notifications?
+    PersonMailer.deliver_temp_message_notification(self) if @send_mail
     destroy
   end
 
