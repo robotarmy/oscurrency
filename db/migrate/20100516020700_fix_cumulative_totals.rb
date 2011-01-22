@@ -1,5 +1,8 @@
 class FixCumulativeTotals < ActiveRecord::Migration
   def self.up
+    # disable this, since we renamed the migration
+    # but it was already run in production
+    return true
     Person.find(:all).each do |p|  
       totalearned=0 
       totalpaid=0 

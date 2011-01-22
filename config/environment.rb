@@ -71,9 +71,9 @@ Rails::Initializer.run do |config|
   config.gem 'rubyist-aasm', :lib => 'aasm'
   #config.gem 'aasm'
   # installed with `rake gems:install`
-  config.gem 'twitter', :version => '1.1.1'
+  config.gem 'twitter', :version => '>= 0.8.4'
   config.gem 'ruby-openid', :lib => 'openid', :version => '>= 2.1.6'
-  config.gem 'rack-openid', :lib => 'rack/openid', :version => '>= 1.2.0'
+  config.gem 'rack-openid', :lib => 'rack/openid', :version => '>= 1.0.1'
   config.gem 'starling-starling', :lib => 'starling'
   #config.gem 'starling'
   config.gem 'feed-normalizer'
