@@ -1,14 +1,14 @@
 class PwdsHashedNotEncrypted < ActiveRecord::Migration
   def self.up
 
-    unless LocalEncryptionKey.find(:first)
-      error "Can't migrate to hash without the RSA encryption keys"
+    if Person.count(:conditions => "crypted_password is not null") > 0 && LocalEncryptionKey.count == 0
+      raise "Can't migrate to hash without the RSA encryption keys"
     end
 
     add_column :people, :password_salt, :string
     Person.reset_column_information # stupid rails can't figure this out for itself
 
-    Person.find(:all).each { |person|
+    Person.find(:all, :conditions => "crypted_password is not null").each { |person|
       person.verify_password = true
       person.password = person.unencrypted_password
       person.password_confirmation = person.unencrypted_password

@@ -30,6 +30,10 @@ class PersonMailer < ActionMailer::Base
     "preferences_note" => preferences_note(message.recipient)
   end
   
+  def temp_message_notification(message)
+    message_notification(message)
+  end
+  
   def connection_request(connection)
     from         "#{connection.contact.name} <connection@#{domain}>"
     recipients   connection.person.email

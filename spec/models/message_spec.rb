@@ -98,9 +98,27 @@ describe Message do
   describe "email notifications" do
     
     before(:each) do
+      ActionMailer::Base.delivery_method = :test
       @emails = ActionMailer::Base.deliveries
       @emails.clear
       @global_prefs = Preference.find(:first)
+    end
+    
+    it "should actually send a message" do
+      lambda do
+        mail = PersonMailer.deliver_message_notification(@message)
+        mail.body.should =~ /Lorem/
+        mail.body.should =~ /view this message/
+      end.should change(@emails, :length).by(1)
+    end
+    
+    it "should actually send a temp message" do
+      lambda do
+        message = new_temp_message
+        mail = PersonMailer.deliver_temp_message_notification(message)
+        mail.body.should =~ /Lorem/
+        mail.body.should_not =~ /view this message/
+      end.should change(@emails, :length).by(1)
     end
     
     it "should send an email when global/recipient notifications are on" do
@@ -135,6 +153,11 @@ describe Message do
 
   private
 
+    def new_temp_message(options = { :sender => @sender, :recipient => @recipient })
+      TempMessage.unsafe_build({ :subject => "The subject",
+                             :content => "Lorem ipsum" }.merge(options))
+    end
+  
     def new_message(options = { :sender => @sender, :recipient => @recipient })
       Message.unsafe_build({ :subject => "The subject",
                              :content => "Lorem ipsum" }.merge(options))

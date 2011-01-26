@@ -1,1 +1,4 @@
-See the README file
+gem install texticle
+gem install oauth
+gem install chronic
+sudo apt-get install libmagickcore-dev libmagickwand-dev
