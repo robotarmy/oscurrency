@@ -162,7 +162,7 @@ module ApplicationHelper
     end
     opts = {}
     str = link_to(img,path, opts)
-    str << "&nbsp;"
+    str << raw('&nbsp;')
     str << link_to_unless_current(action, path, opts)
   end
 
@@ -172,7 +172,7 @@ module ApplicationHelper
     opts = {}
     action = "Give credit"
     str = link_to(img,path,opts)
-    str << "&nbsp;"
+    str << raw('&nbsp;')
     str << link_to_unless_current(action, path, opts)
   end
 
@@ -187,7 +187,7 @@ module ApplicationHelper
     action = reply.nil? ? "Send a message" : "Send reply"
     opts = { :class => 'email-link' }
     str = link_to(img, path, opts)
-    str << "&nbsp;"
+    str << raw('&nbsp;')
     str << link_to_unless_current(action, path, opts)
   end
 

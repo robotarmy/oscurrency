@@ -1,4 +1,9 @@
 gem install texticle
 gem install oauth
 gem install chronic
-sudo apt-get install libmagickcore-dev libmagickwand-dev
+gem install rmagick
+
+RMagick requires ImageMagick:
+> sudo apt-get install libmagickcore-dev libmagickwand-dev
+or on Mac
+> sudo port install ImageMagick
